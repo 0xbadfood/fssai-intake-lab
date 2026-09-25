@@ -32,9 +32,10 @@ export function report(records, run) {
 
   // Yield per step
   L.push('## Yield', '', 'Agreed = the blind reviewer chose exactly the intended option (or nothing, for no-match answers). Strong = the blind self-check agreed too. Relabelled = both blind classifiers agreed, with high confidence, on a different option than the planner intended; kept under their label and marked.', '')
-  const steps = [...new Set(records.map((r) => r.step))]
+  const stepOf = (r) => r.review.view || r.step
+  const steps = [...new Set(records.map(stepOf))]
   table(['Step', 'Answers', 'Agreed', 'Strong', 'No-match recognised', 'Relabelled', 'Records kept', 'Duplicates', 'Errors'], steps.map((s) => {
-    const rs = records.filter((r) => r.step === s)
+    const rs = records.filter((r) => stepOf(r) === s)
     const t = rs.filter(targeted)
     const n = rs.filter((r) => !targeted(r))
     return [s, rs.length, `${t.filter((r) => r.review.agree).length}/${t.length} (${pct(t.filter((r) => r.review.agree).length, t.length)})`,
@@ -52,10 +53,10 @@ export function report(records, run) {
 
   // Per option
   L.push('## Per option', '', 'Low yield means answers written for this option are often read as another one: a sign of overlapping options (worth showing the expert) or of weak generation.', '')
-  const opts = [...new Set(records.filter(targeted).map((r) => `${r.step}:${r.review.intent[0]}`))]
+  const opts = [...new Set(records.filter(targeted).map((r) => `${stepOf(r)}:${r.review.intent.join('+')}`))]
   table(['Step:option', 'Accepted', 'Most often read as'], opts.map((k) => {
     const [s, o] = k.split(':')
-    const rs = records.filter((r) => r.step === s && r.review.intent[0] === o)
+    const rs = records.filter((r) => stepOf(r) === s && r.review.intent.join('+') === o)
     const wrong = rs.filter((r) => !r.review.agree).map((r) => (r.review.reviewer?.length ? r.review.reviewer.join('+') : 'none'))
     const top = Object.entries(wrong.reduce((m, x) => ((m[x] = (m[x] || 0) + 1), m), {})).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([x, n]) => `${x} (${n})`).join(', ')
     return [k, `${rs.filter((r) => r.review.agree).length}/${rs.length}`, top || '—']
@@ -78,12 +79,12 @@ export function report(records, run) {
   const bySig = new Map()
   for (const r of records) {
     byText.set(r.text_norm, (byText.get(r.text_norm) || 0) + 1)
-    bySig.set(`${r.step}|${r.token_sig}`, (bySig.get(`${r.step}|${r.token_sig}`) || 0) + 1)
+    bySig.set(`${stepOf(r)}|${r.token_sig}`, (bySig.get(`${stepOf(r)}|${r.token_sig}`) || 0) + 1)
   }
   const sims = []
   for (const k of opts) {
     const [s, o] = k.split(':')
-    const toks = records.filter((r) => r.step === s && r.review.intent[0] === o).map((r) => words(r.text_norm))
+    const toks = records.filter((r) => stepOf(r) === s && r.review.intent.join('+') === o).map((r) => words(r.text_norm))
     for (let i = 0; i < toks.length; i++) for (let j = i + 1; j < toks.length; j++) sims.push(jaccard(toks[i], toks[j]))
   }
   const lens = records.map((r) => words(r.text_norm).length)
@@ -105,7 +106,7 @@ export function report(records, run) {
   // Samples
   L.push('## Samples', '', 'Accepted (first 4 per step by id):', '')
   for (const s of steps) {
-    for (const r of records.filter((x) => x.step === s && x.status === 'model-reviewed').sort((a, b) => a.id.localeCompare(b.id)).slice(0, 4)) {
+    for (const r of records.filter((x) => stepOf(x) === s && x.status === 'model-reviewed').sort((a, b) => a.id.localeCompare(b.id)).slice(0, 4)) {
       L.push(`- \`${s}\` → ${r.targets.length ? r.targets.join('+') : 'none'} · ${r.review.style} · "${r.text}"`)
     }
   }
