@@ -1,0 +1,27 @@
+{
+  "note": "Labelling rules for the blind classifiers, one per expert decision (review page https://claude.ai/artifact/96ygCEkYEj3JQmojn6un4A). `status`: proposed = our proposed resolution (used for impact estimates); agreed = the expert agreed; changed = the expert changed it (then `rule` holds their version); dropped = not a labelling rule. Reclassify with: node loop/fill.mjs --reclassify --guidance loop/guidance.json --tag <name> [--status proposed|agreed].",
+  "rules": [
+    { "decision": "D9", "status": "proposed", "views": ["activity"],
+      "rule": "Making or packing food includes selling, storing and transporting your OWN products (to shops, wholesale or online). Choose sell only when the business also sells, stores or transports food made by others." },
+    { "decision": "D8a", "status": "proposed", "views": ["activity"],
+      "rule": "A farmer who only grows and sells their own raw produce (grain, vegetables, raw coffee beans) to traders is not a food business for this question: choose none." },
+    { "decision": "D7", "status": "proposed", "views": ["activity", "manufacture"],
+      "rule": "Pet food and animal feed are not food under the FSS Act: an answer only about them fits none of the options." },
+    { "decision": "D1", "status": "proposed", "views": ["manufacture"],
+      "rule": "Choose proprietary only when the answer says the product has no FSSAI standard or is a new formulation; house spice blends, chutney powders, granola and similar are general." },
+    { "decision": "D2", "status": "proposed", "views": ["manufacture"],
+      "rule": "Choose novel when the ingredient itself is new and needs FSSAI product approval (insect, algae or lab-grown proteins); choose nutraceutical for supplements made from approved ingredients (protein powder, vitamins, herbal extracts)." },
+    { "decision": "D3", "status": "proposed", "views": ["manufacture"],
+      "rule": "Choose slaughter only when live animals or birds are killed on site; choose meat when they start from carcasses or cut meat; both when the answer says both." },
+    { "decision": "D4", "status": "proposed", "views": ["manufacture"],
+      "rule": "Killing, cleaning, freezing or processing fish is fish, never slaughter." },
+    { "decision": "D5", "status": "proposed", "views": ["service"],
+      "rule": "School meals: mdm_canteen when cooked and served inside the school under the mid-day meal scheme; mdm_caterer when cooked elsewhere and delivered to schools; canteen for a school or college canteen outside the scheme." },
+    { "decision": "D6", "status": "proposed", "views": ["service"],
+      "rule": "caterer when they cook for events or institutions at the client's venue; vending_est when food is served at their own banquet hall, dhaba, stall or boarding house, or when they deliver packed meals (dabbawala, home tiffin)." },
+    { "decision": "D8b", "status": "proposed", "views": ["service"],
+      "rule": "anganwadi only for ICDS Anganwadi centres; other government or NGO child-nutrition centres are canteen." },
+    { "decision": "B11", "status": "proposed", "views": ["online"],
+      "rule": "platform only when the business runs an app or website where OTHER sellers list food; selling your own food on Swiggy, Zomato, Amazon or your own website is seller." }
+  ]
+}

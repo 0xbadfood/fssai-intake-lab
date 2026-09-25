@@ -7,6 +7,12 @@
 // finishes; a rerun with the same --run skips work already done. Records go to staging only.
 //
 // Usage: node loop/fill.mjs [--plan loop/plan.full.json] [--run full-1] [--views service,manufacture]
+//
+// Reclassify mode (after expert decisions): re-run only the blind classification of the saved answers, with
+// the labelling rules in loop/guidance.json added to the prompt, and write a complete new record set to
+// <run>/<tag>/ plus CHANGES.md (what moved). Generation is not repeated.
+//   node loop/fill.mjs --run full-1 --reclassify --guidance loop/guidance.json --tag expert-v1 [--status agreed,changed]
+// --status proposed estimates the impact of our proposed resolutions before the expert has answered.
 import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import { createEngine, loadGraph } from '../engine/index.js'
@@ -14,13 +20,20 @@ import { LAB_ROOT } from '../engine/graph.js'
 import { loadEndpoints, makeClient } from './llm.mjs'
 import { makeRecord, normalizeText, sha, splitFor, tokenSignature } from './records.mjs'
 import { report } from './report.mjs'
+import { classify as classifyShared, optionList, same, viewMaker } from './classify.mjs'
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => (a.startsWith('--') ? [...acc, [a.slice(2), all[i + 1]]] : acc), []))
 const plan = JSON.parse(readFileSync(path.resolve(LAB_ROOT, args.plan || 'loop/plan.full.json'), 'utf8'))
 const RUN = args.run || 'full-1'
 const OUT = path.join(LAB_ROOT, 'records/loop', RUN)
 const ONLY = args.views ? new Set(args.views.split(',')) : null
-const PROMPT_VERSION = 'fill-v1'
+const RECLASSIFY = 'reclassify' in args
+const TAG = args.tag || null
+if (RECLASSIFY && !TAG) throw new Error('--reclassify needs --tag NAME')
+const STATUSES = new Set((args.status || 'agreed,changed').split(','))
+const guidance = args.guidance ? JSON.parse(readFileSync(path.resolve(LAB_ROOT, args.guidance), 'utf8')).rules.filter((r) => STATUSES.has(r.status)) : []
+const notesFor = (viewName, step) => guidance.filter((r) => r.views.includes(viewName) || r.views.includes(step)).map((r) => `${r.rule} [${r.decision}]`)
+const PROMPT_VERSION = RECLASSIFY ? `fill-v1+guidance:${TAG}` : 'fill-v1'
 
 const graph = loadGraph(path.resolve(LAB_ROOT, plan.graph))
 const E = createEngine(graph)
@@ -29,8 +42,6 @@ const stats = {}
 const planner = makeClient(endpoints.planner, stats)
 const selfcheck = makeClient(endpoints.selfcheck, stats)
 const reviewer = makeClient(endpoints.reviewer, stats)
-const ESCAPES = new Set(['unsure', 'none'])
-const concepts = new Map((graph.concepts || []).map((c) => [c.id, c]))
 
 const STYLES = {
   short: '1 to 4 words, the way people answer a chat quickly',
@@ -47,22 +58,14 @@ const SYSTEM = 'You write realistic test answers for a chat that helps small Ind
 mkdirSync(OUT, { recursive: true })
 const load = (f) => (existsSync(f) ? readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : [])
 const GEN = path.join(OUT, 'gen.jsonl')
-const CLS = path.join(OUT, 'cls.jsonl')
+const CLS = path.join(OUT, RECLASSIFY ? `cls.${TAG}.jsonl` : 'cls.jsonl')
+const RECORDS_DIR = RECLASSIFY ? path.join(OUT, TAG) : OUT
 const gens = new Map(load(GEN).map((g) => [g.key, g]))
 const clss = new Map(load(CLS).map((c) => [c.key, c]))
 
 // ---------- views ----------
-function makeView(v) {
-  const q = E.QUESTIONS.find((x) => x.id === v.step)
-  const facts = E.sanitizeFacts(v.context || {})
-  const options = E.optionsFor(q, facts).filter((o) => !ESCAPES.has(o.id)).map((o) => ({ ...o, desc: concepts.get(o.id)?.desc || null }))
-  return { ...v, q, facts, title: E.titleFor(q, facts), multi: E.isMulti(q, facts), options }
-}
-const optionList = (options) => options.map((o) => `- ${o.id}: ${o.label} — ${o.example}${o.desc ? ` (${o.desc})` : ''}`).join('\n')
-const contextLine = (view) => {
-  const rows = E.summary(view.facts).map((r) => r.value).filter(Boolean)
-  return rows.length ? `What the user already told the chat: ${rows.join('; ')}.\n` : ''
-}
+const makeView = viewMaker(E, graph)
+const contextLine = (view) => view.context
 
 // ---------- generation ----------
 async function generate(view, targetIds, round) {
@@ -106,35 +109,33 @@ Reply as JSON: {"answers": [{"text": "...", "lang": "en|hi-Latn|hi|mixed", "kind
   return (r.answers || []).filter((a) => a && typeof a.text === 'string' && a.text.trim())
 }
 
-// ---------- blind classification ----------
-function classifyPrompt(view, text) {
-  return `${contextLine(view)}A user of an FSSAI licensing chat was asked: "${view.title}"
+// ---------- blind classification (shared prompt: loop/classify.mjs) ----------
+const classify = (client, view, text) => classifyShared(client, view, text, notesFor(view.name, view.step))
 
-Options:
-${optionList(view.options)}
-
-The user answered: """${text}"""
-
-Which option${view.multi ? '(s)' : ''} does the answer mean? Pick only options the answer clearly states or strongly implies${view.multi ? ' (more than one only if the answer describes more than one)' : ''}. If no option fits, or the answer is off-topic or unclear, return an empty list.
-Reply as JSON: {"choice": ["<option id>", ...], "confidence": "high|medium|low"}`
-}
-async function classify(client, view, text) {
-  const ids = view.options.map((o) => o.id)
-  const schema = {
-    type: 'object',
-    properties: { choice: { type: 'array', items: { type: 'string', enum: ids } }, confidence: { type: 'string', enum: ['high', 'medium', 'low'] } },
-    required: ['choice', 'confidence'],
+/** What moved between two record sets for the same answers (matched by record id). */
+function changes(before, after) {
+  const byId = new Map(before.map((r) => [r.id, r]))
+  const label = (r) => (r.status === 'model-reviewed' ? (r.targets.length ? r.targets.join('+') : 'none') : 'dropped')
+  const moved = []
+  for (const r of after) {
+    const b = byId.get(r.id)
+    if (b && label(b) !== label(r)) moved.push({ view: r.review.view, from: label(b), to: label(r), text: r.text })
   }
-  const r = await client([{ role: 'user', content: classifyPrompt(view, text) }], { temperature: 0, maxTokens: 200, schema })
-  return { choice: [...new Set((r.choice || []).filter((c) => ids.includes(c)))].sort(), confidence: r.confidence ?? null }
+  const L = [`# Changes from the labelling rules (${TAG})`, '', `${moved.length} of ${after.length} answers changed label.`, '']
+  const counts = moved.reduce((m, x) => ((m[`${x.view}: ${x.from} → ${x.to}`] = (m[`${x.view}: ${x.from} → ${x.to}`] || 0) + 1), m), {})
+  L.push('| Change | Answers |', '|---|---:|', ...Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([k, n]) => `| ${k} | ${n} |`), '')
+  L.push('Examples (up to 3 per change):', '')
+  for (const k of Object.keys(counts)) for (const x of moved.filter((m) => `${m.view}: ${m.from} → ${m.to}` === k).slice(0, 3)) L.push(`- ${k} · "${x.text}"`)
+  return L.join('\n') + '\n'
 }
-
-const same = (a, b) => a.length === b.length && a.every((x) => b.includes(x))
 const log = (...m) => console.error(`[${new Date().toISOString().slice(11, 19)}]`, ...m)
 
 async function main() {
   const t0 = Date.now()
-  const views = plan.views.filter((v) => !ONLY || ONLY.has(v.name)).map(makeView)
+  const allViews = plan.views.map(makeView)
+  // Reclassify touches only the views that have a labelling rule (or --views); the rest are copied unchanged.
+  const views = allViews.filter((v) => (ONLY ? ONLY.has(v.name) : RECLASSIFY ? notesFor(v.name, v.step).length > 0 : true))
+  if (RECLASSIFY) log(`reclassifying ${views.map((v) => v.name).join(', ')} with ${guidance.length} rule(s) (status: ${[...STATUSES].join(', ')})`)
 
   // 1. Generation tasks (skip the ones already on disk).
   const tasks = []
@@ -144,7 +145,8 @@ async function main() {
     const half = Math.ceil(plan.nomatch / 2)
     for (let r = 0; r < 2; r++) tasks.push({ key: `${v.name}|none|r${r}`, view: v, intent: [], round: r, nomatch: half })
   }
-  const todo = tasks.filter((t) => !gens.has(t.key))
+  const todo = RECLASSIFY ? [] : tasks.filter((t) => !gens.has(t.key))
+  if (RECLASSIFY && tasks.some((t) => !gens.has(t.key))) throw new Error('reclassify needs the full generation log (gen.jsonl) of this run')
   log(`${views.length} views, ${tasks.length} generation tasks (${todo.length} to do)`)
   let g = 0
   await Promise.all(todo.map(async (t) => {
@@ -217,15 +219,24 @@ async function main() {
       split: splitFor(normalizeText(x.answer.text)),
     }))
   }
-  writeFileSync(path.join(OUT, 'records.jsonl'), records.map((r) => JSON.stringify(r)).join('\n') + '\n')
+  mkdirSync(RECORDS_DIR, { recursive: true })
+  if (RECLASSIFY) {
+    const base = load(path.join(OUT, 'records.jsonl'))
+    const touched = new Set(views.map((v) => v.name))
+    const untouched = base.filter((r) => !touched.has(r.review.view))
+    writeFileSync(path.join(RECORDS_DIR, 'CHANGES.md'), changes(base.filter((r) => touched.has(r.review.view)), records))
+    records.push(...untouched)
+  }
+  writeFileSync(path.join(RECORDS_DIR, 'records.jsonl'), records.map((r) => JSON.stringify(r)).join('\n') + '\n')
   const run = {
     run: RUN, finished: new Date().toISOString(), seconds: (Date.now() - t0) / 1000, steps: views.map((v) => v.name),
     per_option: plan.per * plan.rounds, nomatch: plan.nomatch, duplicates_dropped: dupes,
     graph: { version: graph.version, sha256: sha(JSON.stringify(graph)) }, prompt_version: PROMPT_VERSION, plan,
     endpoints: Object.fromEntries(Object.entries(endpoints).filter(([, v]) => v?.url).map(([k, v]) => [k, { url: v.url, model: v.model }])), usage: stats,
   }
-  writeFileSync(path.join(OUT, 'run.json'), JSON.stringify(run, null, 2))
-  writeFileSync(path.join(OUT, 'REPORT.md'), report(records, run))
+  if (RECLASSIFY) run.guidance = guidance
+  writeFileSync(path.join(RECORDS_DIR, 'run.json'), JSON.stringify(run, null, 2))
+  writeFileSync(path.join(RECORDS_DIR, 'REPORT.md'), report(records, run))
   log(`done: ${records.filter((r) => r.status === 'model-reviewed').length} records kept of ${records.length}`)
 }
 
