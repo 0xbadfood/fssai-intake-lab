@@ -279,6 +279,7 @@ fssai-intake-lab/
     - A retry must change the sampling.
     - The planner's own "none" answers were often real matches, so the no-match prompt must forbid listed activities.
     - Spark catches about 2.5% of answers that the local model passes. They are the genuinely ambiguous ones, so it stays on every answer.
+  - **Full run done 2026-09-25** (`records/loop/full-1/`): 10 views (activity, the four "which kind?" questions, place in four contexts, online), 40 answers per option in 4 persona rounds, plus combined answers and no-match. **2,237 of 2,331 kept (96%): 2,045 train, 192 dev, 257 no-match, 1,174 with hard negatives, 119 relabelled.** 0 errors, 75 min, 30 records/min. Languages: 1,420 English, 554 Hinglish, 302 Devanagari. Combined answers are the hardest (4–6 of 8 kept). Makers and exporters who also sell their own goods get read as make + sell or export + make (expert query D9).
   - **Confusable pairs**, for the expert and as CLM hard negatives: proprietary/general, novel/nutraceutical, slaughter/meat, mid-day-meal canteen/canteen, caterer/vending establishment. Also: pet food is outside FSSAI.
 - Then the CLM experiment.
 

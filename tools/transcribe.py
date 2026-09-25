@@ -16,7 +16,7 @@ PROMPT = ("Transcribe this page exactly as Markdown. Reproduce tables as Markdow
 
 
 def ask(png, key):
-    body = {"model": "qwen3.8-27b", "max_tokens": 4000, "temperature": 0, "chat_template_kwargs": {"enable_thinking": False},
+    body = {"model": "qwen3.8-27b", "max_tokens": 8000, "temperature": 0, "chat_template_kwargs": {"enable_thinking": False},
             "messages": [{"role": "user", "content": [
                 {"type": "image_url", "image_url": {"url": "data:image/png;base64," + base64.b64encode(png.read_bytes()).decode()}},
                 {"type": "text", "text": PROMPT}]}]}

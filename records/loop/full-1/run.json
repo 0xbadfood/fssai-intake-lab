@@ -1,0 +1,277 @@
+{
+  "run": "full-1",
+  "finished": "2026-09-25T12:53:47.998Z",
+  "seconds": 4472.727,
+  "steps": [
+    "activity",
+    "service",
+    "manufacture",
+    "trade",
+    "export",
+    "place/restaurant",
+    "place/maker",
+    "place/shop",
+    "place/transport",
+    "online"
+  ],
+  "per_option": 40,
+  "nomatch": 30,
+  "duplicates_dropped": 45,
+  "graph": {
+    "version": 2,
+    "sha256": "f9fcb1bce4ffa935f5107a56f756e6e3896e0aa5f9d4e777a652d17dcb1f6dae"
+  },
+  "prompt_version": "fill-v1",
+  "plan": {
+    "note": "Full cache-fill run (M4). Each view is a question as a user reaches it (context = facts already given). `rounds` × `per` answers per option, each round written from a different persona; `combos` are multi-select answers; `nomatch` answers fit no option.",
+    "graph": "graph/graph.v2.json",
+    "per": 10,
+    "rounds": 4,
+    "nomatch": 30,
+    "combo_per": 8,
+    "personas": [
+      "owners in small towns of Uttar Pradesh, Bihar and Madhya Pradesh, one- or two-person businesses, typing mostly in Hinglish",
+      "owners in Mumbai, Pune, Bengaluru and Hyderabad, growing businesses selling through apps and to other businesses",
+      "owners in Tamil Nadu, Kerala, Karnataka and Andhra Pradesh, family businesses, writing simple English with local words",
+      "owners in Punjab, Gujarat, Rajasthan, West Bengal and the North East, mixed sizes, some writing in Devanagari Hindi"
+    ],
+    "views": [
+      {
+        "name": "activity",
+        "step": "activity",
+        "context": {},
+        "combos": [
+          [
+            "cook",
+            "sell"
+          ],
+          [
+            "make",
+            "sell"
+          ],
+          [
+            "cook",
+            "make"
+          ],
+          [
+            "import",
+            "sell"
+          ],
+          [
+            "make",
+            "export"
+          ],
+          [
+            "sell",
+            "export"
+          ]
+        ]
+      },
+      {
+        "name": "service",
+        "step": "service",
+        "context": {
+          "activities": [
+            "cook"
+          ]
+        },
+        "combos": [
+          [
+            "restaurant",
+            "caterer"
+          ],
+          [
+            "hotel",
+            "restaurant"
+          ],
+          [
+            "caterer",
+            "vending_est"
+          ],
+          [
+            "petty",
+            "hawker"
+          ],
+          [
+            "canteen",
+            "caterer"
+          ]
+        ]
+      },
+      {
+        "name": "manufacture",
+        "step": "manufacture",
+        "context": {
+          "activities": [
+            "make"
+          ]
+        },
+        "combos": [
+          [
+            "general",
+            "repack"
+          ],
+          [
+            "dairy",
+            "general"
+          ],
+          [
+            "meat",
+            "slaughter"
+          ],
+          [
+            "oil",
+            "milling"
+          ],
+          [
+            "nutraceutical",
+            "ayurveda"
+          ],
+          [
+            "general",
+            "packaged_water"
+          ]
+        ]
+      },
+      {
+        "name": "trade",
+        "step": "trade",
+        "context": {
+          "activities": [
+            "sell"
+          ]
+        },
+        "combos": [
+          [
+            "retail",
+            "wholesale"
+          ],
+          [
+            "wholesale",
+            "distribution"
+          ],
+          [
+            "storage_cold",
+            "transport"
+          ],
+          [
+            "distribution",
+            "transport"
+          ],
+          [
+            "retail",
+            "vending_agency"
+          ]
+        ]
+      },
+      {
+        "name": "export",
+        "step": "export",
+        "context": {
+          "activities": [
+            "make",
+            "export"
+          ],
+          "make_kinds": [
+            "general"
+          ]
+        }
+      },
+      {
+        "name": "place/restaurant",
+        "step": "place",
+        "context": {
+          "activities": [
+            "cook"
+          ],
+          "service_kinds": [
+            "restaurant"
+          ]
+        }
+      },
+      {
+        "name": "place/maker",
+        "step": "place",
+        "context": {
+          "activities": [
+            "make"
+          ],
+          "make_kinds": [
+            "general"
+          ]
+        }
+      },
+      {
+        "name": "place/shop",
+        "step": "place",
+        "context": {
+          "activities": [
+            "sell"
+          ],
+          "trade_kinds": [
+            "retail"
+          ]
+        }
+      },
+      {
+        "name": "place/transport",
+        "step": "place",
+        "context": {
+          "activities": [
+            "sell"
+          ],
+          "trade_kinds": [
+            "transport"
+          ]
+        }
+      },
+      {
+        "name": "online",
+        "step": "online",
+        "context": {
+          "activities": [
+            "cook"
+          ],
+          "service_kinds": [
+            "restaurant"
+          ],
+          "place": "premises",
+          "locations": "one",
+          "states": [
+            "Goa"
+          ]
+        }
+      }
+    ]
+  },
+  "endpoints": {
+    "planner": {
+      "url": "http://localhost:7001/v1",
+      "model": "qwen3.8-27b"
+    },
+    "selfcheck": {
+      "url": "http://localhost:7001/v1",
+      "model": "qwen3.8-27b"
+    },
+    "reviewer": {
+      "url": "http://10.8.0.4:8001/v1",
+      "model": "qwen3.8-flash-next"
+    }
+  },
+  "usage": {
+    "qwen3.8-27b": {
+      "calls": 2617,
+      "failures": 0,
+      "prompt_tokens": 1129602,
+      "completion_tokens": 177536,
+      "seconds": 5532.566000000003
+    },
+    "qwen3.8-flash-next": {
+      "calls": 2331,
+      "failures": 0,
+      "prompt_tokens": 938030,
+      "completion_tokens": 56181,
+      "seconds": 3925.758000000002
+    }
+  }
+}
