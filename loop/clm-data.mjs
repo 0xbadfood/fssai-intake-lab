@@ -15,6 +15,7 @@ import path from 'node:path'
 import { createEngine, loadGraph } from '../engine/index.js'
 import { LAB_ROOT } from '../engine/graph.js'
 import { viewMaker } from './classify.mjs'
+import { NONE_KEY, clmRequest } from './clm-format.mjs'
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => (a.startsWith('--') ? [...acc, [a.slice(2), all[i + 1]]] : acc), []))
 const RECORDS = path.resolve(LAB_ROOT, args.records || 'records/loop/full-1/records.jsonl')
@@ -23,23 +24,21 @@ const OUT = path.resolve(LAB_ROOT, args.out || '../clm/data/fssai')
 const graph = loadGraph(path.join(LAB_ROOT, 'graph/graph.v2.json'))
 const E = createEngine(graph)
 const makeView = viewMaker(E, graph)
-const NONE = 'None of these: the answer does not describe any of the options above, is not about a food business, or is off-topic.'
 const load = (f) => readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l))
 
 function row(r, origin) {
   const view = makeView({ step: r.step, context: r.known_facts || {} })
-  const options = view.options.filter((o) => r.candidates.includes(o.id))
-  const criteria = Object.fromEntries(options.map((o) => [o.id, `${o.label} — ${o.example}${o.desc ? ` (${o.desc})` : ''}`]))
-  criteria.none = NONE
-  const targets = r.targets.length ? r.targets.filter((t) => t in criteria) : ['none']
+  const shown = { ...view, options: view.options.filter((o) => r.candidates.includes(o.id)) }
+  const { state, questions } = clmRequest(E, shown, r.text)
+  const criteria = questions.q.criteria
+  const targets = r.targets.length ? r.targets.filter((t) => t in criteria) : [NONE_KEY]
   if (!targets.length) return null
-  const known = E.summary(view.facts).map((x) => x.value).filter(Boolean)
   return {
     id: r.id,
     workflow: r.step,
     origin,
-    state: JSON.stringify({ ...(known.length ? { 'Already told the chat': known.join('; ') } : {}), 'The user answered': r.text }),
-    questions: JSON.stringify({ q: { type: 'choice', instructions: view.title, criteria } }),
+    state: JSON.stringify(state),
+    questions: JSON.stringify(questions),
     gold: JSON.stringify({ q: { label: targets[0], probabilities: Object.fromEntries(targets.map((t) => [t, 1 / targets.length])) } }),
     lang: r.lang || null,
     multi: targets.length > 1,

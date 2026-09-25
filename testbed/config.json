@@ -1,0 +1,25 @@
+{
+  "note": "Intake test page at https://fssaitest.photovault.live/ (Caddy on 10.8.0.1 -> 10.8.0.2:8340). Also answers under /test. invites and data/ are git-ignored.",
+  "host": "10.8.0.2",
+  "port": 8340,
+  "graph": "graph/graph.v2.json",
+  "clmUrl": "http://127.0.0.1:8700",
+  "clmModel": "fssai-v-hard",
+  "clmThreshold": 0.8,
+  "silentReviewer": true,
+  "textSteps": [
+    "activity",
+    "service",
+    "manufacture",
+    "trade",
+    "export",
+    "place",
+    "online"
+  ],
+  "records": [
+    "records/loop/full-1/records.jsonl",
+    "records/prod/2026-09-25/records.jsonl"
+  ],
+  "invites": "testbed/invites.json",
+  "ratePerMinute": 60
+}

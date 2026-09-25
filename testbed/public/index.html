@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>FSSAI Licence Check · Test</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <div class="brand"><span class="mark">F</span><div><div class="name">FSSAI licence check</div><div class="sub">Test version</div></div></div>
+    <button type="button" class="linkish" id="restart" hidden>Start again</button>
+  </header>
+
+  <p class="banner" role="note">This is a test. Nothing is submitted to FSSAI. Please don't type names, phone numbers, Aadhaar, PAN or addresses. Answer as a real business would, in your own words, English or Hindi. If a reply looks wrong, tap <b>Not what I meant</b>.</p>
+
+  <section id="gate" class="gate">
+    <label for="code">Invite code</label>
+    <div class="row">
+      <input id="code" autocomplete="off" spellcheck="false" placeholder="fssai-…">
+      <button type="button" id="start" class="primary">Start</button>
+    </div>
+    <p id="gateError" class="error" hidden></p>
+  </section>
+
+  <main id="chat" class="chat" aria-live="polite" hidden></main>
+
+  <section id="composer" class="composer" hidden>
+    <div id="choices" class="choices"></div>
+    <div id="stateBox" class="statebox" hidden>
+      <div id="popular" class="chips"></div>
+      <div class="row"><select id="stateSelect" aria-label="All states"></select><button type="button" id="addState">Add</button></div>
+      <div id="pickedStates" class="picked"></div>
+    </div>
+    <div id="continueRow" class="row" hidden><button type="button" id="continue" class="primary">Continue</button></div>
+    <form id="typeForm" class="row" hidden>
+      <input id="typed" autocomplete="off" maxlength="300" placeholder="Or type your answer in your own words">
+      <button type="submit" class="primary">Send</button>
+    </form>
+    <p id="error" class="error" hidden></p>
+  </section>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

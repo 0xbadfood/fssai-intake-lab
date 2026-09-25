@@ -4,3 +4,5 @@ node_modules/
 __pycache__/
 records/loop/*.stdout
 records/loop/*.stderr
+testbed/invites.json
+testbed/data/
