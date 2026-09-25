@@ -15,8 +15,9 @@ PROMPT = ("Transcribe this page exactly as Markdown. Reproduce tables as Markdow
           "field labels and options. Do not summarise or add anything.")
 
 
-def ask(png, key):
+def ask(png, key, penalty=None):
     body = {"model": "qwen3.8-27b", "max_tokens": 8000, "temperature": 0, "chat_template_kwargs": {"enable_thinking": False},
+            **({"repetition_penalty": penalty} if penalty else {}),
             "messages": [{"role": "user", "content": [
                 {"type": "image_url", "image_url": {"url": "data:image/png;base64," + base64.b64encode(png.read_bytes()).decode()}},
                 {"type": "text", "text": PROMPT}]}]}
@@ -42,7 +43,17 @@ def main():
         pages = sorted(Path(tmp).glob("p-*.png"))
         parts = [f"<!-- source: {a.pdf.name} sha256:{sha} pages:{len(pages)} model:qwen3.8-27b dpi:{a.dpi} -->"]
         for i, png in enumerate(pages, 1):
-            parts.append(f"\n<!-- page {i} -->\n\n{ask(png, key)}")
+            try:
+                text = ask(png, key)
+            except RuntimeError:
+                # A page full of repeated screenshots can make the model loop until max_tokens: retry once with a
+                # repetition penalty, then fall back to the page's own text layer so one page never loses the file.
+                try:
+                    text = ask(png, key, penalty=1.15)
+                except RuntimeError:
+                    raw = subprocess.run(["pdftotext", "-layout", "-f", str(i), "-l", str(i), str(a.pdf), "-"], capture_output=True, text=True).stdout
+                    text = f"<!-- vision transcription looped; text layer (pdftotext) instead -->\n\n{raw.strip()}"
+            parts.append(f"\n<!-- page {i} -->\n\n{text}")
             print(f"{a.pdf.name}: page {i}/{len(pages)}", file=sys.stderr)
     a.out.parent.mkdir(parents=True, exist_ok=True)
     a.out.write_text("\n".join(parts) + "\n")
