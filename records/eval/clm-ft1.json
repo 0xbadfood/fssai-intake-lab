@@ -1,0 +1,22 @@
+{
+  "ft1": {
+    "generated-dev": "147/192 (77%)",
+    "all": "195/250 (78%)",
+    "prod": "1/3 (33%)",
+    "handwritten": "47/55 (85%)",
+    "none": "20/21",
+    "median_ms": 50.0,
+    "misses_independent": [
+      "activity: \"i run a cloud kitchen in pune about 80 lakh a year we sell on swiggy\" gold cook -> sell",
+      "online: \"no but we have 3 outlets in goa\" gold no -> platform",
+      "activity: \"Dubai bhejte hain basmati\" gold export -> import",
+      "activity: \"resturant\" gold cook -> sell",
+      "service: \"we deliver dabbas to offices\" gold vending_est -> restaurant",
+      "manufacture: \"paneer, dahi, lassi\" gold dairy -> general",
+      "manufacture: \"we make leather shoes\" gold none -> repack",
+      "trade: \"thok vyapari hain dal chawal ke\" gold wholesale -> retail",
+      "place: \"dukaan\" gold premises -> none",
+      "place: \"thela\" gold street -> none"
+    ]
+  }
+}

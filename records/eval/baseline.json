@@ -1,0 +1,27 @@
+{
+  "qwen3.8-27b (local)": {
+    "accuracy": "55/58",
+    "by_origin": {
+      "handwritten": "52/55",
+      "prod": "3/3"
+    },
+    "median_ms": 2063,
+    "misses": [
+      "activity: \"bhai hum samose aur kachori banake bechte hain thele pe\" gold cook → make+sell",
+      "trade: \"cold room for fruits and vegetables\" gold storage_cold → storage_ca",
+      "place: \"thela\" gold street → none"
+    ]
+  },
+  "qwen3.8-flash-next (Spark)": {
+    "accuracy": "56/58",
+    "by_origin": {
+      "handwritten": "53/55",
+      "prod": "3/3"
+    },
+    "median_ms": 3999,
+    "misses": [
+      "activity: \"bhai hum samose aur kachori banake bechte hain thele pe\" gold cook → make+sell",
+      "trade: \"thok vyapari hain dal chawal ke\" gold wholesale → retail"
+    ]
+  }
+}

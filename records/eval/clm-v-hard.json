@@ -1,0 +1,40 @@
+{
+  "hard": {
+    "generated-dev": "160/192 (83%)",
+    "all": "206/250 (82%)",
+    "prod": "1/3 (33%)",
+    "handwritten": "45/55 (82%)",
+    "none": "21/21",
+    "median_ms": 48.4,
+    "misses_independent": [
+      "activity: \"i run a cloud kitchen in pune about 80 lakh a year we sell on swiggy\" gold cook -> sell",
+      "online: \"no but we have 3 outlets in goa\" gold no -> platform",
+      "activity: \"bhai hum samose aur kachori banake bechte hain thele pe\" gold cook -> make",
+      "activity: \"Dubai bhejte hain basmati\" gold export -> import",
+      "activity: \"resturant\" gold cook -> sell",
+      "service: \"we deliver dabbas to offices\" gold vending_est -> restaurant",
+      "service: \"school mein mid day meal banate aur parosate hain\" gold mdm_canteen -> mdm_caterer",
+      "manufacture: \"paneer, dahi, lassi\" gold dairy -> general",
+      "manufacture: \"ayurvedic chyawanprash type khane wale product\" gold ayurveda -> nutraceutical",
+      "trade: \"thok vyapari hain dal chawal ke\" gold wholesale -> storage",
+      "place: \"dukaan\" gold premises -> none",
+      "place: \"thela\" gold street -> none"
+    ],
+    "coverage": {
+      "independent@0.0": "covers 58/58 (100%), accuracy 79%",
+      "independent@0.5": "covers 52/58 (90%), accuracy 87%",
+      "independent@0.6": "covers 46/58 (79%), accuracy 89%",
+      "independent@0.7": "covers 38/58 (66%), accuracy 100%",
+      "independent@0.8": "covers 35/58 (60%), accuracy 100%",
+      "independent@0.9": "covers 25/58 (43%), accuracy 100%",
+      "independent@0.95": "covers 17/58 (29%), accuracy 100%",
+      "generated-dev@0.0": "covers 192/192 (100%), accuracy 83%",
+      "generated-dev@0.5": "covers 170/192 (89%), accuracy 88%",
+      "generated-dev@0.6": "covers 153/192 (80%), accuracy 90%",
+      "generated-dev@0.7": "covers 134/192 (70%), accuracy 91%",
+      "generated-dev@0.8": "covers 107/192 (56%), accuracy 92%",
+      "generated-dev@0.9": "covers 80/192 (42%), accuracy 94%",
+      "generated-dev@0.95": "covers 55/192 (29%), accuracy 93%"
+    }
+  }
+}
