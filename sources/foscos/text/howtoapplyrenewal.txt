@@ -1,0 +1,77 @@
+   How to apply for Renewal?
+
+    Through login: -
+
+        Step 1: After logging in, navigate to “Renewal” and select “Apply for renewal of
+        license/registration”.
+
+
+
+
+Click
+here
+
+
+
+
+        Step 2: A list of issued license/registration for Renewal will appear. Click on “Proceed”
+        against application which user wants to renew.
+
+
+
+
+        NOTE: 1.) License(s)/Registration Certificate eligible for Renewal shall only be listed 120 Days
+        prior to expiry of License.
+        2.) License(s)/Registration Certificate shall not get listed here for Renewal once your
+        License(s)/Registration Certificate has expired as of today. In that case submit a new
+        application.
+      Step 3: User will land on Form B: Application Details page wherein following stages will be in
+      editable/non-editable mode:
+      ◦ Premises Details: Non-editable.
+      ◦ Product Selection: Non-editable.
+      ◦ Communication Details: All sections are editable except registered address.
+      ◦ Required Documents: Documents which are mandatory can only be uploaded.
+      ◦ Payment: As per year(s) selected by user.
+
+NOTE: Please note that if renewal of license is applied 90 days prior to expiration then only
+renewal fees is charged.
+Post 90 days a fine of Rs.100/day will be charged in addition to renewal fees.
+
+      Step 4: After making payment, a receipt will be generated with a new 17-digit registration
+      number which can be used for future reference.
+          Below receipt shows renewal of central license for two years with no fine.
+• Below receipt shows renewal of state license for two years with fine of Rs. 100/day.
+• The total fee adds up to Rs. 5300 with renewal fee for 2 years Rs 4000 and Late fee for 13
+  days of Rs. 1300.
+Through homepage:
+
+     Step 1: From homepage click on the box “Renewal of License and Registration Fee: Same as
+     new Lic/Reg”.
+
+
+
+
+                                                                                         Click here
+
+
+
+
+     Step 2: Fill in the License/Registration no, validity end date and captcha code and click on
+     “Submit”.
+
+
+
+
+     Step 3: Click on “Proceed”.
+Step 4: Form B will open wherein user can upload the documents, select the year(s) for
+which license is required and choose payment method to move forward with the
+application.
+Step 5: After successfully completing the payment, a receipt will be generated with a 17-
+digit reference number which can be used for future reference.
+
+
+
+
+Step 6: User can track the status of application through the Homepage i.e.
+foodlicensing.fssai.gov.in
+

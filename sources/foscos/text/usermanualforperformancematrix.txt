@@ -1,0 +1,35 @@
+1.User manual of State and District wise Performance Matrix on
+FoSCoS Homepage:-
+
+Step 0: User can log on to this URL https://foscos.fssai.gov.in on web browser.
+
+Step 1: Select radio buttons for licence/registration having further drop down boxes.
+        1.     Select category.
+        2.     Select financial year.
+        3.     Select report type.
+
+Step 2: Select category having four options.
+         1. Central licence/central registration.
+         2. State licence/state registration.
+         3. Indian railway licence/ Indian railway registration
+         4. Airport(only in licence).
+
+
+
+
+Step 3: Select Financial year having three options.
+         1. All data.
+         2. This financial year.
+         3. Last financial year.
+Step 4:Select report type having ten options.
+         1. Issued licence/ registration.
+         2. Active licence/registration.
+         3. FBO submitted annual returns.
+         4. No. Of samples lifted.
+         5. Inspection conducted.
+         6. Audit conducted.
+         7. Hygiene conducted
+         8. Improvement notice issued.
+         9. Amount of penalties/fine collected.
+         10. Consumer grievances received and closed.
+

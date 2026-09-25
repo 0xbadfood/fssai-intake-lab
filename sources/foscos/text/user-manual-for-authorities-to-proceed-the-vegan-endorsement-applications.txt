@@ -1,0 +1,32 @@
+● User Manual for authorities to proceed the vegan endorsement applications
+
+● HOW TO LOGIN
+  Login panel is given at home page of the application at right side as shown in below
+  figure. User has to enter valid username and Password and then click a below 'Login'.
+  Will be redirected to dashboard of the user with access permission of assigned
+  services.
+● DASHBOARD
+Step-1: Once login using the Username and password, after successful login to his/her
+account, authority will redirect to the dashboard page as shown in figure.
+
+Step-2: At the left panel of the screen the user will find the Menu option for the further
+process.
+Step-3: Click on the verified vegan endorsement.
+Step-4: New screen will open with the details and the user have to fill the details
+
+Step-5: After clicking on the search button, authority will have the List of Applied Vegan
+Endorsement.
+Step-6: After clicking on the proceed button, a new screen will be open for the acceptance of the
+application.
+
+Step-6: Authority will click on the Submit button to accept the application.
+● Application forwarded to Applicant
+
+Step-1: From the left panel menu option choose ‘Endorsement Vegan’ under
+license/registration.
+Step-2: Click on proceed for the endorsement of the vegan.
+
+Step-3: User will find a screen named view endorsement for vegan
+Step-4: After clicking on view endorsement for vegan user will find there certificate for the
+vegan
+

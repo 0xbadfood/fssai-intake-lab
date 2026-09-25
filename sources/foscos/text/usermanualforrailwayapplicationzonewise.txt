@@ -1,0 +1,11 @@
+1.User manual of Railway Application Zone wise for FBO:-
+Step 0: Open the web browser and visit the FoSCoS Web portal.
+
+
+
+
+Step 1: Select Apply for licence/registration yellow box.
+Step 2: Select apply for licence/registration[railway]; further new window open and
+select your station from the drop down menu, Railway zone and division comes
+automatically as per selected railway station.
+

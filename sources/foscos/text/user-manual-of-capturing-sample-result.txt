@@ -1,0 +1,25 @@
+1. The User manual of Capturing sample result for all Authorities:-
+
+Note:- Capturing sample result provided by FoSCoS for every authorities flow will
+be the same as shown below.
+
+Step 0: Authorities can log on to this URL https://foscos.fssai.gov.in on the web
+browser. Sign in using username and password.
+
+
+
+
+Step 1: Select the License Inspection/Registration Inspection menu and then click
+on Sample details without inspection sub-menu.
+
+Note:- Users can add License/Registration no and click on the search button.
+Step 2: Click on Add sample collection.
+
+
+
+
+Step 2: Fill license Number and click on the get details button. All details will
+autofill and click on ‘submit sample’, after that sample detail form will open fill form
+and upload a document as per requirement.
+Step 3: All filed Samples will be listed in the record table.
+

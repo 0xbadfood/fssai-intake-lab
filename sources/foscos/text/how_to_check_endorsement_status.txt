@@ -1,0 +1,19 @@
+   How can I check if the endorsement application status?
+
+Step 1: The FBO will have to log into the FoSCoS website (https://foscos.fssai.gov.in/ ) using their
+credentials. After logging in, navigate to License/Registration and click on “Endorse Fortified Products”.
+Step 2: Click on “History” to check if the endorsement application has been submitted
+The History window will pop up, showing the status of your endorsement application. If the Status shows
+“Pending for approval from competent authority”, it suggests that your endorsement application has
+been submitted but yet to be approved by competent authority.
+The status will reflect as “Accepted”, once the endorsement application has been accepted and approved by the
+competent authority. The FBO can close the “History” window and click on “view Fortification” to download their
+endorsement certificate.
+The Endorsement certificate will appear as shown below. The + F logo file can be downloaded in the
+CDR/PNG format
+
+
+
+
+                                                                                Download the +F logo
+

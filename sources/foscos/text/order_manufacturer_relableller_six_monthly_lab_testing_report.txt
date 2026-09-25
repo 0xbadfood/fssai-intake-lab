@@ -1,0 +1,31 @@
+Uploading/Linking of Six-monthly Lab Testing Report by Manufacturers of Food Products (as per condition of license
+no. 12)
+
+    1. Login to FoSCoS (https://foscos.fssai.gov.in) through ‘Login Businesses’ tab on the FoSCoS Homepage.
+    2. Click on “Upload Six Monthly Lab Testing Report” on Left Menu Panel and click on Proceed.
+
+
+
+
+3. After clicking on Proceed, you would get following screen.
+4. When you click on “Upload Six Monthly Lab Testing Report”, you have to select the period from the dropdown for
+which Lab Testing report is being uploaded/linked.
+
+
+
+
+5. List of Products endorsed on your license will be displayed. Select the appropriate product for ‘Uploading / Linking of
+Report’. Below Pop-up window will be opened.
+
+   a) If FBO wants to upload lab report manually [in case, FBO has not got its food product tested through FSSAI Notified
+Lab], he/she can click on Choose File and upload the report:
+b.) In case FBO has got its food product tested through FSSAI Notified Lab and want to fetch the lab report from
+INFOLNET (https://infolnet.fssai.gov.in/) , he/she can click on Get Sample Report
+
+
+
+
+FBO need to enter sample report no. (from INFOLNET)
+And verify through the OTP sent on mobile number or Email id [as provided to the Lab Official while submitting sample
+to the FSSAI Notified Lab]
+

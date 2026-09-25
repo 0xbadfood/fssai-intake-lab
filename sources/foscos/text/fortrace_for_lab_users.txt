@@ -1,0 +1,95 @@
+FoRTrace
+[Fortified Rice Traceability Application]
+
+User Manual for Food Analysts/Food Laboratories
+Lab users can login to the portal and can see the list of samples dispatched from vendors. Once the samples
+are received, then acknowledgement can be sent to the respective vendors. After that based on condition of
+sample, lab user performs the test and upload the test results and submit the report by clicking on
+‘Sample Tested’. If sample condition is not good, Lab user can reject the sample with comments and date
+of rejection.
+
+The functionality is as mentioned below:
+
+1.1 Login:
+Enter the following url: https://lab-frqms.fssai.gov.in/
+
+
+
+
+                                       Figure 1: Login screen for lab user
+
+The above login screen will be shown.
+
+           Username: Enter a valid username.
+
+           Password: Enter a valid password and click on Login.
+User will be navigated to the landing page as shown in Figure 2.
+As per the eligibility of the Lab, sample types (Premix samples, FRK samples and Miller samples) will be
+shown in the side menu.
+
+In order to navigate this page:
+  (i)       Click on Premix to see list of Premix samples in the grid. Click on FRK to see FRK samples.
+            Click on Miller to see Miller samples.
+
+
+
+
+                                                                                                    2|Page
+                               Figure 2: Lab user view for Premix sample
+ (ii)   Click on a particular sample and see the details as shown below.
+(iii)   Click on ‘Sample received’ button and enter the date and comments and click on submit button.
+        This will send an acknowledgement as received and the stage will be updated as “Test in
+        Progress”.
+
+
+
+
+                                  Figure 3: Premix sample details page
+(iv)    Confirmation popup will be displayed click on Yes to confirm.
+ (v)    Then user can see success notification message, that sample received as shown in below image.
+
+
+
+
+                                                                                               3|Page
+                          Figure 4: Success notification message on receiving sample
+(vi)       Based on quality and physical condition of the sample, Lab may reject the sample if it is not in a
+           condition to be tested. If the condition of sample is good, Lab will perform the test and submit the
+           report as mentioned below.
+
+1.2 Adding Lab Test Results:
+Expand lab test details and add following details
+       (a) Test date: Enter test date
+       (b) Performed by: Enter name of person who will perform lab test.
+       (c) Enter test data: Iron, folic acid, vitamin B12 in result column and enter test method followed.
+       (d) Attachments: User can add attestation report, iron report and any other additional reports also.
+After adding test results, click on ‘Sample tested’ to submit the test report to vendor.
+
+
+
+
+             Figure 5: Selecting sample status as tested or rejected after testing (premix lab report)
+
+                                                                                                         4|Page
+                                            Figure 6: FRK lab report
+
+
+
+
+                                        Figure 7: Miller lab Report
+
+
+In the side menu, user can choose the list of samples by category wise such as all samples or samples in lab
+or samples sent to lab etc.,
+
+
+
+
+                                                                                                   5|Page
+Figure 8: sample tested stage for premix
+
+
+
+
+                                           6|Page
+

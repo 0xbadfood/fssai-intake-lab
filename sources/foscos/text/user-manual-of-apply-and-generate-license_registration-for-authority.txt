@@ -1,0 +1,36 @@
+The User manual of Apply and Generate License/Registration:-
+
+ Note:-Apply and Generate the License/Registration provided by FoSCoS
+for Central authorities and State authorities - the flow will be the same as shown
+below
+Step 0: Authorities can log on to this URL https://foscos.fssai.gov.in on the web browser.
+Sign in using your username and password.
+
+
+
+
+Step 1: Select the Apply & Generate License/Registration in the side menu list
+and click on the Apply License and Apply Registration sub-menu as per the
+requirement.
+Step 2: After clicking on Apply license or Apply Registration (as per requirement),
+Users need to select a state from the dropdown list. The user then needs to choose
+KOB and click on Proceed Button.
+
+
+
+
+Step 3: This step is not required. Neither the screenshot is required which is shown
+below, it is redundant. (Instead of this add screenshot for ‘Apply Registration’)
+Step 4(A): Fill in all the mandatory fields as shown in Form A(In
+case Registration is applied)
+Step 4(B): Fill in all the mandatory fields as shown in Form B(In
+case License is applied)
+Step 5: Upload the documents, pay the fee with available modes
+and apply
+
+
+
+
+Step 6: After completing the payment, a receipt will be generated with a
+17-digit reference number which can be used for future reference.
+

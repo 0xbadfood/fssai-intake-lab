@@ -1,0 +1,163 @@
+FoRTrace
+[Fortified Rice Traceability Application]
+
+User Manual for Warehouses
+The warehouse comes fourth in line of the supply chain of the Rice fortification. The warehouse received
+lots from miller and FRK, after receiving lot warehouse can directly accept the lot/directly reject the lot
+which is then sent back to miller/FRK or send sample to local lab for self-certification, if lab report results
+are within range then after self-certified lots are automatically accepted else lots are rejected and change
+the stage as lot to send back which is further send back to miller/FRK. The accepted lots from FRK and
+miller can be sent to another warehouse and to another manufacturers.
+
+1.1 Process:
+The key functionalities that occur at warehouse level is as described below.
+    1. There will be 2 roles at warehouse vendor level, admin has access to both.
+          a. Approver: Who receives Miller/FRK lots and acknowledge and verify the lot quality and
+              get it tested at lab if required and finally either approve the Lot or reject the lot and also
+              can dispatch lot to another warehouse.
+          b. User: same as approver.
+The functionality of miller manufacturer is described below in detail:
+1.2 Login
+
+
+
+
+                                 Figure 1: Login page for warehouse admin
+
+To log into the system as a miller admin, go to following link https://frqms.fssai.gov.in/
+
+A login page will be displayed
+
+        Username: Enter a valid username
+        Password: Enter a valid password
+        To continue, click on the Login button.
+
+On successful login, the landing page will be shown
+1.3 Lot Approval by Warehouse Admin:
+ (i)    Click on All/Lot dispatched from side menu, Admin can see list of lots that are present at
+        warehouse from Miller vendors in Miller Lots and lots from FRK vendors in FRK lots.
+
+
+
+
+                        Figure 2:     Dashboard showing Miller lots with different stages
+
+
+
+
+                        Figure 3: Dashboard showing FRK lots with different stages
+
+
+ (i)    Click on a lot, user will get MILLER/FRK LOT DETAILS page. To acknowledge lot is received, click on
+        Lot Received as shown in below image.
+
+ (ii)   It updates the status of Lot from Lot dispatched to lot received and MILLER vendor will also get
+        the updated status of Lot that loot is been received by Warehouse.
+(iii)   User has to enter the date on which lot is received and comments if any and click yes on popup
+        while acknowledging that lot is received. A prompt will be shown that lot is received.
+
+
+
+
+                                        Figure 4: MILLER lot details page
+
+
+
+
+                                        Figure 5: FRK lot details page
+
+(iv)    Clicking on lot received from left side menu populates list of lots acknowledged by admin.
+                                 Figure 6: MILLER lots received
+
+
+
+
+                                   Figure 7: FRK lots received
+
+
+(v)   Click on lot to see lot details page with possible actions of ‘Send sample to Lab’, ‘Accept’, ‘Test
+      rejected ready to send back’ as shown in below image.
+         Figure 8: Option for Warehouse admin to accept, reject or Send sample to Lab for Miller
+
+
+
+
+         Figure 9: Option for Warehouse admin to accept, reject or Send sample to Lab for FRK
+
+
+ (vi)     If user click on Send sample to Lab, the sample will be sent to the local lab and lab will do
+          necessary tests and publish the test report.
+(vii)     If the report is satisfactory, after test lot will automatically accepted & showing the stage as
+          ”Accepted”, if the report is unsatisfactory, after test lot will automatically rejected & showing
+          stage as ‘lot to send back’
+(viii)    After clicking on Test rejected Ready to send back, an action will be shown on lot details page as
+          ‘Lot to send back’. Clicking on it will send the lot back to miller/FRK vendor.
+(ix)    If the user clicks on Accept button as shown in above image. Then a popup screen will be displayed
+        and the user will be prompted to enter approved date, enter comments and click on Accept.
+ (x)    Again one confirmation popup prompt will appear where the user have to click on the Yes button.
+(xi)    Then success notification message will be shown as “lot has been accepted and is available for
+        use” as shown in below image.
+
+
+
+
+                        Figure 10: Success toast for lot acceptance for Miller
+
+
+
+
+                        Figure 11: Success toast for lot acceptance for FRK
+(xii)   Click on Accepted from left side menu populate all lots that are approved by admin
+                              Figure 12: List of MILLER lots accepted
+
+
+
+
+                              Figure 13: List of FRK lots accepted
+
+
+1.4 Lot Dispatch by Warehouse Admin:
+  (i)   Click on MILLER/FRK LOTS under Inventory from side menu, Admin can see list of lots that
+        are present at warehouse from Miller vendors as shown below:
+(ii)   Admin user can dispatch only accepted lots to FCI Storage/ Miller Manufacturers (FRK lots).
+
+
+
+
+                     Figure 14: Miller lot Inventory page
+
+
+
+
+                             Figure 15: FRK lot Inventory page
+(iii)   When user click on dispatch button as shown in image above, then lot dispatch popup form will
+        open as shown below:
+
+
+
+
+                                 Figure 16: Lot dispatch details form
+(iv)      Addition of lot: Click on ‘Add Lot’ & select Lot No-RemQty, enter quanty to dispatch, select
+          units and also user can add multiple lots if available as shown below
+  (v)     User can delete added items and can re-enter the data if any mistakes are there.
+ (vi)     Now enter the following details:
+      (a) Dispatch Date: enter dispatch date (present date is populated as default date),
+      (b) Manufacturer type: select manufacturer type public/private. Public manufacturers are those who
+          are registered with Government & Private manufacturers are those from the market who can trade
+          for their own purposes.
+      (c) Manufacturer name: For Public/Private type, a list of mapped vendors are populated. select
+          manufacturer name.
+(vi)     Once lot details are added, click on the Dispatch lot as shown in below image and click on ‘Yes’ in
+          popup         to       dispatch        the        lot       to      FCI      Storage       vendor.
+                           Figure 17: Lot dispatch details form
+
+
+
+
+(vii)   After clicking on Dispatch lot, success toast message will be shown as shown below
+
+
+
+
+                           Figure 18: Dispatch lot success toast
+

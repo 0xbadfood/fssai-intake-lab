@@ -1,0 +1,118 @@
+1.User manual of Adjudication for Central Authority:-
+Step 0: First Open the web browser and search for FoSCoS Web portal and login to
+Central authority for central adjudication.
+
+
+
+
+Step 1: Go for central adjudication having both the option Licence Adjudication and
+Registration Adjudication.
+User manual of Adjudication for State RA Authority:-
+
+Step 0: First Open the web browser and search for FoSCoS Web portal and login to
+State RA authority for Registration adjudication.
+
+
+
+
+Step 1: Go for adjudication , state RA have only one option Registration
+Adjudication.
+Step 0: First Open the web browser and search for FoSCoS Web portal and login to
+State DO authority for Licence adjudication.
+
+
+
+
+Step 1: Go for adjudication , state DO have only one option Licence Adjudication.
+2.User manual of Improvement Notice for Central Authority:-
+
+Step 0: First Open the web browser and search for FoSCoS Web portal and login to
+Central authority for central Improvement notice.
+
+
+
+
+Step 1: Go for central Improvement notice having both the option Licence
+Improvement notice and Registration Improvement notice.
+Step 2: Go for Licence Improvement notice by filling required details like licence
+number ,improvement notice ref no. And status and date.
+
+
+
+
+Step 3: Send new Licence Improvement notice by filling required details like
+Application ref no./Licence number .
+Step 4: Go for Registration Improvement notice by filling required details like
+certificate number ,improvement notice ref no. And status and date.
+
+
+
+
+Step 5: Send new Registration Improvement notice by filling required details like
+Application ref no./certificate number .
+User manual of Improvement Notice for State RA Authority:-
+
+
+Step 0: First Open the web browser and search for FoSCoS Web portal and login to
+State RA authority for registration Improvement notice.
+
+
+
+
+Step 1: Go for Registration Improvement notice and click on send new improvement
+notice for registration.
+User manual of Improvement Notice for State DO Authority:-
+
+
+Step 0: First Open the web browser and search for FoSCoS Web portal and login to
+State DO authority for licence Improvement notice.
+
+
+
+
+Step 1: Go for Licence Improvement notice and click on send new improvement
+notice for Licence.
+3.User manual of Pay penalty for FBO:-
+
+Step 0: First Open the web browser and search for FoSCoS Web portal and click on
+login businesses and login from FBO end.
+
+
+
+
+Step 1: Go for Pay penalty in FBO end it have two options pay penalty Licence and
+pay penalty registration.
+Step 2: Go for pay penalty Licence you can view penalty log and receipt.
+
+
+
+
+Step 3: Go for pay penalty Registration you can view penalty log and receipt.
+User manual of Confirm penalty for State RA authority:-
+
+Step 0: First Open the web browser and search for FoSCoS Web portal and click on
+login Authorities and click on confirm penalty side menu under processing of
+registration.
+
+Step 1:Filling all the required data in text box and go for search and confirm penalty
+and add.
+
+
+
+
+User manual of Confirm penalty for State DO authority:-
+
+Step 0: First Open the web browser and search for FoSCoS Web portal and click on
+login Authorities and click on confirm penalty side menu under processing of Licence.
+
+Step 1:Filling all the required data in text box and go for search and confirm penalty
+and add.
+User manual of Confirm penalty for central authority:-
+
+Step 0: First Open the web browser and search for FoSCoS Web portal and click on
+login Authorities and click on confirm penalty side menu under processing of Licence
+and processing of registration.
+
+Step 1:Filling all the required data in text box and go for search and confirm penalty
+and add.
+

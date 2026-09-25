@@ -1,0 +1,37 @@
+How to process the complaint?
+Step 1: Login to the portal foscos.fssai.gov.in and navigate to “Food Concern
+Management”. Under it click on “Pending Complaints”.
+
+
+
+
+                                                                     Click Here
+
+
+
+
+Step 2: Search for the ticket number against which action is to be taken or navigate
+manually and click on “Proceed”.
+Step 3: Scroll down to “Action To be Performed by Designated Officer”
+
+
+
+
+Action 1: Resolve Consumer Grievance – If the complaint pertains to the designated officer
+then they can click on this radio button, fill in the remarks and click on “Submit” button to
+resolve the complaint from their end.
+
+
+
+
+Action 2: If the complaint does not pertain to them then the designated officer can transfer
+the complaint to the designated officer to whom the complaint is escalated.
+For this, click on the “Transfer To Other DO” radio button, choose the district, sub-district
+(If required), fill remarks and click on “Submit” button to resolve the complaint from their
+end.
+
+
+
+
+NOTE: Complaints will be visible in “Closed Complaint” bin once closed by the consumer
+

@@ -1,0 +1,16 @@
+1. User manual of Risk Based Inspection Monthly for all Authorities:-
+
+Note:- Risk Based Inspection Monthly provided by FoSCoS for each and every
+authorities flow will be same as shown below.
+
+Step 0: Authorities can log on to this URL https://foscos.fssai.gov.in on the web
+browser. Sign in using username and password.
+
+
+
+
+Step 1: Select the License Inspection menu and then click on Roasted inspection
+sub-menu and Same process for Registration Inspection.
+
+Note:- select all required fields and click on search button.
+

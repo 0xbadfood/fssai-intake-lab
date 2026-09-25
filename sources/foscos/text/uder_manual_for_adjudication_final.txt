@@ -1,0 +1,187 @@
+Adjudication can be submitted in two ways:
+
+   1. Using the Sampling module after the referral lab results are available.
+2. Directly through the Adjudication bin, as shown in the image below.
+USER MANUAL FOR ADJUDICATION FLOW
+
+   1. CLA/CFSO bin: The process starts by fetching the details of the License number given
+
+
+
+
+   2. Authority needs to fill the details of “Add Witness and Add FBO” details:
+
+
+
+
+   3. Authority needs to fill the mandatory details:
+4. In the sample details page the following details are required to fill
+
+
+
+
+5.   Sealed sample photos are required to be uploaded with a description
+
+
+
+
+6. Submit sample verified through OTP
+7.   Next step: Sample forward to Lab
+
+
+
+
+8. Lab forward process:
+
+
+
+
+9.    Next Step: upload Sample Result:
+
+
+
+
+10. Result status > Confirming or Non-Confirming
+11. After that Authority may issue a Notice if the lab test result non-conformed
+
+
+
+
+12. Notice page view: the remarks box is in editable format.
+
+
+
+
+13. OTP verification and Notice issued from here.
+14. After issuance of the Notice it will be visible in the FBO bin under Pending Action> View
+    Notice from DO, from there FBO can file an Appeal.
+
+
+
+
+15. The Form- VIII page will be filled by FBO.
+
+
+
+
+16. E-sign and OTP verification:
+
+
+
+
+17. FBO can view the appeal after submission.
+18. CLA bin next step “View and Action on Notice Details”
+
+
+
+
+19. The Authority may send 3rd sample to the referral lab (Rule 2.4.6), here No. of days left to
+    accept or reject count will be displayed.
+
+
+
+
+20. Sample forward to Lab details required to fill:
+21. After clicking on the submit button the sample details will be forwarded to Lab:
+
+
+
+
+22. Upload 3rd sample result:
+23. Result status > Confirming or Non-Confirming
+
+
+
+
+24. After that Authority may issue a Notice if the lab test result non-conformed
+
+
+
+
+25. Issue Notice process: as per Rule 3.1.1
+26. OTP verification is required to issue Notice.
+
+
+
+
+27. The authority can view the Action on Notice details.
+
+
+
+
+28. FBO Bin: 3rd sample issue notice is visible in FBO, but the “appeal” option is disabled here.
+
+
+
+
+29. CLA bin: The Authority can accept or Reject the Appeal raised by FBO.
+
+
+
+
+30. After accepting the appeal authority needs to choose the radio button for “ Action to be
+    taken for Adjudication” if required.
+31. After clicking on the “proceed for adjudication” option the below page will display. The
+    authority will select the FSS Regulation/rules/act and Adjudication date with remarks.
+
+
+
+
+32. To create the Adjudication OTP authentication is required.
+
+
+
+
+33. After creating the Adjudication it will show as “open case”.
+34. For further processing to close the case by two options will be displayed under the “License
+    Adjudication for Form VIII” tab as Close with penalty and Close without penalty(marked in
+    red color in the screenshot).
+
+
+
+
+35. If the penalty is applicable then the authority can choose the following steps:
+    (A)
+
+
+
+
+    (B)
+
+
+
+
+    (C)
+
+
+
+
+36. After closing the case with Penalty “View Raise Penalty “will display
+
+
+
+
+37. Penalty Status is shown in below screenshot:
+38. Penalty module
+
+    CLA can update the payment:
+
+    CLA bin: (a)
+
+
+
+
+    (b)
+
+
+
+
+39. After accepting the payment this payment history will be reflected in the CLA bin.
+40. The same status will be updated in the “Adjudication” tab under “License Adjudication for
+    Form VIII.
+
+
+
+
+   ------------------------------------------------User Manual End---------------------------------------------
+

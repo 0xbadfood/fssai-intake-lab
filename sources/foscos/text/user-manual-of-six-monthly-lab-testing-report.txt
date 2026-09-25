@@ -1,0 +1,45 @@
+1. User manual of Six Monthly Lab Testing Report for all
+Licensing Authorities:-
+Note:- Six Monthly Lab Testing Report provided by FoSCoS only for Licensing
+authorities and enforcement authorities - flow will be the same as shown below.
+
+Step 0: Authorities can log on to this URL https://foscos.fssai.gov.in on the web browser. Sign in
+using your username and password.
+
+
+
+
+Step 1: Select the Six Monthly Lab Testing Report in the side menu list and
+click on the View Six Monthly Lab Testing Report sub-menu.
+Step 2: On this page, the authority can use a different filter to search data and proceed further.
+
+
+
+
+Step 3:After clicking on Proceed. (If the report is filled by the user multiple times, in that case, the
+authority can see the list here)
+Step 4: Click on the View action to see the detailed report.
+
+
+
+
+2. User manual of Six Monthly Lab Testing Report for
+FBOs :-
+Step 0: Users can log on to this URL https://foscos.fssai.gov.in on the web browser.
+Sign in using Application Ref. No./License No./Certificate No. and password.
+Step 1: Select the Six Monthly Lab Testing Report in the side menu list and click on the View Six
+Monthly Lab Testing Report sub-menu.
+(FYI- there is no filter in this screen)
+
+
+
+
+Step 2: Click on Proceed and select the financial year from the drop-down box.
+
+
+
+
+Step 3: After Selecting the financial year, choose the session.
+Step 4: After Selecting the session, a Form will open - Fill and submit it. After submission user can
+view the already filled Six Monthly Lab Testing Report.
+

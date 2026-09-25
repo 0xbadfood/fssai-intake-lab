@@ -1,0 +1,28 @@
+Part-A) Updating PAN while renewal of license in FBO login
+
+1.. After logging into the FBO's Foscos account, the user should click on the "Renewal" tab located on the
+right side of the screen, then select the "Proceed" button as shown below.
+
+
+
+
+2.. Clicking on the "Proceed" tab will open the following window, which provides the option to update the
+"PAN," as shown below.
+Part-B) updating PAN during modification of license
+
+1.. After logging into the FBO's Foscos account, the user should click on the "Modification" tab located on the
+right side of the screen, then select the "Proceed" button as shown below.
+
+
+
+
+Clicking on the "Proceed" tab will open the following window, which provides the option to update the
+"PAN ," (under Premises Detail) as shown below.
+Part-C) Updating PAN by visiting FBO’s profile section after login as shown below.
+
+
+
+
+Clicking on profile section of FBO, following window will be opened with provision to update PAN as shown
+below.
+

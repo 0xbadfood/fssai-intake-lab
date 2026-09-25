@@ -1,0 +1,23 @@
+How to register?
+Step 1: Navigate to Food safety connect App, under consumer there is an option of “Consumer for
+lodging grievance”, click on it.
+
+
+
+
+Step 2: If user already have account then he/she can login directly else go for Create new account.
+Step 3:If user clicked on create a account now user have to fill Email id or mobile number and click on
+send OTP to create a account and redirect to next page and fill all required details and click on submit
+to create account successfully.
+
+
+
+
+Step 4: Forgot password.
+Step 5: After login user redirect to this homepage.
+
+
+
+
+Step 6: After clicking on my profile button on home redirect to this page
+

@@ -1,0 +1,21 @@
+1.User manual of Fortified/Organic endorsement for FBO:-
+
+Step 0: Users can log on to this URL https://foscos.fssai.gov.in on the web browser.
+Sign in using Application Reference No/license No.
+
+
+
+
+Step 1: - Select the licence/registration menu and then click on the
+Endorsement(Organic) sub-menu or Endorse Fortified Products as applicable.
+Step 2:In Organic Endorsement - Select any license and click on proceed and fill all
+required details, fill brand name and submit. Organic endorsement successful pop up
+comes up.
+
+
+
+
+Step 3: In Fortified Endorsement - Select any license and click on proceed and fill
+all required details, fill brand name and submit. Fortified endorsement successful
+pop up comes up.
+

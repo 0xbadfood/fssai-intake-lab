@@ -1,0 +1,49 @@
+Step 0: After downloading/updating and installing the FoSCoRIS application from Google
+Playstore, sign in by entering username and password. Username and Password are same as
+created/updated in Food Safety Compliance System (FoSCoS) by Designated Officers (DOs)
+and Food Safety Officers (FSOs).
+
+
+
+
+                              Allocation of Inspection by DO
+Step 1: - Click on the left menu and click on “Allocate Inspection” as shown below:
+Step 2: Enter the license no or application reference no and click on next button.
+
+
+
+
+Step 3: Select the name FSO to whom the inspection should be assigned, fill remarks and
+click on create inspection.
+Step 4: Once allocated, the inspection can be seen in “Allocated Inspection” bin. However,
+to re-assign any inspection, click on re-assign button and select the FSO from the drop down,
+fill remarks and click on reassign button.
+Acknowledging and conducting the Inspection by Food Safety Officer
+Step 1: For accepting or rejecting any inspection, on the left menu navigate to “Inspection
+Acknowledgement” and then click on accept/reject against the marked entry on which
+inspection has to be conducted.
+Step 2: Once inspection accepted/rejected by the concerned FSO, the applications can be
+seen under the respective menu panel. DO can reassign inspection which has been rejected
+by the FSO for conducting the inspection due to any particular reason.
+Conducting the Inspection
+Step 1: For moving forward with any accepted inspection, click on “Accepted Inspections”
+bin under the left menu and then click on proceed against which inspection is to be done.
+Once proceeded a popup will appear mentioning that the application is forwarded to
+“Ongoing Inspections” bin.
+*DOs/FSOs can also start Random Inspection (without allocation) by visiting ‘Start Random
+Inspection’ tab and by entering License or Registration number.
+Step 2: On left menu navigate to “Ongoing Inspections” bin and click on resume button
+against the application the inspection is to be carried out.
+Step 3: Click on the listed sections for marking observations, against each parameter in the
+section, select the observation (Compliance, Non-Compliance, Partial Compliance, Not
+applicable) from the dropdown entries. At the end fill the non-conformance observations and
+comments. The entered observations can be saved as draft or submitted.
+Step 4: Once completed, fill the remarks and click on finish button. A popup will come with
+confirmation that “Inspection is completed successfully”.
+Searching of Inspection Report
+Step: For searching any inspection report, on the left menu click on “Search reports” and
+then searching can be done on the basis of either FBO license number or Kind of business
+wise.
+The inspection reports can also be searched on FoSCoS after completion. The inspection
+report is also available to concerned DO and Concerned FBO on the FoSCoS.
+

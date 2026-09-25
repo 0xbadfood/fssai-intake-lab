@@ -1,0 +1,366 @@
+FoRTrace
+[Fortified Rice Traceability Application]
+
+User Manual for Manufacturers of Premix for FRK
+1.1 Login:
+To log into the system as a Premix admin, go to the “FoSCoS” portal by using the link: https://foscos.fssai.gov.in/
+
+A FoSCoS Home page will be displayed as shown in the figure below:
+
+
+
+
+                                        Figure 1: FoSCoS Home page
+
+
+       Click on the “Login Food Businesses”
+
+       License/Registration/Application number: - Enter a valid License/Registration/Application number
+
+       Click on “proceed”
+
+       Enter password: - Enter a valid password
+       Enter Captcha: - Enter the Displayed Captcha
+
+       To continue click on the Sign-in button.
+       Verification Code: Enter the verification code that you received in the registered Mobile number /
+        Email.
+User will be navigated to the FoSCoS Dashboard page as shown in figure below:
+
+
+
+
+                                                                                                   2|Page
+                                      Figure 2: FoSCoS Dashboard page
+
+       Click on the “Issued”
+       Click on the “Issued – License” Expandable button.
+User will be navigated to the page as shown in figure below:
+
+
+
+
+                                        Figure 3: Login page
+
+
+                                                                        3|Page
+       Now click on the “Login to FRQMS”
+       User will be navigated to the FoRTrace landing page.
+
+
+
+
+                                          Figure 4: Landing page
+
+Admin can also download the raw material table data by clicking on the Download button.
+
+
+
+1.2 Creating Raw Material
+Click on Raw material in the side drawer of the landing page as shown in figure above, a Grid will be
+displayed on the screen with a ‘+’ icon at bottom right.
+On clicking ‘+’ icon, a form will be displayed as shown below. Then click on ‘Add new vendor’ button, a
+Pop up form will open as shown below
+The user needs to fill the details in the form which consists of:
+
+Vendor Details:
+    (a) Name of the vendor: Name represents manufacturer/supplier name from whom the raw material
+        was procured.
+    (b) Vendor type: Choose the type of vender whether manufacturer or trader or broker.
+    (c) Email Id: Enter mail address of the vendor.
+    (d) Mobile Number: Enter mobile number of the vendor.
+    (e) Address Lane one: Enter the address of the vendor.
+    (f) Address Lane two: Enter the address of the vendor.
+    (g) Pin code: Enter pin code of the vendor.
+    (h) Country: Select country.
+    (i) States: Select state.
+    (j) Districts: Select districts.
+    (k) Village/City: Enter name of the village/city.
+                                                                                             4|Page
+On clicking on “Vendor with FSSAI license number”, a form will appear as shown in below images
+where user can search License number of the vendor and details will be auto filled in the vendor details.
+Lot details:
+    (a) Raw-material Name: Choose raw-material from a dropdown of 3 options (Vitamin B12,
+        Vitamin B6-Folic Acid & Iron).
+    (b) Raw Material Type: Choose type of raw material used in premix creation.
+    (c) Manufacturing Lot Number: Enter manufacturing lot number (if any).
+    (d) Batch no (Auto Generated): Batch number of raw material will generate automatically.
+    (e) Manufacturing date: Select manufacturing date of raw material.
+    (f) Expiry date: Select expiry date of raw material.
+    (g) Percentage to be used in mix: Mention the percentage of raw material to be used in premix
+    (h) Total quantity (in kg): Enter quantity of raw material in kg.
+    (i) Attachments: Add any attachments/raw material reports that are associated with raw material.
+        e.g.: Lab report of raw material, license of supplier etc.
+
+
+
+
+                               Figure 3: Form to capture Raw material data
+
+
+
+
+                                 Figure 3 (a): Form to add new vendor
+                                                                                                  5|Page
+                 Figure 3 (b): Form after clicking Vendor with FSSAI license number button
+
+Once all the data pertaining to the procured raw materials is added. Click on the create button as shown in
+figure above.
+On successful creation of lot, a confirmation message will appear on the screen as shown in figure below:
+
+
+
+
+                        Figure 4: Success message for creation of raw material lot
+
+
+
+
+                                                                                                  6|Page
+1.2.1 Creating batch
+To create a batch, click on PREMIX tab in the side drawer of the landing page as shown in figure below. A
+grid will be displayed on the screen with a ‘+’ icon at bottom right.
+
+
+
+
+                         Figure 5: Creating batch from Premix tab of landing page
+
+
+On clicking ‘+’ icon, a form will appear as shown in figure below. The user needs to fill the details in the
+form which consists of:
+Vendor details:
+    a)   Name of Vendor: Name of your organization is populated,
+    b)   FSSAI License: FSSAI license number is auto populated,
+    c)   Vendor type: Select vendor type,
+    d)   Address: Vendor address is auto populated,
+
+        Select checkbox if Manufacturer is accredited by any agency
+Batch details:
+    a)   Name: Enter the name of the batch.
+    b)   Manufacturing Batch Number: Enter Manufacturing Batch Number (if any).
+    c)   Batch No: Batch number will generate automatically.
+    d)   Manufacturing date: Enter manufacturing date of batch.
+    e)   Expiry date: Enter expiry date of batch.
+    f)   % to be used: %age to be mixed will be auto populated.
+    g)   Total quantity (in Kgs): Quantity of premix powder generating under this batch.
+    h)   Material details: - Click on add raw material and select the raw material to be consumed under
+         this batch & enter quantity & select units.
+    i)   Instructions: Enter the instructions that FRK manufacturer should be notified at the time usage of
+         this premix powder as raw material in FRK generation.
+
+                                                                                                    7|Page
+    j)   Attachments: User can upload material specification sheet and technical specification sheet and
+         any additional attachments that are associated with Premix powder.
+
+
+
+
+                                 Figure 6: Premix batch creation
+
+ After entering the batch details in the form, click on the create button as shown in figure above.
+On successful creation of batch, a confirmation message will appear on the screen as shown in figure
+below:
+
+
+
+
+                             Figure 7: Success message for creation of batch
+In the left side menu under Batch, the user can see created batches in All and Created options as shown
+in figure below. The “All” tab displays a consolidated list of all batches under various categories such as
+created, sent to lab for testing. Testing done, accepted, rejected etc. Under “Created” tab, a list of the
+batches created by the user is displayed.
+
+
+
+                                                                                                      8|Page
+                              Figure 8: Display of batch created by the user
+
+
+
+1.3 Send samples for lab testing
+The premix manufactured in a specific premix unit needs to be tested in designated laboratories.
+ (i)    To send the manufactured sample to the lab, click on the created batch from the grid and the
+        batch details page is displayed.
+ (ii)   Scroll down to the end of the batch and click on ‘Send Sample to Lab’ button and enter the date,
+        select lab name and comments and click on submit button.
+(iii)   This will initiate the process of dispatching the sample to the lab in offline mode.
+(iv)    An acknowledgment will be sent by the lab, once the Lab receives the sample and lab reports will
+        be published after performing the lab tests.
+ (v)    If sample sent is in damaged condition, Lab may reject the sample and Premix manufacturer may
+        need to resend the sample using above process.
+
+
+
+
+                                                                                                   9|Page
+                                        Figure 9: Sending sample to lab for testing
+
+
+
+
+                                        Figure 10: send sample to lab popup form
+(vi)     User can see success message as ‘sample has been sent to lab for testing’ as shown in below image.
+
+
+
+
+                                  Figure 11: Success message after sample is sent to lab
+       (vii)    Once testing on sample is completed, and if the report is satisfactory then the stage of the batch
+                will be changed to ‘Batch ready to be dispatched’.
+       (viii)   From the side menu, the user can click on ‘Batch ready to be dispatched’ to see list of batches in
+                the grid with the stage of Batch ready to be dispatched as shown below.
+        (ix)    Clicking on the batch will populate the batch details which also includes test results.
+
+
+
+
+                                                                                                          10|Page
+                        Figure 12: Batch ready to be dispatched stage for premix user
+  (x)    If the lab report is unsatisfactory, the stage of batch will be shown as ‘Rejected’. Click on ‘Rejected’
+         from the side menu to see list of rejected samples from lab as shown below.
+
+
+
+
+                                      Figure 13: List of rejected samples
+
+
+ (xi)    User can click on ‘Batch ready to be dispatched’ in the side menu to see list of batches ready for
+         dispatch.
+(xii)    On clicking any particular batch from the list, PREMIX BATCH DETAILS page will open where
+         the packaging information is to be added to dispatch the selected batch.
+(xiii)   Expand packaging info and click on add, enter size, units and quantity. Click on save packaging
+         info. For example, if batch is generated for 1000kg and if this has to be dispatched as 20kg bags
+         of 50 units, the same details to be added in packaging details section as shown below.
+(xiv)    These bag details will be populated while dispatching the premix powder.
+User can also delete packaging info by clicking on the delete button.
+                                                                                                        11|Page
+1.4 Dispatch:
+After adding package details in a batch, the option to Dispatch will be enabled at the end of the page.
+Click on Dispatch as shown in image below.
+
+
+
+
+                                      Figure 14: Dispatching a batch
+A popup page will open as shown in the image below. Enter the following details:
+    (a) Manufacture Lot number: Enter manufacture lot number (if any).
+    (b) Dispatch Date: Enter dispatch date (present date is populated as default date).
+    (c) Manufacture Select: Choose between two options (Dropdown & License Number) for FRK vendor.
+    (d) Dropdown:
+            a. Manufacturer type: Select manufacturer type public/private. Public manufacturers are
+                those FRK who are registered with Government and are eligible to generate FRK of
+                Millers. Private manufacturers are those from the market who can trade for their own
+                purposes.
+            b. Manufacturer name: For Public type, select the FRK vendor from the dropdown list.
+    (e) License Number:
+            a. Manufacture License Number: Enter a valid license number to search.
+            b. Search Button: Click on Search button after entering a valid license number.
+            c. Manufacture Name: It will be auto-populated after clicking search button.
+    (f) Addition of baggage: Click on ‘add item’ & select bag size & enter quantity. User can delete added
+        items and can re-enter the data at this stage, if required.
+
+Once lot details are added, click on Dispatch lot as shown in below image and click on ‘Yes’ in popup to
+dispatch the lot to FRK Vendor.
+Then success toast message will be displayed as follows:
+
+
+
+
+                                                                                                    12|Page
+  Figure 15(a): Dispatching a lot by dropdown
+
+
+
+
+Figure 15(b): Dispatching a lot by license number
+
+
+
+
+                                                    13|Page
+                               Figure 16: Success toast for dispatching lot
+
+
+If the batch is not fully dispatched, its status will be changed to partially dispatched. User can dispatch
+bags to multiple vendors also using Dispatch feature. The details of dispatched lots are shown under
+‘Usage Details’ section in details page.
+
+
+
+
+                                     Figure 17: List of dispatched lot
+
+
+
+Admin can download the usage details table data by clicking on Download button.
+Note:- Dispatched lot will be shown under “Packaging Info” section as shown below.
+
+
+
+
+                                                                                                  14|Page
+                                 Figure 17 (a): Details of dispatched lot
+
+
+Refer to the side menu for Lot category. Clicking on ‘All’ populates list of all lots that are dispatched to
+FRK and accepted/rejected by FRK. Clicking on ‘Lots Dispatched’ will populate list of batches that are
+dispatched to FRK but not yet received by FRK. Clicking on ‘Lot sent back’ will populate a list of lots
+sent back by FRK vendor. Clicking on ‘Rejected lot received’ will populate a list of lots received back to
+Premix vendor.
+
+
+
+
+                              Figure 18(a): Rejected lot received by premix user
+
+
+
+
+                                                                                                   15|Page
+1.5 Managing Users:
+Admin can add new users from User tab under Manage tab in side-drawer.
+
+
+
+
+                               Figure 18(b): Manage User page
+
+
+1.5.1 Adding New Users
+      Admin can add new users by clicking on the + button in the right-corner.
+      Admin can view ‘User Create’ form after clicking on the + button.
+
+
+
+
+                       Figure 18 (c): User create form
+
+      Enter First Name, Last Name, Username, Email ID, Password, Confirm Password.
+      Click on Add role button.
+
+
+                                                                                      16|Page
+                      Figure 18(d): After clicking on the add role button
+
+   Add category, select role & click on “Add User” button.
+   Category > Premix & Role > User
+   After clicking on “Add User” button a successful toast will appear saying “User Created
+    Successfully”.
+
+
+
+
+                       Figure 18(e): User Created Successfully message
+
+   Admin can use these credentials for the newly created user, it will have only user access
+    and will not have manage tab in the side-drawer.
+   These newly created credentials should be used on this link: https://frqms.fssai.gov.in/
+   The existing records will be shown to the newly created user.
+
+
+
+
+                                                                                            17|Page
+

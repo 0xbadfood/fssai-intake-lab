@@ -1,0 +1,30 @@
+User Manual for application of Vegan Endorsement
+  ● HOW TO LOGIN
+ Login panel is given at the home page of the application at the right side as shown in
+ the figure below.
+    1. User has to enter valid License/Registration/Application number and Then click a
+       below button ‘Proceed’
+    2. Then Password screen will open. Fill the credentials and click on sign in
+    3. Will be redirected to dashboard of the user with access permission of assigned
+       services.
+   ● DASHBOARD
+Step-1: Once login using the Username and password, after successful login to his/her
+account, will redirect to the dashboard page as shown in figure.
+
+Step-2: At the Left panel of the screen user will find the Menu option for the further
+process.
+
+
+
+
+   ● How to do the endorsement of the Vegan
+
+Step-1: From the left panel menu option choose ‘Endorsement Vegan’ under
+license/registration.
+Step-2: Click on proceed for the endorsement of the vegan.
+Step-3: User will find a screen named declaration where he/she has filled all the fields with
+correct documents.
+Step-4: After click on proceed new screen will be open named update brand name where
+user need to fill the details and click on add to add in the list
+Step-5: Click on submit button and the application will forward to the authority.
+

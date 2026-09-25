@@ -1,0 +1,22 @@
+1. The User manual for Performance statistics:-
+
+Step 0: User can log on to this URL https://foscos.fssai.gov.in/state-wise-statistics on the
+web browser.
+
+
+
+
+Step 1: Users can fetch data of current financial year or last financial year as per
+selection as well the user can select a different category and report type and many
+more.
+Note: Map has zoom in and zoom out functionality along with cursor showing data
+and changes the color
+            Step 2: The data shown to user was updated on last date of every month.
+            Revised Step 2: The data shown to the user was updated on the last date of every
+            month.
+
+
+
+
+Read this
+

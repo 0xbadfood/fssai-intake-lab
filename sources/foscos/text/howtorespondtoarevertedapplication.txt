@@ -1,0 +1,27 @@
+How to respond to a reverted application?
+Step1: Login to the system.
+
+Step 2: Navigate to “License/Registration” and under it select “Reverted application by Authority”
+
+
+
+
+Click
+here
+
+
+
+
+Step 3: Click on Proceed against the application which user wants to edit.
+Step 4: Fill the Reason/Purpose for Editing in the textbox if any and click on Proceed.
+
+
+
+
+Step 5: Form B will open and only those fields will be in editable mode which DO has marked for editing. For instance,
+if DO has selected Contact Information then only this field will be in editable mode while other fields will be in non-
+editable mode.
+After editing details, submit the application.
+NOTE: In case 'Kind of Business' is selected then 'Product/Quantity Details', 'Supporting Documents' & 'Technically
+Qualified Person in-charge of Operations / Person in-charge of Operations' will be auto selected.
+

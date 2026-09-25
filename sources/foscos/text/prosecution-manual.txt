@@ -1,0 +1,97 @@
+Prosecution flow – For Central Authority ( as of 23/04/2025)
+
+Flow in CLA login:
+
+There are two ways to launch the prosecution in DO login
+
+    1.    From the Sampling module, after the referral lab result is available and the officer has
+         sent a notice to the FBO about the result.
+2..Directly from the Prosecution tab.
+Part :A)
+
+From the Sampling module, after the referral lab result is available and the officer has sent a
+notice to the FBO about the result.
+
+
+
+
+ 1..Click on “ View & Action on Notice Details” to launch the prosecution after the referral lab result is
+ available and the officer has sent a notice to the FBO about the result
+  2.Click on “Action to be taken” and select “Prosecution” under “Action to be taken” tab
+
+
+
+
+After user clicks on “Submit request for prosecution”, the prosecution request will be submitted to FSSAI
+HQ for approval/rejection
+3. Prosecution status can be view under “View Prosecution”
+4.. FSSAI HQ may ask for clarifications on the prosecution requests submitted by the DO. These
+clarifications are shared as queries linked to specific rules, as shown in the image below
+
+
+
+
+5...Responding to clarification:
+
+Click on procced
+6..
+
+
+
+
+7.. Proceeding for prosecution when request is approved:
+When you click on "Launch Prosecution," a window will open showing all sample IDs linked to the
+license number. In the action column, sample ID will have a "Create Prosecution" button.
+The prosecution record can be viewed
+
+
+
+
+Regular entries can be added by clicking on the "Add Entry" tab under the Action section, as shown in
+the image below.
+In RCD enforcement login.
+
+1.. All prosecution requests appear in the RCD enforcement login. You can filter them by status, such as
+"Prosecution request pending," "Sent for clarification," "Granted," "Rejected," etc. The list is shown in
+descending order, meaning the oldest records appear at the top and the newest ones at the bottom.
+
+
+
+
+2.. When you click on the "Proceed" tab, three options appear:
+
+Send back to DO for clarification
+
+Grant permission for prosecution
+
+Reject
+2. The user ( HQ) can send the prosecution request back to the DO for clarification by adding queries
+along with the related rules, as shown in the image below.
+3.. The clarification response sent by the DO can be viewed, and more queries can be added if needed,
+as shown in the image below.
+
+
+
+
+4...Granting permission for prosecution
+
+It is mandatory to upload “Order of Prosecution” while granting prosecution request.
+5.. prosecution request which have been granted can be viewed as
+Part-2) ..Directly from the Prosecution tab.
+
+
+
+
+Prosecution requests can also be created by directly clicking on the Prosecution Bin. In this case, the
+user will see two options: "Create New Prosecution" and "Create Prosecution against Sample ID."
+
+It is recommended to use "Create Prosecution against Sample ID" as explained in this manual ( Part -1)
+to avoid duplicate prosecution entries for the same sample ID.
+You can edit "FSS Regulations/Rules/Act & Sections" and view the added entries under "View Log," as
+shown in the image below.
+
+
+
+
+.
+

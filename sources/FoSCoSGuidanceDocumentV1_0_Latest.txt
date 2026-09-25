@@ -1,0 +1,1642 @@
+Food Safety and
+Compliance
+System (FoSCoS)
+Guidance Document
+FSSAI
+
+Version 1.0
+March 2020
+                                                                                                FoSCoS Guidance Document
+
+
+
+Table of Contents
+
+
+Disclaimer .......................................................................................................................... 1
+1.        Background ............................................................................................................. 2
+2.        Purpose of the Document ...................................................................................... 3
+3.        Food Safety and Compliance System (FoSCoS) .................................................. 4
+     3.1.      Introduction ......................................................................................................... 4
+     3.2.      Objective of FoSCoS application......................................................................... 4
+     3.3.      What are the improved features of FoSCoS? ..................................................... 4
+4.        Processes defined for FoSCoS application.......................................................... 6
+     4.1.      Process flow to log in on FoSCoS application ..................................................... 6
+     4.2.      Process flows designated for Food Business Operators (FBOs) ........................ 7
+          4.2.1. Process flow for Guest login as Petty FBO ..................................................... 7
+          4.2.2. Process followed to submit a new application (Registration/ License) ............ 8
+          4.2.3. FBO Dashboard .............................................................................................. 9
+          4.2.4. Process to be followed for Renewal of an application ................................... 10
+          4.2.5. Process followed to submit Modification request .......................................... 11
+          4.2.6. Process followed for Surrender/ transfer....................................................... 12
+     4.3.      Process flows designated for Designated Officers (DOs) ................................. 13
+          4.3.1. Process flow to facilitate application requests submitted by FBOs ............... 13
+          4.3.2. Process flow to facilitate request submitted for Modifications ....................... 14
+          4.3.3. Process flow to facilitate renewal request ..................................................... 15
+     4.4.      Process flows designated for Food Safety Officers (FSOs) .............................. 16
+          4.4.1. Process flow for FSO to use inspection module ........................................... 16
+5.        Change in methodology of licensing for manufacturers................................... 17
+     5.1.      Background ....................................................................................................... 17
+     5.2.      Introduction of Product Selection Approach in FoSCoS .................................... 17
+          5.2.1. Key Features ................................................................................................ 17
+          5.2.2. Brief description of changes.......................................................................... 18
+     5.3.      Transition from previous licenses to new standardized product licenses .......... 19
+6.          Frequently asked questions (FAQ) .................................................................... 20
+     6.1.      FoSCoS Application .......................................................................................... 20
+     6.2.      Methodology of Licensing for Manufacturers based on Standardization products
+               23
+Annexure-A ...................................................................................................................... 31
+                                                                          FoSCoS Guidance Document
+
+
+
+A. Features relevant to all users i.e. FBO, DOs/ RAs and FSOs ............................... 31
+B. Features relevant to Food Business Operators (FBOs)......................................... 31
+C. Features relevant to Designated Officers (DOs) .................................................... 32
+D. Features relevant to Food Safety Officers (FSOs) ................................................ 33
+                                                                FoSCoS Guidance Document
+
+
+
+Disclaimer
+
+
+The guidance document is intended for the use of officers of FSSAI, food safety
+department of States/ UTs and Food Business Operators who shall be using the FoSCoS
+application. This document provides an overview of the application functions and features
+along with policy or regulatory aspects. This document, however, does not supersede any
+direction, official orders or regulations as issued by FSSAI. Furthermore, the guidance
+document shall not be considered valid for any legal redressal or as evidence in any legal
+proceeding. This document is only for guiding users on FoSCoS application by providing
+general information that may be helpful in using the application.       This document is
+expected to be updated from time to time, please check the latest version before use.
+
+In case any error or omission is noted, please bring it to the notice of FoSCoS team
+on foscos-hq@fssai.gov.in for rectification.
+
+
+
+
+                                                                                    Page | 1
+                                                              FoSCoS Guidance Document
+
+
+
+1.Background
+
+
+ FSSAI had earlier implemented a Food Licensing and Registration System (FLRS) - an
+ online application to provide licensing and registration functionality. FLRS application
+ enabled the process for FBOs to submit registration/ license applications related to all
+ food businesses and further supported the processing of these applications by the
+ Central/ State licensing authorities. FLRS has been in place from past 9 years. Over
+ the years multiple enhancements and modifications have been done to enhance the
+ usability of application.
+
+ Having observed certain performance challenges and business process limitations in
+ FLRS, FSSAI recognized the need for an upgrade which led to development of a new
+ application - Food Safety and Compliance System (FoSCoS). During development
+ of FoSCoS, care has been taken to ensure that most of it is similar to FLRS application
+ in functionality and process flows to the extent possible while making it more user
+ friendly and also improving its system performance. FoSCoS is built on open source
+ platform, has a new and advanced User Interface, is intuitive, computationally powerful
+ and technically superior to FLRS.
+
+
+
+
+                                                                                   Page | 2
+                                                              FoSCoS Guidance Document
+
+
+
+2.Purpose of the Document
+
+
+ The purpose of the document is to enable and provide guidance to our primary users
+ i.e. Food Business Operators (FBOs), Designated Officers (DOs) and Food Safety
+ Officer (FSOs) about the newly launched application i.e. Food and Safety Compliance
+ System (FoSCoS). This will also further help the users in transition from our legacy
+ application FLRS to FoSCoS from business perspective. FSSAI is providing this
+ guidance document to provide an overall understanding of the new system and
+ describe the key application functions which would be used to apply and process the
+ Registration/ License applications. Please note that this document does not replace the
+ detailed User Manuals being provided with the application.
+
+
+
+
+                                                                                  Page | 3
+                                                                FoSCoS Guidance Document
+
+
+
+3.Food Safety and Compliance System (FoSCoS)
+
+
+3.1. Introduction
+
+FoSCoS- Food Safety and Compliance System is a unified application built on open
+source platform, with enhanced features, easily configurable and has architectural
+capability to meet the envisaged functionalities and modules. The application is designed
+in such a way that it has interoperable capabilities to integrate and merge with other
+FSSAI applications for providing solutions to all kinds of food businesses on single
+platform.
+
+
+
+3.2. Objective of FoSCoS application
+
+Overall objectives of FoSCoS are as follows:
+
+   Transform from the present FLRS which is only a licensing platform to a central food
+     safety compliance regulatory platform.
+   Build a technically advanced integrated application to achieve interoperability with
+     other applications, capable of higher user traffic, and has potential for future
+     upgrades and functionalities.
+   Enhance user performance of the application and make application process simpler
+     and efficient to promote ease of doing business amongst FBOs.
+   Achieve minimal physical documentation and streamline business process flows for
+     FBOs for online application.
+   Achieve and enable the application to have standardized product approach rather
+     than text box approach for manufacturers.
+   Enable application to seed business specific details such as CIN No., PAN No. and
+     GST No. to ensure 360o profiling and validation of FBOs.
+
+
+
+3.3. What are the improved features of FoSCoS?
+
+To meet the above objective, process flows and application features of FoSCoS have
+been enhanced and upgraded for better user experience. Following are the improved key
+features of FoSCoS:
+
+
+                                                                                   Page | 4
+                                                                 FoSCoS Guidance Document
+
+
+
+   Upgradation of hardware and software to ensure enhanced processing speed, least
+    possible downtime, higher user traffic capability and potential for future upgrades.
+   Scalable architecture to meet future upgrades, new modules for additional
+    functionalities and integration with other IT systems of FSSAI. FoSCoS shall in future
+    be the one-stop food safety compliance portal.
+   Paradigm shift in licensing approach from Text Box approach to Standardized
+    Product approach for manufacturers.
+   The Home page has been re-designed to make it more user friendly, intuitive and
+    smart search option for standardized products and eligibility search for any food
+    business is given.
+   New online feature for filling annual returns through FoSCoS application.
+   FoSCoS has been integrated with FoSCoRIS to ensure seamless operations. FBOs
+    will have access to inspections reports.
+   Rationalization of required documents KoB wise instead of complete set of 29
+    documents indicated previously in FLRS application.
+   Many document-based declarations revised to a check box online declaration.
+   Clear segregation of KoBs in FoSCoS application. For e.g. nutraceuticals and novel
+    food category has been added as a separate category of business under
+    manufacturing.
+   FoSCoS application has been enabled to seed business specific details such as PAN
+    no., CIN no. and GST numbers to ensure 3600 profiling and validation of FBO.
+
+
+Whilst above features are comprehensive, detailed list of key features for FBO, DO and
+FSO are attached for reference in Annexure-A.
+
+
+
+
+                                                                                      Page | 5
+                                                                   FoSCoS Guidance Document
+
+
+
+4.Processes defined for FoSCoS application
+
+
+Below section outlines the process flows diagrammatically for various business functions
+as performed by FoSCoS users i.e. FBOs, DOs and FSOs. The dark colored boxes within
+process flow represent the new features added in FoSCoS. While this section intends to
+familiarize the user with FoSCoS application, however for detailed functionality it is
+recommended to refer the FoSCoS user manuals. Detailed user manual can be
+downloaded at https://foscos.fssai.gov.in/user-manual.
+
+4.1. Process flow to log in on FoSCoS application
+Following details should be referred for use of FoSCoS application:
+
+   User credentials i.e. ID and Password: Credentials shall be SAME as used for log-in
+     on FLRS application.
+   However, if the credentials are subsequently changed in FLRS, replication lag of few
+     hours will be observed in FoSCoS or vice versa.
+   FoSCoS URL: https://foscos.fssai.gov.in/
+
+
+
+FBO can either create sign-up using unique mobile ID and email ID or use same login
+credentials as used for FLRS application for login.
+
+Refer below the process flow to login for all user types.
+
+
+
+                                  Navigate to
+                             www.foscos.fssai.gov.in
+
+
+
+                                Login with FLRS
+  FBO/ DO/ FSO
+                                  credentials
+
+
+
+                                                            Click Forgot
+                                                                               Reset your
+                                 Login Successful?     No   Username/
+                                                                               password
+                                                             password
+
+                                        Yes
+
+
+
+                                Dashboard page
+
+
+                                                                                         Page | 6
+                                                                       FoSCoS Guidance Document
+
+
+
+4.2. Process flows designated for Food Business Operators
+    (FBOs)
+4.2.1. Process flow for Guest login as Petty FBO
+
+
+Petty FBO login facility is the new feature incorporated in the FoSCoS application. This
+feature has been enabled for small businesses like hawkers, roadside vendors, etc who
+are being encouraged to apply for registrations. This facility enables Petty FBO Login with
+OTP validation through phone number or email address without creating sign-up details or
+a password. On Login the Petty FBO shall have access to only Registration related
+functionalities which means License related functionalities shall not be available unlike the
+case of regular FBO Login.
+
+
+
+                                 Navigate to www.foscos.fssai.gov.in
+
+
+
+
+         Petty FBO              Apply for Registration Certificate
+                               (Petty Food Business Operators)
+
+
+
+                                Verify OTP on Email ID or Mobile of
+                                              choice
+
+
+
+
+                                  Apply for New Registration
+                                          Page opens
+
+
+
+
+                                   Fill application for Registration
+
+
+
+
+                                         Submit Application
+
+
+
+
+                                                                                         Page | 7
+                                                                                          FoSCoS Guidance Document
+
+
+
+4.2.2. Process followed to submit a new application (Registration/ License)
+
+
+The process flow of submitting application for registration/ license is similar to FLRS with
+minimal changes in overall functionality however efforts has been put in place to make
+process more efficient and productive. Some of key highlights are:
+
+
+ Revision of questions asked from FBO regarding eligibility of head office. Head office
+   has been added as a separate KoB.
+ Only KoB wise documentation is required to be uploaded along with application.
+
+
+
+                     Dashboard Page
+
+
+
+
+             Click License/ Registration
+                      in left menu
+
+
+
+
+     Click Apply for New License/ Registration
+
+
+
+
+                                                                                      Tip: Nutraceuticals and Novel food are
+                                                                 Select Head office   visible under manufacturers KoB
+                  Head office declared?                     No
+                                                                        as KoB
+
+
+
+
+                            Yes
+
+
+    Select appropriate kind of business applicable as per
+               food Business to be conducted
+
+
+
+
+                       Fill Form-B
+
+
+
+
+                    Submit Application
+
+
+
+
+                                                                                                                      Page | 8
+                                                                                                FoSCoS Guidance Document
+
+
+
+4.2.3. FBO Dashboard
+
+
+
+Dashboard is the default landing page once the FBO has logged in. The new dashboard is
+interactive and intuitive specifically built to provide updates to the submitted applications
+for both licensing and registration. For easy reference, new actions and feature has been
+highlighted in colored box. Some of the new features of dashboard in FoSCoS application
+are:
+
+
+        FBO can view application status by clicking on tab “Submitted applications”.
+        FBO can view list of all licenses and registration issued in past.
+
+
+
+
+                                Dashboard page
+
+
+                                                                                                             Reverted Applications
+                                                                   License/ Registration
+                                                      Yes                                                       by Authority
+                        Application reverted with
+                        comments (Alert in Red)?
+                                                               Tip: You have 30 days to
+                                                               respond on reverted
+                                      No
+                                                               applications. Failing to do so
+                                                               would result in auto                         View Remarks and click
+                                                               application rejection.                          Proceed to update
+                                Dashboard Tabs                                                                    application
+
+
+
+        Incomplete                 Submitted                                             Issued             Submit updated application
+                                                            Applications
+Application to complete          applications                                    to view the applications
+                                                            reverted by
+ or delete your previously      to view details of                                 for which license is
+                                                            Authorities
+   created applications       submitted application                                     generated
+
+
+
+                                                                           Tip: Mail yourself
+                                                                           the license using
+                                                                           Send Mail button
+                                                                           under the Issued
+                                                                           tab
+
+
+
+
+                                                                                                                         Page | 9
+                                                                          FoSCoS Guidance Document
+
+
+
+4.2.4. Process to be followed for Renewal of an application
+
+
+FBOs can submit request to renew their existing issued licenses/ registrations under the
+Renewal tab. Renew your license window opens 120 days prior to date of expiry of your
+license. Hence, it is ideal that renewal application is submitted between time frame of 120
+days and 30 days before the date of expiry of license. For e.g. If expiry of your license is
+31/03/2020, Thus, the ideal time of application for renewal should be between 02/12/2020
+and 01/03/2020.
+
+
+
+
+        Click Renewal in left menu
+
+
+
+
+                                          Tip: You can apply for renewal of your license as early as 120
+        Click Apply for Renewal of        days but atleast 30 days before license expiry date. INR 100
+           License/ Registration          per day is charged as late fees starting 30 days before license
+                                          expiry date.
+
+
+
+
+                                          Tip: If the license/ Registration has expired already, it will
+       Select the license to be renewed
+                                          not be listed here
+
+
+
+
+         Submit renewal application
+
+
+
+
+                                                                                                 Page | 10
+                                                                         FoSCoS Guidance Document
+
+
+
+4.2.5. Process followed to submit Modification request
+
+
+FBOs can submit request for modification in the existing issued licenses/ registrations
+under the modification tab. Three types of modifications are processed i.e. Form-C, Non-
+Form-C modifications and Change of product category to standardized products for
+manufacturers only. Non form-c modifications refers to changes such as change in contact
+details, change in supporting documents submitted at the time of obtaining fresh license,
+etc. Process flow is given for reference.
+
+
+
+
+       Click Modification in left menu
+
+
+
+
+          Apply for Modification in
+           License/ Registration
+
+
+
+
+         Select the license to be modified
+
+
+
+
+                                              Tip: Form C modifications are the details of
+         Select the type of Modification      your business which are printed on the license
+                                              i.e. Company name, Kind of business etc.
+
+
+
+
+                 Is it a Form C                        Submit Modification
+                                             No
+                   modification?                    application without any fees
+
+
+
+                       Yes
+
+
+      Submit Modification application with
+                     fees
+
+
+
+
+                                                                                           Page | 11
+                                                                       FoSCoS Guidance Document
+
+
+
+4.2.6. Process followed for Surrender/ transfer
+
+
+FBOs can submit the request for surrender/ transfer of license/ registration by clicking on
+tab “Surender”. FBOs shall see the complete list details of all licenses/ registration issued
+in past. Once selected, FBO may proceed to confirm submission of such request using
+action button.
+
+
+
+                                            Tip: To get duplicate copy of license, click Send
+          Click Surrender/ Transfer         Mail button under Issued tab on Dashboard
+                  in left menu
+
+
+
+
+      Click Apply for Surrender/ Transfer
+            of License/ Registration
+
+
+
+
+     Surrender using Surrender button          Transfer using Transfer button
+           against relevant license                against relevant license
+
+
+
+
+                 Submit request
+
+
+
+
+                                                                                                Page | 12
+                                                                                                     FoSCoS Guidance Document
+
+
+
+4.3. Process flows designated for Designated Officers (DOs)
+
+4.3.1. Process flow to facilitate application requests submitted by FBOs
+
+
+The default landing page after login is Dashboard. DO can view stage-wise activity status
+of all applications submitted by the FBOs in their jurisdiction.
+
+  Application for new license received by DO
+
+
+
+
+          Stage 1: Check Jurisdiction
+
+
+
+
+          Stage 1: Check Jurisdiction
+
+
+
+
+                                                     Reject application/ Send back to
+        Offline fee receipts correct?
+                                                            FBO for editing
+
+
+                    Yes
+
+      Send to Stage 2 Document
+                                                     Send back to FBO for editing
+            Securitization
+
+
+                                                                                                                                        No
+                    Yes
+
+                                                                              Send application for
+                                                                              clarification to FBO
+
+            Documents correct?                             No
+                Stage-2                                                                       Tip: FSO now has the provision to
+                                                                                              revert Application in case edits are
+                                                                                              required in Form-B
+
+                    Yes
+
+
+                                                                                    FSO conducts                                        No
+                                                                                                              Forward to DO
+                                                                                      inspection
+           Inspection Required?                  Allocate Inspection
+                                           Yes                                      (FoSCoRIS or
+                 Stage-3                               to FSO
+                                                                                      Manually)
+
+
+
+
+                                                                                                           Scrutinize Inspection
+                                                        Yes
+                                                                                                         Reports by DO. Satisfied?
+                    No
+
+                                                                                                                    No
+
+
+                                                                                                        Re-inspection & Assign FSO
+
+
+           Generate License                                                                                 Tip: DO has the provision to
+                                                                                                            reassign the application for re-
+                                                                                                            inspection if deemed necessary
+
+
+
+
+                                                                                                                                     Page | 13
+                                                                                                FoSCoS Guidance Document
+
+
+
+4.3.2. Process flow to facilitate request submitted for Modifications
+
+
+There are two types of modifications submitted by FBOs i.e. Form „C‟ modifications and
+Non-Form „C‟ modifications. The process to facilitate application for modification submitted
+by FBOs remains similar to FLRS process and is given below for reference:
+
+
+
+                                       Tip: Form C modifications are the details which are
+     Application for new license/
+                                       printed on the license i.e. Company name, Kind of
+        Modification by FBO
+                                       business etc.
+
+
+
+
+                                                     Scrutinize Non Form C
+         Form C modification           No                                                         Accept
+                                                          modification
+
+
+                                                                                                  Reject
+
+
+
+
+                                                Reject application/ Send back to
+      Offline fee receipts correct?    No
+                                                       FBO for editing
+
+
+                  Yes
+
+     Send to Stage 2 Document
+                                                Send back to FBO for editing
+           Securitization
+
+
+                                                                                                                                   No
+                  Yes
+
+                                                                         Send application for
+                                                                         clarification to FBO
+
+         Documents correct?                           No
+             Stage-2                                                                     Tip: FSO now has the provision to
+                                                                                         revert Application in case edits are
+                                                                                         required in Form-B
+
+                  Yes
+
+
+                                                                                                                                   No
+
+         Inspection Required?               Allocate Inspection                FSO conducts
+                                      Yes                                                                  Forward to DO
+               Stage-3                            to FSO                        inspection
+
+
+
+
+                                                                                                      Scrutinize Inspection
+                                                    Yes
+                                                                                                    Reports by DO. Satisfied?
+                  No
+
+                                                                                                                No
+
+
+                                                                                                   Re-inspection & Assign FSO
+
+
+         Generate License                                                                              Tip: DO has the provision to
+                                                                                                       reassign the application for re-
+                                                                                                       inspection if deemed necessary
+
+
+
+
+                                                                                                                                Page | 14
+                                                                                               FoSCoS Guidance Document
+
+
+
+4.3.3. Process flow to facilitate renewal request
+
+
+The process flow of a DO for the renewal workflow is similar to a New license approval
+except that jurisdiction check is not required. Please note that Late fees may have been
+levied by the system depending on the date of renewal application.
+
+
+          Renewal by FBO
+
+
+
+
+                                               Reject application/ Send back to
+     Offline fee receipts correct?    No
+                                                      FBO for editing
+
+
+                 Yes
+
+    Send to Stage 2 Document
+                                               Send back to FBO for editing
+          Securitization
+
+
+                                                                                                                                  No
+                 Yes
+
+                                                                        Send application for
+                                                                        clarification to FBO
+
+        Documents correct?                           No
+            Stage-2                                                                     Tip: FSO now has the provision to
+                                                                                        revert Application in case edits are
+                                                                                        required in Form-B
+
+                 Yes
+
+
+                                                                                                                                  No
+
+        Inspection Required?               Allocate Inspection                FSO conducts
+                                     Yes                                                                Forward to DO
+              Stage-3                            to FSO                        inspection
+
+
+
+
+                                                                                                     Scrutinize Inspection
+                                                  Yes
+                                                                                                   Reports by DO. Satisfied?
+                 No
+
+                                                                                                              No
+
+
+                                                                                                  Re-inspection & Assign FSO
+
+
+        Generate License                                                                              Tip: DO has the provision to
+                                                                                                      reassign the application for re-
+                                                                                                      inspection if deemed necessary
+
+
+
+
+                                                                                                                               Page | 15
+                                                                                FoSCoS Guidance Document
+
+
+
+4.4. Process flows designated for Food Safety Officers (FSOs)
+
+4.4.1. Process flow for FSO to use inspection module
+
+
+FoSCoS has been integrated with FoSCoRIS to ensure seamless operations. Thus, FSO
+will be enabled to submit his inspection report directly on FoSCoS application. On login,
+the FBO shall also have access to view the inspection reports and comments made by the
+FSOs.
+
+
+                                        Allocated Inspections in
+                                                left menu
+
+
+
+                                             Acknowledge
+                                                                                   Reject with Remarks
+                                             Inspection
+                                                                          Tip
+                                                                           FSO can reject an inspection incase it
+                                                                             has been wrongly assigned or due to
+                                           Accept and choose
+                                                                             unforeseen circumstances
+                                            Inspection Date
+                                                                           After initiating inspection, listing of
+                                                                             inspection will be moved under tab
+                                                                              On-going inspections
+                       Start Random
+                                             Start Inspection
+                         Inspection
+
+
+
+
+                  No                       Is FoSCoRIS in use?
+
+
+
+
+  Physical checklist used to          FoSCoRIS app used to conduct
+     conduct inspection                      inspection
+
+
+
+
+                                       Inspection Report visible on   Tip: With FoSCoRIS now integrated, the
+   Upload findings on FoSCoS
+                                         FoSCoS/ Done manually        inspection report is also available in FoSCoS
+
+
+
+                                                   Yes
+
+
+
+                                             Forward to DO
+
+
+
+
+                                                                                                            Page | 16
+                                                                  FoSCoS Guidance Document
+
+
+
+5. Change in methodology of licensing for manufacturers
+
+
+5.1. Background
+
+In the Food Licensing and Registration System (FLRS) the process followed for licensing
+for manufacturers is: -
+
+      An applicant selects the food category system, drilled down to 4-digit level.
+      Then the applicant inputs the food product he proposes to manufacture, in a text
+       box.
+      Licensing authority while processing the application checks if the declared product
+       belongs to the stated category and is standardized as per Food Safety and
+       Standards Regulation (FSSR).
+
+The Licensing Authority, after other checks he needs to exercise approves the application.
+Expected output is a licensed product which is standardized. However, the description is
+subjective. It may be specific to the product/ manufacturer or even be generic or be a
+variant. If not standardized, application needs to be submitted under Proprietary Food or
+non- specified Food.
+
+
+
+5.2. Introduction of Product Selection Approach in FoSCoS
+
+5.2.1. Key Features
+
+      The new approach is only for manufacturers of food products.
+      For Category 99 products such as additives/processing aids/enzymes etc., the text
+       box approach will be continued as in FLRS under “Substances added to Food”
+      There are few products standardized under FSSR, for which no specific category
+       has been allocated, these products will be listed under a new category 100 (only for
+       the purpose of licensing)
+      In case of non-standardized food products, FBO will need to apply for “Proprietary
+       Food”, “Non specified Food” or “Food or Health Supplements, Nutraceuticals etc”
+       as applicable.
+
+
+
+
+                                                                                       Page | 17
+                                                                    FoSCoS Guidance Document
+
+
+
+5.2.2. Brief description of changes
+
+
+      The new system is based on trust and self-regulation approach. An FBO opts and
+       selects a standardized product and his license is approved for the same. The
+       license approval means that the FBO can manufacture only those standardized
+       products which are covered by the description as under in the FSSR. The onus is
+       on the FBO to manufacture only products which are Standardized with the
+       description FSSR.
+      The linguistic meaning of the Standardized product list is NOT to be relied upon.
+       Standardized products means any product whose standards are prescribed in in
+       “Food Safety and Standards (Food Products Standards and Food Additives)
+       Regulation,   2011”,    “Food    Safety   and    Standards     (Health   Supplements,
+       Nutraceuticals, Food for Special Dietary Use, Food for Special Medical Purpose,
+       Functional Food and Novel Food) Regulations, 2016” and “Food Safety and
+       Standards (Alcoholic Beverages) Regulation, 2018”.
+      For manufacturers of Standardized food products, the methodology is being
+       changed from the text box approach to a Standardized product listing approach.
+       FoSCoS is built on food category system as in FLRS with category 1-16.
+      There is a 3-level structure being followed in FoSCoS for Manufacturing, Repacking
+       and Relabeller for selection of food products i.e.
+          o Level 1: Main Category
+              Example: 7 Bakery Product
+          o Level 2: Sub-Categories forming part of the main category
+              Example: 7.1 Bread and ordinary bakery wares and mixes
+          o    Level 3: Name of Standardized product (select)
+              Example: Bread
+
+      The listed products include the types/sub types of products falling under same
+       FSSR number.
+       Example:
+          o 5.1.3 Chocolate: In this all other Standardized products detailed under FSSR
+              covered. i.e whether Milk Chocolate, Milk Covering Chocolate, Plain
+              Chocolate, Plain Covering Chocolate, White Chocolate, Blended chocolate.
+          o 2.9.1 Spice like Caraway (Siahjira): all its types Standardized like (Siahjira),
+              Caraway Black (Siahjira), Caraway (Siahjira) are considered to be covered
+              under description.
+                                                                                      Page | 18
+                                                                   FoSCoS Guidance Document
+
+
+
+         o 2.1.7 Cream and Malai: All types (Reconstituted cream, Recombined cream,
+            Prepared creams etc.) and sub type (Pre-packaged liquid cream, Whipping
+            cream etc. ) are under description Cream.
+     On some occasions, the description of food products has been slightly changed
+      from the heading used in FSSR, primarily because the food category of types and
+      subtypes of the products were distinct.
+      Example:
+         o Separate Food Categories are specified for two variants of Pastas and
+            Noodles i.e 6.4.2: Macaroni Products (Dried) and 6.4.3 Macaroni Products
+            (pre-cooked)
+         o Culinary Sauce and Pastes bifurcated into 12.6.2 (chilli sauce, fruit sauce
+            etc.) & 12.6.3 ( culinary paste)
+     In some cases, the variants (types and subtypes) of Standardized products are
+      listed separately, thereby requiring specific endorsement on license for each of
+      them. The same is done owing to administrative reasons keeping the need of
+      licensing authority and sensitivity of the food products or its nature and source in
+      perspective.
+      Eg. All refined edible vegetable oils are listed as individual refined vegetable oil.
+
+
+
+5.3. Transition from previous licenses to new standardized product
+  licenses
+
+     Provision for modification in existing license to choose from standardized product
+      for manufacturers has been provided.
+     No modification fee is required to be paid for the same. The transition will be
+      allowed with modification fee upto 31st December 2020 as per FSSAI order number
+      15(31)2020/FoSCoS/RCD/FSSAI dated 28th May 2020.
+     The renewals are not linked with modification of License. However, renewal without
+      modification of licence based on list of Standardized products, shall be allowed for
+      one year only.
+
+
+
+
+                                                                                        Page | 19
+                                                                   FoSCoS Guidance Document
+
+
+
+
+6.      Frequently asked questions (FAQ)
+
+
+6.1. FoSCoS Application
+
+Q1. What is the user ID and Password of FoSCoS application?
+
+     Answer: Login credentials of the FoSCoS application shall be same as FLRS. New
+     FBO can also create login credentials using sign-up option.
+
+
+
+Q2. What if I am using both the applications i.e. FLRS and FoSCoS in the transition
+     phase and change the credentials in one of the applications. Would this change
+     be implemented for both applications?
+
+     Answer: Yes, change will be implemented in both the applications however user will
+     observe the replication time lag of few hours in the subsequent application.
+
+
+
+Q3. How to submit annual return online on FoSCoS?
+
+     Answer: FoSCoS has new online feature for submitting Annual returns. FBO can click
+     on tab “Annual returns”, fill the prescribed format and upload required documents and
+     click on submit.
+
+
+
+Q4. What if FBO does not remember both User ID and Password for login?
+
+     Answer: FBO can retrieve user ID and password by submitting following information:
+
+         Signup for a new login, and provide the new login
+
+         Request Application on company letter head duly signed by Authorised Signatory
+
+         Copy of License/Registration/Application
+
+         ID proof of authorized signatory.
+
+         Any other document proving ownership of FSSAI license/ registration.
+
+
+                                                                                     Page | 20
+                                                                  FoSCoS Guidance Document
+
+
+
+   All above documents to be submitted electronically via email (from authorized email ID
+   to enforcement1@fssai.gov.in or in physical manner at FSSAI HQ. If the credentials
+   are verified and request approved then the FSSAI license details will be shifted to the
+   new user login provided.
+
+
+
+Q5. What are the new KoBs added to FoSCoS?
+
+   Answer: Head office, Nutraceuticals and Non specified/Novel food for manufacturers
+
+
+
+Q6. Can FBO view his inspection history?
+
+   Answer: Yes, FBO can view inspection report by clicking on tab “view inspection
+   history”.
+
+
+
+Q7. How to check your eligibility criteria of your food business?
+
+   Answer: FBO can use Search option “Eligibility of your food business” provided on the
+   home page to view details pertinent to KoB/ criteria/ license/ registration and fee per
+   annum.
+
+
+
+Q8. How to search standardized food products and KoBs?
+
+   Answer: FBO can use Search option “FSSAI Standardized products” provided on the
+   home page.
+
+
+
+Q9. How many documents required to be uploaded by FBO for issuance of license?
+
+   Answer: Only documentation pertinent to the selected KoB for license application is
+   required to be uploaded. However FoSCoS has provision for additional documents
+   such as NoC from CGWA, NoC from local bodies, Water test Report, Vehicle RC,
+   FSMS Plan, and any other document mandated by state government by way of an
+   official order.
+
+
+
+
+                                                                                       Page | 21
+                                                                 FoSCoS Guidance Document
+
+
+
+Q10. Are there any agents or consultants authorized by FSSAI to submit application
+   on behalf on FBO?
+
+   Answer: No, there are no consultants or agents authorized to fill application on behalf
+   of FBO however FBO can take help of Food Safety Mitra (FSM) for the same.
+
+
+
+Q11. Difference between Form-C and Non Form-C modifications?
+
+   Answer: Form-C modifications refers to change in business information details as
+   printed on the license such as Company name, change of address (within district), Kind
+   of Business, etc. with applicable fees of INR 1000 plus differential amount of annual
+   fee of license in case of upgradation.
+
+   Non Form-C modification refers to change in information not printed on license such as
+   correspondence address, contact information, etc.
+
+
+
+Q12. Does FBO need to re-submit the application fees if the application is rejected
+   by the DO?
+
+   Answer: Yes, FBO is required to re-submit the application fees in case of rejection.
+
+
+
+Q13. How can FBO generate duplicate copy of license?
+
+   Answer: On the FBO‟s dashboard, click on “Issued” tab. Click “Send Mail” button
+   against the relevant license.
+
+
+
+Q14. Does DO need to review all information given in the application once the
+   application is sent back to FBO for editing?
+
+   Answer: No, FBO will only be able to edit the details for options as selected by DO
+   whilst sending back the application for editing.
+
+
+
+Q15. Can the Designated officer (DO) re-assign the application to FSO once already
+   assigned to a FSO?
+
+
+                                                                                     Page | 22
+                                                                 FoSCoS Guidance Document
+
+
+
+   Answer: Yes, DO can re-assign the application to FSO for inspection or even after
+   inspection for any further processing.
+
+Q16. Some states are asking for additional documents which are not listed in online
+licensing portal , where to upload these documents?
+
+   Answer: On document upload page, there will be a option of “Other documents” under
+   that upload these additional documents.
+
+
+
+   Q17. Where can I upload NOC from CGWA, NOC from State Pollution Control
+   Board, BIS certificate etc.?
+
+   Answer: On document upload page, there exists a facility of “Other documents” under
+   which additional documents can be uploaded.
+
+   Q18. Is it mandatory to upload details of training under FoSTaC, Food Safety
+   Mitra etc.?
+
+   Answer: It is presently not mandatory. However, we encourage applicants to declare
+   details.
+
+
+
+
+Note: For other queries related to licensing, please refer to FAQs on licensing/
+registrations at https://www.fssai.gov.in/cms/licensingregulationfaq.php
+
+
+
+
+6.2. Methodology of Licensing for Manufacturers based on
+    Standardization products
+
+Q1. What are standardized food products?
+
+   Answer: Those products whose standards are specified under in “Food Safety and
+   Standards (Food Products Standards and Food Additives) Regulation, 2011”,” Food
+   Safety and Standards (Health Supplements, Nutraceuticals, Food for Special Dietary
+   Use, Food for Special Medical Purpose, Functional Food and Novel Food) Regulations,
+   2016” and “Food Safety and Standards (Alcoholic Beverages) Regulation, 2018”.
+
+
+
+
+                                                                                   Page | 23
+                                                               FoSCoS Guidance Document
+
+
+
+Q2. What should FBO do, if the product he wants to manufacture does not display
+   in any category in dropdown?
+
+   Answer: In such cases, if FBO does not find the products in the list of Standardized
+   food products, then he needs to apply either in proprietary food or nutraceuticals or
+   non-specified/novel food whichever is applicable.
+
+
+
+Q3. General manufacturing kind of business is applicable for which food business
+   operators?
+
+   Answer: Those manufacturing products other than dairy, oil, meat, proprietary,
+   nutraceutical, non-specified/novel food, are covered under “general manufacturing”.
+
+
+
+Q4. I am doing business of catering, whether individual product need to be
+   mentioned in the license/registration?
+
+   Ans: No, only mention broad category of food products.
+
+
+
+Q5. Is it mandatory for a milk product manufacturer to select kind of business dairy
+   processing units, can’t they apply for general manufacturing?
+
+   Answer: No, milk product manufacturer should take license under dairy processing
+   kind of business only. FBOs manufacturing products other than oil, meat, dairy,
+   nutraceuticals, Proprietary food, non-specified/novel food can take license under
+   general manufacturing.
+
+
+
+Q6. Are there any products for which standards exists and are yet not listed on
+   FoSCoS for grant of License?
+
+   Answer: Yes, Radiation Processed Foods, Gluten Free Foods and Special dietary
+   food with low sodium content are not listed. In such case, FBOs need to select the
+   corresponding Food Category of the food product. E.g in case Fruits and Vegetables
+   are irradiated FBO can select. 4.2. Also, in such cases the standards for the same
+   (process food standard) need to be complied additionally to the standards for the food
+   item.
+
+                                                                                   Page | 24
+                                                                FoSCoS Guidance Document
+
+
+
+
+Q7. Why a new category No. 100 is created though the products are standardized?
+
+   Answer: Some of standardized products are not currently mapped with any food
+   category system code for example pan masala, colostrum, royal jelly. These are listed
+   here. The category is only for the purpose of licensing. Whenever the mapping is
+   decided and notified, the product shall be shown in relevant category.
+
+
+
+Q8. My product falls under the product category 15 and 16, but I am not able to find
+   the products under the said category in Standardized flow under manufacturer
+   KoB. What should I do and where i need to apply?
+
+   Answer: In category no. 15 and 16 presently there are no Standardized food products.
+   Hence, you need to apply under the Proprietary Food category, if applicable. Eg ready
+   to eat packages.
+
+
+
+Q9. My product neither falls under Standardized food, nor proprietary food and
+   substance added to food, where do I go and where need to apply?
+
+   Answer: If your product does not fall under Standardized food or proprietary food or
+   substances added to food, in such you need to obtain approval of such product and
+   apply under non-specified food.
+
+
+
+Q10. Whether product selection methodology is also available for proprietary, non-
+   specified food and nutraceuticals/supplements?
+
+   Answer: Product selection method is available only in case of Standardized products
+   under “Food Safety and Standards (Food Products Standards and Food Additives)
+   Regulation, 2011” and “Food Safety and Standards (Alcoholic Beverages) Regulation,
+   2018” except for Substances added to food. For proprietary, non- specified food and
+   nutraceuticals/supplements the text box approach as in FLRS continues.
+
+
+
+Q11. Whether FBOs can manufacture variants (types and subtypes) of a licensed
+   product?
+
+                                                                                  Page | 25
+                                                                 FoSCoS Guidance Document
+
+
+
+   Answer: Yes, variants (types and subtypes) of Food products so licensed can be
+   manufactured if they are as per Standards specified under Food Safety and Standards
+   Regulations. e.g all variants of Chocolate (i.e milk chocolate, milk covering chocolate,
+   plain chocolate, plain covering chocolate, blended chocolate etc) as specified under
+   sub-regulation 2.7.4 of FSSR can be manufactured by FBO, if licensed for Chocolate.
+   Please note only variants (types and subtypes) of products for which standards exist
+   can be manufactured. Any deviation needs to be applied under other suitable
+   categories such as Proprietary, Health Supplements & Nutraceuticals and non-
+   specified/novel food, whichever applicable.
+
+
+
+Q12. Why Buttermilk is given, in addition to Drinks based on fermented milk?
+
+   Answer: Separate Food Category System are specified for Buttermilk (1.1.2 ) and
+   Drinks based on fermented milk (1.1.2), hence separately listed.
+
+
+
+Q13. I am manufacturing fancy breads, milk breads etc which category should I
+   select?
+
+   Answer: All types of breads which are covered under Food Safety and Standards
+   (Food Products Standards and Food Additives) Regulation, 2011 will fall under
+   “Bread”. Else you will need to apply under Proprietary or non-specified food category.
+
+
+
+Q14. I am in to the business of storage and sale, Whether i have to mention
+   individual product by select option?
+
+   Answer: No, product selection methodology is applicable only for manufacturers, rest
+   all categories will have option of broad food category selection, as in FLRS.
+
+
+
+Q15. Drop down option to select additives is not given even they are Standardized,
+   reasons why?
+
+   Answer: There is a long list of additives for which standards are available and many
+   more are being developed. Presently for manufacturer of category 99 “Substance
+   added to Food”, the text box approach will continue.
+
+
+                                                                                    Page | 26
+                                                              FoSCoS Guidance Document
+
+
+
+Q16. I am manufacturing bees wax, in which category I should apply”?
+
+   Answer: For bees wax, apply in category no. 99
+
+
+
+Q17. I am manufacturing decaffeinated beverage, which food product category
+   should I select?
+
+   Answer: All types of coffee which are covered under 2.10.2 of Food Safety and
+   Standards (Food Products Standards and Food Additives) Regulation, 2011 will fall
+   under “Coffee”. Hence apply for product “coffee”.
+
+
+
+Q18. Why are hard and soft candy separately listed?
+
+   Answer: Hard and Soft candy are separately listed due to different food category
+   system.
+
+
+
+Q19. I am manufacturing fruit pickle, vegetable pickle, mixed pickle, shall I take just
+   pickle in my license?
+
+   Answer: No, these pickles are classified under different food category system so
+   separate selection to be made.
+
+
+
+Q20. I am manufacturing low fat cream, shall I take just cream in my license?
+
+   Answer: Yes, “Cream ” will cover all types and sub types of cream including low fat
+   cream.
+
+
+
+Q21. I am manufacturing pre-cooked pasta product, which category will be
+   applicable for me?
+
+   Answer Separate Food Categories are specified for two variants of Pastas and
+   Noodles i.e 6.4.2: Macaroni Products (Dried) and 6.4.3 Macaroni Products (pre
+   cooked).
+
+
+
+
+                                                                                 Page | 27
+                                                               FoSCoS Guidance Document
+
+
+
+Q22. How to align food products in my license/registration with Standardized
+   products under FoSCoS, in such cases whether modification fee is required or
+   not?
+
+   Answer. Provision for modification of license to choose from Standardized products for
+   manufacturers has been provided. No modification fee is required to be paid for the
+   same. The modification to Standardized product (product migration) needs to be done
+   before 30th September 2020.
+
+
+
+Q23. Renewal of my licence is due, can modification to Standardized products be
+   done along with renewal application?
+
+   Answer. No, renewal and modification process are separate. In case, renewal is
+   imminent, please get renewal before modification. The modification to Standardized
+   product (product migration) needs to be done before 30th September 2020.
+
+
+
+Q24. I am holding license for manufacturing a food product, is any modification
+   required in case of any change in ingredient and additive in Standardized food
+   product category?
+
+   Answer. In case the changed ingredient and additive are as per standards prescribed
+   for the food products and the new food product is as per standards (already endorsed
+   on the licence), no modification of license is required.
+
+
+
+Q25. I am a food business operator holding manufacturer license. What steps do I
+   need to take during migration from old licensing system to new system
+   (FoSCoS)?
+
+   Answer: Existing FSSAI License holders for manufacturing kind of business needs to
+   visit the portal before 30th September 2020. A facility under “modification” has been
+   provided to modify the license to choose from Standardized food products. No
+   modification fee shall be charged for the same until other details of the license kept
+   same which necessitated change in fee structure. Further, if you do not find your
+   products in the Standardized list, please refer below:
+
+
+
+                                                                                  Page | 28
+                                                                 FoSCoS Guidance Document
+
+
+
+   For Category 99 products such as additives/processing aids/enzymes etc., the text box
+    approach will be continued as in FLRS.
+   There are few products standardized under FSSR, for which no specific category have
+    been allocated, these products will fall under broad category 100.
+   In case of non-standardized food products, you shall apply for “Proprietary Food”, “Non
+    specified Food” or “Health Supplements, Nutraceuticals etc” as applicable.
+
+Q26. I am a food business operator, other than manufacturer. What steps do I need
+    to take while migrating to new system (FoSCoS)?
+
+    Answer. If you are a manufacturer, please refer to above answer. Food Businesses
+    involved in kind of business other than manufacturers shall match the details of their
+    license and/or application form submitted in earlier licensing system i.e FLRS. In case
+    you find any mismatch or error please write us at foscos-helpline@fssai.gov.in or call
+    us at Toll free Helpline number 1800112100.
+
+Q27. What if I do not modify my license to Standardized products (for
+    manufacturers)
+
+    Answer: If within the specified period, the manufacturer doesn‟t get modification to
+    Standardized product (product migration) the licensing authority may issue notice and
+    proceed for cancellation of your license.
+
+
+
+
+Q28. I am a food product manufacturer with a valid State license. While applying for
+    modification to Standardized product (product migration) In case if it
+    necessitates a change from State to Central license. What to do?
+
+    Answer: A new Central license will need to be obtained and the previous State license
+    may be surrendered.
+
+
+
+
+Q29. I am having problems with FoSCoS. Whom can I approach for resolution of my
+    problems?
+
+    Answer: In case you have State license, for any guidance or difficultly you may contact
+    your jurisdictional FSO/ DO, or the licensing helpdesk in the State or the Food Safety
+    Commissioner in the State. In case you have a central license, you may approach
+                                                                                    Page | 29
+                                                            FoSCoS Guidance Document
+
+
+
+FSSAI‟s Regional Office. You can also email at helpdesk-foscos@fssai.gov.in or call at
+Toll free Helpline number 1800112100.
+
+
+
+
+                                                                               Page | 30
+                                                                       FoSCoS Guidance Document
+
+
+
+Annexure-A
+
+
+Detailed List of key features applicable to each type of user i.e. FBO, DO and FSOs is
+segregated below for better understanding.
+
+A. Features relevant to all users i.e. FBO, DOs/ RAs and FSOs
+
+      Smart Homepage featuring:
+              Text based intelligent Eligibility Search for businesses
+              Text based intelligent Standardized Product Search
+      Simpler login
+              Unnecessary details not required
+              Email, mobile verification through OTP
+              Direct login facility only for registration purposes.
+      Email ID and Mobile number is verified using unique OTP during sign-up (license
+       generation).
+      Intuitively designed unique tabs for tracking of applications, FBO search, application
+       status and instructions for users to understand the application process flow.
+      User shall be able to search for standardized food products and its details
+      Functionality for searching of standardized food products is provided on home
+       page.
+      The new feature for FBO is also incorporated to search eligibility of any type of food
+       business which is planned to be conducted.
+
+
+
+B. Features relevant to Food Business Operators (FBOs)
+
+   Enhanced and New features of the FoSCoS
+
+      Home page and log-in screen has been made more interactive and intuitive.
+      Separate guest login as “Petty FBO Log-in” for small business operators to apply for
+       registrations using their mobile number and email IDs.
+      Feature to submit annual returns online.
+      Only KoB wise required set of documents will be shown to license applicant in
+       FoSCoS instead of complete set of 29 documents.
+      Separate KOB for head office is included for easy reference.
+
+                                                                                         Page | 31
+                                                                     FoSCoS Guidance Document
+
+
+
+        FBO can view the inspection report as soon as inspection report is formulated by
+         FSO.
+        Improved dashboards for Licensing and Registering Authorities to view pendency of
+         applications at different Stages.
+        Improved and eased licensing procedure/ flow:
+ o       Questions at the beginning of licensing application pertaining to Head Office omitted.
+         Head Office is now made as a separate KoB.
+ o       New KoB flow for products covered under Nutraceutical Regulations and products
+         require Product Approval from FSSAI.
+        Grouping of KoBs under „Other Business‟ is broken into logical groups. Now two
+         group of KoBs have been introduced - Trade/Retail and Food Services
+        New KOB listing page with more segregation in the KOB selection.
+        Several declarations which earlier required document upload now converted to tick
+         based online declarations. E.g. Declarations for FSMS, Repacking, General
+         Conditions etc. have been converted to single declaration which applicant has to tick
+         and declaration shall be printed on the application for future reference.
+        Provision for capturing Food Product Category for Importers
+
+
+
+ Features removed from FLRS
+
+        KOB listing has been improvised such as Removal of KoB (Section 22 products –
+         FBO holding PA/NOC from PA division FSSAI prior to the Hon'ble Supreme Court
+         Judgment dated 19th Aug 2015)
+
+        Process has been streamlined and irrelevant questions and documentation proof
+         has been removed to ease the user for conducting business activity through
+         FoSCoS. For eg: Removing of 03 questions related to Head Office to be asked by
+         every FBO whether he is eligible for it or not and converted Head Office as separate
+         KoB and Removing „Clarification incidents‟ tab meant for applications to be
+         responded after improvement notice on inspection.
+
+C. Features relevant to Designated Officers (DOs)
+
+        DO can now view the application as per applicable stages of its processing.
+         Further Menu items in DO dashboard have been rearranged for easily locating the
+         daily tasks related to processing of applications.
+        Feature to verify the zone list for FSO for their respective designated application.
+                                                                                         Page | 32
+                                                                  FoSCoS Guidance Document
+
+
+
+     Application workflow for DO to review and send application to different stages
+     Auto issuance of license in maximum 75 days after application submission
+     The description of each bin/ tab is revised and made self-explanatory.
+     Stage wise bifurcation enabling self-understanding for DO‟s leading to intuitive
+      actions with minimal confusions
+     Comprehensive search tool made available to every DO/ FSO limited to their area
+      of jurisdiction to search the applications and licenses issued.
+
+
+D. Features relevant to Food Safety Officers (FSOs)
+
+     FoSCoRIS (Inspection System) integrated with FoSCoS to enable allocation of
+      inspections, viewing of inspection report within the licensing system.
+     OTP based Verification of Inspection Reports
+     Instant availability of Inspection reports to FBOs.
+
+
+
+
+                                                                                       Page | 33
+     FoSCoS Guidance Document
+
+
+
+
+Thank you
+
+
+
+
+                       Page | 34
+

@@ -1,0 +1,113 @@
+# FoSCoS document assets (from main.94e15801bb9b71f2dbdd.bundle.js, 2026-09-25); prefix https://foscos.fssai.gov.in/
+assets/docs/2.1.1.pdf
+assets/docs/2.1.2.pdf
+assets/docs/2.1.3.pdf
+assets/docs/2.1.7.pdf
+assets/docs/5b653af637c0eActive3.pdf
+assets/docs/5dd61a7e9a637Letter_Alcoholic_ECommerce_21_11_2019.pdf
+assets/docs/Additional_Document_-_Exporters.pdf
+assets/docs/AffidavitofProprietorship_27.pdf
+assets/docs/Annexure5.docx
+assets/docs/authority/ERChandbook_Draft2.pdf
+assets/docs/authority/Prosecution-Manual.pdf
+assets/docs/authority/Uder_Manual_for_Adjudication_Final.pdf
+assets/docs/authority/UserManualAdjucationImprovementnoticeandpaypenalty.pdf
+assets/docs/authority/User Manual for authorities to proceed the vegan endorsement applications.pdf
+assets/docs/authority/usermanualforFortifiedOrganicendorsementForAuthority.pdf
+assets/docs/authority/User manual for Risk Based Inspection Monthly Roster.pdf
+assets/docs/authority/User manual of Apply and Generate License_Registration for Authority.pdf
+assets/docs/authority/usermanualofBulkEmailandnotification.pdf
+assets/docs/authority/User manual of  Capturing sample result.pdf
+assets/docs/authority/User manual of Dashboard.pdf
+assets/docs/authority/UsermanualofOfflinedocumentuploadforAuthorities.pdf
+assets/docs/authority/User manual of Six Monthly Lab Testing Report.pdf
+assets/docs/centralForm_b.pdf
+assets/docs/CGWA_NOC_dated_11.01.2021.pdf
+assets/docs/Chd_admin.pdf
+assets/docs/Compiled FPC_FoSCoS.pdf
+assets/docs/Consumer for lodging grievance.pdf
+assets/docs/DeclarationConversion.pdf
+assets/docs/DeclarationforFBO.pdf
+assets/docs/Declaration-Hindi.pdf
+assets/docs/DeclarationModification.pdf
+assets/docs/Declaration.pdf
+assets/docs/DeclarationRegardingFSMSPlan.pdf
+assets/docs/DocumentListMarch.pdf
+assets/docs/DocumentsrequiredforRegistrationCertificate.pdf
+assets/docs/fbo/Head_Office.pdf
+assets/docs/fbo/HowtoapplyforLicense_registrationcertificate.pdf
+assets/docs/fbo/HowtoapplyforManufacturerlicense.pdf
+assets/docs/fbo/Howtoapplyformodificationoflicense.pdf
+assets/docs/fbo/HowtoapplylicenseforECommerce.pdf
+assets/docs/fbo/Howtoapplylicenseforexporters.pdf
+assets/docs/fbo/HowtoapplylicenseforImporters.pdf
+assets/docs/fbo/Howtoapplylicenseformiddaymeal.pdf
+assets/docs/fbo/HowtoapplylicenseforProprietaryfood.pdf
+assets/docs/fbo/HowtoapplylicenseforRestaurant.pdf
+assets/docs/fbo/HowtoapplyRenewal.pdf
+assets/docs/fbo/How_to_check_endorsement_status.pdf
+assets/docs/fbo/Howtogetendorsementoforganicfoodproducts.pdf
+assets/docs/fbo/Howtorespondtoarevertedapplication.pdf
+assets/docs/fbo/Howtosurrenderalicense.pdf
+assets/docs/fbo/Howtotransferalicense.pdf
+assets/docs/fbo/License_modification_for_endorsement_of_fortified_food_products.pdf
+assets/docs/fbo/NOC.pdf
+assets/docs/fbo/PAN-manual-for-FBO.pdf
+assets/docs/fbo/Relabeller.pdf
+assets/docs/fbo/Ripening_Chamber.pdf
+assets/docs/fbo/usermanualforFortifiedOrganicendorsementForFbo.pdf
+assets/docs/fbo/User manual  for license kit.pdf
+assets/docs/fbo/User manual for link Head office license.pdf
+assets/docs/fbo/usermanualforPerformanceMatrix.pdf
+assets/docs/fbo/User manual for Performance statistics.pdf
+assets/docs/fbo/usermanualforrailwayapplicationzonewise.pdf
+assets/docs/fbo/User manual for Vegan endorsement.pdf
+assets/docs/fbo/User manual millets.pdf
+assets/docs/fbo/User manual of File Annual Return.pdf
+assets/docs/fbo/UsermanualofonelicenceregistrationoneloginforFBO.pdf
+assets/docs/fbo/User Manual on Faster Processing of Special Category Applications.pdf
+assets/docs/Final_Track change_Clubbing in the list of Standardized Food Products having variants (types  subtypes) DFA 34233.pdf
+assets/docs/Form D_Annual Return_FY 2023-24.pdf
+assets/docs/Form IX- Hindi.pdf
+assets/docs/Form_IX.pdf
+assets/docs/FORM_IX.pdf
+assets/docs/FoRTrace_for_FRK_Manufacturers.pdf
+assets/docs/FoRTrace_for_Lab_Users.pdf
+assets/docs/FoRTrace_for_Premix_Manufacturers.pdf
+assets/docs/FoRTrace_for_Rice_Millers.pdf
+assets/docs/FoRTrace_for_Warehouses.pdf
+assets/docs/FoSCoRIS_User_Manual.pdf
+assets/docs/FoSCoSGuidanceDocumentV1_0_Latest.pdf
+assets/docs/FoSCoSGuidanceDocumentV1.0.pdf
+assets/docs/Guidance_Document_for_Filing_License_Application_ror_Nutraceutical_Products.pdf
+assets/docs/Himachal Pradesh_New _doc _8 _Sep_2021.pdf
+assets/docs/Howtoregister.pdf
+assets/docs/IMG_20200227_0001.pdf
+assets/docs/Karnataka_Stamps_and_registration.pdf
+assets/docs/List of Hish Risk categories (1).pdf
+assets/docs/Lodginggrievances1.pdf
+assets/docs/manipur-add-doc.pdf
+assets/docs/Meghalya-AdditionalDocumentsRequired.pdf
+assets/docs/Note for Tatkal License Restrictions.pdf
+assets/docs/Order_Manufacturer_relableller_six_monthly_lab_testing_report.pdf
+assets/docs/Processing_of_greivance_by_Designated_Officer.pdf
+assets/docs/Processing_of_greivance_by_Food_Business_Operator.pdf
+assets/docs/registrationForm_A.pdf
+assets/docs/Relabeller_Definition.pdf
+assets/docs/Repacker_Declaration_Undertaking.pdf
+assets/docs/Revised_2ndApril2026KindofBusinessEligibility.pdf
+assets/docs/Sample_Food_Recall_Plan_and_Guidelines.pdf
+assets/docs/Self_declaration_for_exporting_FBO.pdf
+assets/docs/SelfDeclarationforProprietorship .pdf
+assets/docs/SelfDeclarationforProprietorship.pdf
+assets/docs/SOP_Order18082020.pdf
+assets/docs/stateForm_b.pdf
+assets/docs/TatkalLicense.pdf
+assets/docs/TatkalRegistration.pdf
+assets/docs/Terms_and_Conditions_FoSCoS.pdf
+assets/docs/Tracking_the_grievance.pdf
+assets/docs/UserManualDirectSellerLicense.pdf
+assets/docs/UserManualDirectSellerRegisttration.pdf
+assets/docs/usermanualforregiistrationfillingthroughconsumerapp.pdf
+assets/docs/UT_of_Jammu_and_Kashmir_New_doc_30_Sep_2024.pdf
+assets/docs/West_Bengal_New_doc_04_Nov_2024.PDF

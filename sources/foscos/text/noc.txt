@@ -1,0 +1,49 @@
+User Manual for Relabellers to obtain online NOC from Third party /
+Contract Manufacturers
+
+Step-1: Click on the Apply license / Registration
+Step-2: Select the state and appropriate Kind of Business [KoB] and click on proceed.
+
+
+
+
+Step-3: Fill Premises details for the Application of License/Registration certificate .
+Step-4: On Product Selection page, after selection of product, in case you are a relabeller, you are required
+to add third party/contract manufacturers, click on Add Manufacturer.
+
+
+
+
+Step 5: Enter the details of Manufacturer and the Production Quantity. Click on Save
+Step 6: Click on ‘Send NOC Request’ for sending request for online NOC to the concerned Manufacturer
+
+
+
+
+      System will allow you to proceed with Pending request for NOC from the Manufacturers from this stage.
+       But, in case NOC is not received from the concerned Manufacturer[s], system will not allow you to submit the
+       application. Accordingly, it is suggested that you may inform the concerned Manufacturer to follow the below
+       steps:
+
+Steps for Manufacturers to accept/reject the request for grant of online NOC to Relabellers:
+
+Step1: After login into FoSCoS, Manufacturer shall visit ‘Relabeller NOC Application’ tab on left menu panel
+Step 2: Manufacturer can view pending request and click on proceed
+
+
+
+
+Step 3: Manufacturer may accordingly accept / reject the request for grant of NOC to the relabeller. In case,
+Manufacturer decides to grant the NOC, the same shall be signed by the Authorised Signatory.
+
+
+
+
+After grant of NOC by the Manufacturer, Relabeller will be able to make the payment for the concerned licensing
+application.
+
+In case request for NOC is Pending or Rejected by the Manufacturer, Relabeller can proceed by deleting that particular
+Manufacturer, but atleast one manufacturer shall be added with valid online NOC.
+A Manufacturer can also track the status of ‘Relabeller’s License/Registration Application’ after the grant of NOC from
+‘Rellabeller NOC application – License’ and selection status of NOC as ‘Accepted’.
+

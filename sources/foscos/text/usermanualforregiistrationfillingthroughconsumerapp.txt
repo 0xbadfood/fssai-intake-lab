@@ -1,0 +1,33 @@
+1.User manual of Registration application filing through Consumer
+App for FBO:-
+
+Step 0: Users can log on to this URL and download the Android application.
+      https://play.google.com/store/apps/details?id=safety.connect.food
+Step 1: Open food safety connect app by clicking on icon.
+Step 2:Click on apply for registration orange colour button on first screen.
+Step 3: Click on apply for registration orange colour button on first screen.
+
+
+
+
+Step 4: Click on drop down and select your state and KOB’s
+Step 5: Fill all required registration details to file the registration through app and
+process.
+
+
+
+
+Step 6: Fill primary contact details and secondary contact details along with
+password and click on submit.
+Step 7: Fill OTP received on your contact number and email id. A dialogue will open
+up read the instructions, then press ok
+Step 8: Upload all required documents like photo,ID proof and other documents.
+
+
+
+
+Step 9: Click on preview application and you can see all details filled by you till now
+and download application form.
+Step 10: Pay amount of registration by selecting any payment mode and download
+receipt.
+

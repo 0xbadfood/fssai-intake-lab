@@ -1,0 +1,25 @@
+The User manual for link Head Office:-
+
+
+1. Link Head Office license while applying for new license:-
+
+Step 0: Users can log on to this URL https://foscos.fssai.gov.in on the web browser
+and click on Apply for license /registration. Fill in all the details on the communication
+page, add the Head office license number if you have any, and click on add to link it.
+
+
+
+
+Step 1: Users can log in with their Head office license number and click on the side
+menu - “Head office license.”
+Step 2: Click on proceed to see a pop-up, and select your license number from
+the dropdown. Now enter the password to link the license with the Head office
+license.
+
+
+
+
+Step 3: The user will get the message once the license is linked successfully.
+Step 4: To check if the license got linked or not with the head office, click on
+the view button under the linked license column.
+

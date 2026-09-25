@@ -1,0 +1,45 @@
+The User manual of File Annual Return:-
+
+
+Note:-From Step 2, the flow will be the same for 'File Annual return' and 'File Express
+Annual Return.'
+
+1. File Express Annual Return:-
+
+Step 0: Users can log on to this URL https://foscos.fssai.gov.in on the web browser
+and click on Fill express Annual return.
+
+
+
+
+Step 1: Users can log in with their license number and validity end date and click on
+submit.
+2. File Annual Return:-
+
+Step 0: Users can log on to this URL https://foscos.fssai.gov.in on the web browser
+and click on Fill Annual return By logging in with Application Ref. No./License
+No./Certificate No.
+
+
+
+
+Step 1: Select the Annual Return in the side menu list and click on the fill
+Annual return sub-menu.
+Step 2: Users need to click on proceed.
+
+
+
+
+Step 3: Users need to submit valid OTP.
+Step 4:Users need to click on File Annual Return as per the Annual year user want
+to fill.
+
+
+
+
+Step 5: Users need to fill the whole Form “D-1”
+Step 6: Users may avail the facility to file a revised annual return by clicking on the
+File Revise Return button.
+The preview is also available by clicking on the Detail button.
+Step 7: If Users click on the File revised return, System asks for confirmation.
+

@@ -1,0 +1,420 @@
+FoRTrace
+[Fortified Rice Traceability Application]
+
+User Manual for Manufacturers of FRK
+ A manufacturer of FRK receives premix powder from premix manufacturers and rice flour from
+ suppliers/other manufacturers. Using these two ingredients, FRK kernels are manufactured and tested and
+ approved FRK kernels will be dispatched to Miller.
+
+ 1.1 Process:
+ The key functionalities that occur at FRK level is as described below.
+     1. There will be 2 roles at FRK vendor level, admin has access to both.
+           a. Approver: Who receives Premix lots and acknowledge and verify the lot quality and get
+               it tested at lab if required and finally either approve the Lot or reject the lot
+           b. User: Who creates Rice flour batches and FRK batches and send sample to lab and
+               dispatch the approved batches to Miller.
+     2. Addition of Raw Materials into the organization/portal: While procuring the raw materials
+        (Rice powder) from suppliers, the details of procurement need to be added in this portal as well.
+        These details are used at the time of FRK batch creation. User can choose the list of raw materials
+        added as input at the time of Premix batch creation. Similarly, another key raw material (premix
+        powder) will be procured from premix vendors. Once the Lot is dispatched from Premix vendor,
+        it will be populated to FRK vendor under Lot Dispatched category. After receiving the Lot, the
+        approver from FRK Vendor will acknowledge that the lot is received and further, can review the
+        lab reports of the premix powder in Lot details page and if lab reports are satisfactory, the lot can
+        be approved. If the Lot lab report is not good, the approver can send sample to Lab and get latest
+        lab report and based on the report, the lot can be approved or rejected automatically. The rejected
+        lots will be sent back to Premix vendor and approved Lots will be used in FRK Batch creation as
+        input raw material.
+     3. Creation of Batch: Once raw materials are added, user can create a FRK batch where raw
+        materials that are used in the batch will be taken as input and a batch will be created in the
+        application.
+     4. Sending sample to the Lab: After a FRK batch is created, a sample needs to be sent to Lab.
+        Once the lab tests are completed, lab report will be auto populated in FRK batch details page. If lab
+        result is positive, FRK user can view the updated stage as ‘Batch ready to be dispatched’
+        automatically, now FRK user has to add packaging info and dispatch the lot to MILLER
+        Manufacturer. If lab report is unsatisfactory, automatically FRK user can view the updated stage
+        as ‘Rejected’ and should not be able to send any lot to MILLER manufacturer.
+     5. Dispatch: Once the Batch ready to be dispatched, User can prepare packaging bags details in the
+        batch details page and dispatch a few/all bags to miller manufacturer.
+     6. Acknowledgement from miller Manufacturer: Once dispatched material is received by miller
+        manufacturer, they may review lab report, may go for additional lab testing of the FRK and accept
+        the material. If lab report is unsatisfactory, automatically that lot is rejected and miller
+        manufacturer can send it back to FRK manufacturer.
+ The functionality related to FRK manufacturer is described in the next section.
+
+
+ 1.2 Login:
+ To log into the system as a FRK admin, go to the “FoSCoS” portal by using the link: https://FoSCoS.fssai.gov.in/
+
+A FoSCoS Home page will be displayed as shown in the figure below.
+                                   Figure 1: FoSCoS Home page
+
+   Click on the “Login Food Businesses”
+
+   Enter the License/Registration/Application number: - Enter a valid
+    License/Registration/Application number
+
+   Click on “proceed”
+   Enter password: - Enter a valid password
+   Enter Captcha: - Enter the Displayed Captcha
+   To continue click on the Sign-in button.
+   Verification Code: Enter the verification code that you received in the registered Mobile
+    number/Email. User will be navigated to the FoSCoS Dashboard page as shown in figure below.
+                                        Figure 2: FoSCoS Dashboard page
+
+   Click on the “Issued”
+   Click on the “Issued – License” Expandable button.
+User will navigate to the page as shown in figure below:
+
+
+
+
+                                       Figure 3: Login page
+
+       Now click on the “Login to FRQMS”
+       User will be navigated to the FRQMS landing page.
+                                 Figure 4: FRQMS Landing page
+1.3 Lot Approval by Admin:
+ (i)     Click on All/Lot dispatched from side menu, Admin can see list of lots that are present at
+         FRK from premix vendors.
+
+
+
+
+                                         Figure 5: Details of dispatched lot
+
+
+ (ii)    Click on a lot dispatched, user will get PREMIX LOT DETAILS page.
+ (iii)   To acknowledge lot is received, click on Lot Received as shown in below image. It updates the
+         status of Lot from Lot dispatched to lot received and Premix vendor will also get the updated
+         status of Lot that lot is been received by FRK.
+ (iv)    User needs to enter the date on which lot is received and comments (if any) and click yes on
+      popup while acknowledging that lot is received. A prompt will be shown that lot is received.
+
+
+
+
+                                  Figure 6: Premix lot details page
+
+
+
+
+                           Figure 7: success toast message of receiving lot
+
+
+(v)   Clicking on lot received from left side menu populates list of lots acknowledged by admin.
+                                      Figure 8: Premix lots received
+
+(vi)   Click on lot to see lot details page with possible actions of ‘Sample send to lab’, ‘Accept’,
+       ‘Test rejected ready to send back’ as shown in below image.
+
+
+
+
+        Figure 9: Option for FRK admin to accept, reject or send sample to lab for premix lot
+
+
+(vii) If user clicks on send sample to lab, the sample will be sent to lab and lab will do necessary tests
+       and publish the test report.
+(viii) If the lab report is satisfactory, automatically admin user can see the lot stage as ‘Accepted’ and if
+       the report is unsatisfactory, automatically admin user can see the lot stage as ‘Rejected’ and
+       admin can sent back by clicking on ‘send rejected lot’.
+(ix)   After clicking on Test rejected Ready to send back, an action will be shown on lot details page as
+       ‘send rejected lot’. Clicking on it will send the lot back to premix vendor.
+(x)    If the user clicks on Accept button as shown in above image. Then one popup will come, here user
+       can enter approved date, enter comments and click on Accept. Again, one confirmation popup
+        message will appear, here user have to click on Yes button.
+ (xi)   Then success notification message will be shown as lot has been accepted and is available for use
+        as shown in below image.
+
+
+
+
+                               Figure 10: Success message for accepted lot
+
+
+ (xii) Clicking on Accepted from left side menu will populate all lots that are approved by admin
+
+
+
+
+                                 Figure 11: List of Premix accepted lots
+
+
+
+1.4 Key features of FRK Admin:
+On successful login, user will be navigated to below landing page.
+                        Figure 12: Landing page of FRK admin
+
+
+
+
+                Figure 33 (a): Creating Rice Mix (Raw material for FRK)
+
+
+Admin can download the rice-mix table data by clicking on Download button.
+
+
+
+1.4.1 Creating Rice Mix:
+Click on Rice Mix in the side drawer of the landing page, a Grid will be displayed on the screen with a ‘+’
+icon at bottom right.
+On clicking ‘+’ icon, a form will be displayed as shown below. Then click on ‘Add new vendor’ button, a
+popup form will open as shown below
+The user needs to fill the details in the form which consists of:
+Vendor Details:
+    a)   Name of the vendor: Name represents manufacturer/supplier name.
+    b)   Vendor type: Choose the type of vender whether manufacturer or trader or broker.
+    c)   Emal Id: Enter mail address of the vendor.
+    d)   Mobile Number: Enter mobile number of the vendor.
+    e)   Address Lane one: Enter the address of the vendor.
+    f)   Address Lane two: Enter the address of the vendor.
+    g)   Pin code: Enter pin code of the vendor.
+    h)   Country: Select country.
+    i)   States: Select state.
+    j)   Districts: Select districts.
+    k)   Village/City: Enter name of the village/city.
+
+
+On clicking on “Vendor with FSSAI license number”, a form will appear as shown in below images
+where user can search License number of the vendor and details will be auto filled in the vendor details.
+Lot details:
+    a)   Name: Enter name of the rice-mix.
+    b)   Raw Material Type: Enter type of rice-mix used in FRK creation.
+    c)   Manufacturing Lot Number: Enter manufacturing lot number (if any).
+    d)   Batch no (Auto Generated): Batch number of rice-mix will generate automatically.
+    e)   Manufacturing date: Select manufacturing date of rice-mix.
+    f)   Expiry date: Select expiry date of rice-mix.
+    g)   Percentage to be used in mix: Mention the percentage of rice-mix to be used in FRK batch.
+    h)   Total quantity (in kg): Enter quantity of raw material in kg.
+    i)   Rice Type: Choose rice type procured from the vendor (raw / boil).
+    j)   Attachments: Add any attachments/rice-mix reports that are associated with rice mix.
+Figure 14: Form to capture rice mix details
+
+
+
+
+   Figure 15: Form to add new vendor
+        Figure 16: Form after clicking Vendor with FSSAI license number button
+
+Once all the data pertaining to the procured raw materials/rice mix is added. Click on the create button as
+shown in figure above.
+On successful creation of lot, a confirmation message will appear on the screen as shown in figure below.
+
+
+
+
+                           Figure 17: Success toast after creating of rice mix lot
+
+
+1.4.2 Creating batch
+  (i)   To create a batch, click on FRK tab in the side drawer of the landing page as shown in figure below.
+        A grid will be displayed on the screen with a ‘+’ icon at bottom right.
+                                   Figure 18: Creating FRK batch
+
+
+(ii)    On clicking ‘+’ icon, a form will appear as shown above. The user needs to fill in the form
+        details which consists of:
+       Vendor details: -
+       (a) Name of Vendor: Name of your organization is populated,
+       (b) FSSAI License: FSSAI license number is auto populated,
+       (c) Vendor type: Select vendor type,
+       (d) Address: Vendor address is auto populated,
+       Select checkbox if Manufacturer is accredited by any agency
+       Batch details:
+       a) Name: enter name of the batch,
+       b) Manufacturing Batch Number: Enter Manufacturing Batch Number (if any).
+       c) Batch No: batch number will generate automatically.
+       d) Manufacturing date: Enter manufacturing date.
+       e) Expiry date: Enter expiry date.
+       f) % to be used: Enter percentage of this FRK to be used at Miller manufacturing time.
+       g) Total quantity (in Kgs): Quantity of FRK generated under this batch.
+       h) Material details: - Click on add rice mix and premix and select the rice mix, premix to be
+          consumed under this batch & enter quantity & select units.
+       i) Instructions: Enter the instructions that FRK manufacturer should be notified at the time usage of
+          this premix powder as raw material in FRK generation.
+       j) Attachments: User can upload material specification sheet and technical specification sheet and
+          any additional attachments that are associated with Premix powder.
+                                     Figure 18: FRK batch create page
+After entering the batch details in the form, click on the create button as shown in figure above.
+On successful creation of batch, a confirmation message will appear on the screen as shown in figure
+below.
+
+
+
+
+                   Figure 20: Success message for creation of FRK batch
+In the left side menu under Batch, the user can see created batches in All and Created options as shown
+in figure below. The “All” tab displays a consolidated list of all batches under various categories such as
+created, sent to lab for testing. Testing done, accepted, rejected etc. Under “Created” tab, a list of the
+batches created by the user is displayed.
+                          Figure 21: Displaying created FRK batches
+
+1.5 Send samples for lab testing
+The FRK manufactured in a specific FRK unit needs to be tested in designated laboratories.
+ (i)    To send the manufactured sample to the lab, click on the created batch from the grid
+        and the batch details page is displayed.
+ (ii)   Scroll down to the end of the batch and click on ‘Send Sample to Lab’ button and enter the
+        date,
+        select lab name and comments and click on submit button.
+(iii)   This will initiate the process of dispatching the sample to the lab in offline mode.
+(iv)    An acknowledgment will be sent by the lab, once the Lab receives the sample and lab
+        reports will be published after performing the lab tests.
+ (v)    If sample sent is in damaged condition, Lab may reject the sample and FRK manufacturer
+        may need to resend the sample using above process.
+
+
+
+
+                          Figure 22: Sending sample to lab for testing
+                            Figure 23: send sample to lab popup form
+
+
+   (vi) User can see success message as ‘sample has been sent to lab for testing’ as shown
+in below image.
+
+
+
+
+                      Figure 24: Success message after sample is sent to lab
+(vii)    Once testing on sample is completed, And if the report is satisfactory then the stage of the
+         batch
+         will be changed to ‘Batch ready to be dispatched’.
+(viii)   From the side menu, the user can click on ‘Batch ready to be dispatched’ to see list of batches
+         in
+         the grid with the stage of Batch ready to be dispatched as shown below.
+ (ix)    Clicking on the batch will populate the batch details which also includes test results.
+                    Figure 25: Batch ready to be dispatched stage for FRK user
+  (x)    If the lab report is unsatisfactory, the stage of batch will be shown as ‘Rejected’. Click on
+         ‘Rejected’
+         from the side menu to see list of rejected samples from lab as shown below.
+
+
+
+
+                                 Figure 26: List of rejected samples
+ (xi)    User can click on ‘Batch ready to be dispatched’ in the side menu to see list of batches ready
+         for
+         dispatch.
+(xii)    On clicking any particular batch from the list, FRK BATCH DETAILS page will open
+         where the packaging information is to be added to dispatch the selected batch.
+(xiii)   Expand packaging info and click on add, enter size, units and quantity. Click on save
+         packaging info. For example, if batch is generated for 1000kg and if this has to be
+         dispatched as 20kg bags of 50 units, the same details to be added in packaging details
+         section as shown below in fig 46.
+(xiv)    These bag details will be populated while dispatching the FRK.
+
+
+User can also delete packaging info by clicking on the delete button.
+
+
+
+
+                                  Figure 27: Added Packing Info
+1.6 Dispatch:
+  (i)    After adding package details in a batch, the option to Dispatch will be enabled at the
+         end of the page.
+  (ii)   Click on Dispatch as shown in image below.
+
+
+
+
+                                Figure 28: Dispatching FRK batch
+A popup page will open as shown in the image below. Enter the following details:
+    a) Manufacture Lot number: Enter manufacture lot number (if any).
+    b) Dispatch Date: Enter dispatch date (present date is populated as default date).
+    c) Manufacture Select: Choose between two options (Dropdown & License Number) for
+       Miller vendor.
+    d) Dropdown:
+           a. Manufacturer type: Select manufacturer type public/private. Public
+               manufacturers are those Miller/Warehouse who are registered with
+               Government and are eligible to generate Miller (Fortified Rice). Private
+               manufacturers are those from the market who can trade for their own purposes.
+           b. Manufacturer name: For Public type, select the Miller/Warehouse vendor
+               from the dropdown list.
+    e) License Number:
+           a. Manufacture License Number: Enter a valid license number to search.
+           b. Search Button: Click on Search button after entering a valid license number.
+           c. Manufacture Name: It will be auto-populated after clicking search button.
+    f) Addition of baggage: Click on ‘add item’ & select bag size & enter quantity.
+
+User can delete added items and can re-enter the data at this stage, if required.
+Once lot details are added, click on Dispatch lot as shown in below image and click on ‘Yes’ in
+popup to
+dispatch the lot to FRK Vendor.
+Then success toast message will be displayed as shown below.
+
+
+
+
+                                     Figure 29: Dispatch a lot
+                           Figure 30: Success toast for dispatching lot
+
+
+If the batch is not fully dispatched, its status will be changed to partially dispatched. User can
+dispatch bags to multiple vendors also using Dispatch feature. The details of dispatched lots are
+shown under ‘Usage Details’ section in details page.
+
+
+
+
+                                Figure 31: List of dispatched lot
+
+
+     Note:- Dispatched lot will be shown under “Packaging Info” section as shown below.
+                        Figure 32: Details of dispatched lot
+
+Refer to the side menu for Lot category. Clicking on ‘All’ populates list of all lots that are
+dispatched to FRK and accepted/rejected by FRK. Clicking on ‘Lots Dispatched’ will populate
+list of batches that are dispatched to FRK but not yet received by FRK. Clicking on ‘Lot sent
+back’ will populate a list of lots sent back by FRK vendor. Clicking on ‘Rejected lot received’
+will populate a list of lots received back to Premix vendor.
+
+
+
+
+                        Figure 33: Rejected lot received by FRK user
+
+
+
+
+1.7 Managing Users:
+Admin can add new users from User tab under Manage tab in side-drawer.
+
+
+
+
+                               Figure 34: Manage User page
+
+
+
+1.7.1 Adding New Users
+      Admin can add new users by clicking on the + button in the right-corner.
+      Admin can view ‘User Create’ form after clicking on the + button.
+
+
+
+
+                       Figure 35: User create form
+
+      Enter First Name, Last Name, Username, Email ID, Password, Confirm Password.
+      Click on Add role button.
+                        Figure 36: After clicking on the add role button
+
+   Add category, select role & click on “Add User” button.
+   For FRK, Admin needs to provide 2 roles to user, i.e. Approver and User.
+   Category -> FRK & Role -> User
+   Category -> FRK & Role -> Approver
+   After clicking on “Add User” button a successful toast will appear saying
+    “User Created Successfully”.
+
+
+
+
+                        Figure 37: User Created Successfully message
+
+   Admin can use these credentials for the newly created user, it will have only user access
+    and will not have manage tab in the side-drawer.
+   These newly created credentials should be used on this link: https://frqms.fssai.gov.in/
+   The existing records will be shown to the newly created user.
+

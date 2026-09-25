@@ -1,0 +1,13 @@
+{
+  "name": "fssai-intake-lab",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Intake automaton + knowledge graph experiment (see DESIGN.md). No UI; the CLI is the front end.",
+  "bin": { "lab": "cli/lab.mjs" },
+  "scripts": {
+    "check": "node cli/lab.mjs check",
+    "parity": "node cli/lab.mjs walk --parity",
+    "test": "node --test tests/"
+  }
+}

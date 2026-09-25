@@ -1,0 +1,39 @@
+How to apply for modification of license/registration?
+
+    Step 1: Open a web browser and search for https://foscos.fssai.gov.in/ Click on the
+              green box “Modification of License and Registration Fee: Rs.1000 for License
+              Rs.100 for Registration”
+
+
+
+
+Step 2: Log in with Application Ref No./license No./registration certificate No. to modify and proceed
+with the modification process
+Step 3: After Login with Application Ref No./license No./registration No. Click on the
+modification button in the side menu and click on apply for modification in lic/reg.
+NOTE:- Select the details which you want to change. There are twotypes of modification
+as explained below:This requires complete revision , kindly see screenshot below for
+current version of modification.
+
+
+
+
+◦ Scenario 1: If you select any (or all) of the top three category or top three along with any
+  of the last two categories then it is called normalmodification and everything will be
+  modifiable in application. For instance, if user selects any one of the options like
+  Company Name, Registered office address details or kind of business/product/quantity
+  details and
+  selects any one or both the last two options then all the sections will be modifiable by
+  user. Look into the figures below for reference:
+◦ Scenario 2: If any of the last two categories is selected or both are selected then it is
+  called Non–form C Modification and only those fields will be modifiable which are not
+  printed on license and rest all other details will be modifiable. For instance, selecting
+  Contact Details or Supporting Documents or both. Look into figures below for reference:
+Step 4: Proceed with Form B modification, fill and modify details which require changes. On
+“Required Documents” page, upload all documents again in both scenarios, fill in the
+purpose of modification, tick check boxfor accepting declaration and click on “Save & Next”
+to proceed.
+Step 5: A green pop up will appear on top right corner of page to confirm that the
+modification is successfully submitted and the concerned officer willtake further course
+of action to generate license.
+

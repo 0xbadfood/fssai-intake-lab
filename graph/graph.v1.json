@@ -1,0 +1,393 @@
+{
+  "version": 1,
+  "name": "Parity port of fssai-portal src/lib/intakeQuestions.js + applicationPlan.js/eligibility.js (2026-09-25)",
+  "note": "v1 reproduces the live portal exactly, as a regression baseline. It is NOT the corrected licensing logic: graph.v2 is built from the FoSCoS 2026 eligibility table. Every edge is 'draft' because none has had expert review.",
+
+  "enums": {
+    "states": [
+      "Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh",
+      "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir",
+      "Jharkhand", "Karnataka", "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya",
+      "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
+      "Uttar Pradesh", "Uttarakhand", "West Bengal"
+    ],
+    "popularStates": [
+      "Maharashtra", "Karnataka", "Delhi", "Tamil Nadu", "Uttar Pradesh", "Gujarat",
+      "Telangana", "West Bengal", "Kerala", "Rajasthan", "Haryana", "Punjab"
+    ],
+    "stateAliases": {
+      "orissa": "Odisha", "pondicherry": "Puducherry", "uttaranchal": "Uttarakhand", "nct of delhi": "Delhi", "new delhi": "Delhi",
+      "jammu & kashmir": "Jammu and Kashmir", "andaman & nicobar islands": "Andaman and Nicobar Islands", "bombay": "Maharashtra"
+    }
+  },
+
+  "keys": [
+    { "id": "activities", "type": "list", "enum": ["cook", "make", "sell", "import"], "keepEmpty": true },
+    { "id": "trade", "type": "list", "enum": ["retail", "wholesale", "storage", "transport"] },
+    { "id": "food_business", "type": "bool" },
+    { "id": "municipal_registered", "type": "bool" },
+    { "id": "sells_online", "type": "bool" },
+    { "id": "ecommerce_platform", "type": "bool" },
+    { "id": "opt_in_registration", "type": "bool" },
+    { "id": "place", "type": "enum", "enum": ["street", "home", "premises", "hub", "vehicles"] },
+    { "id": "locations", "type": "enum", "enum": ["one", "many", "multistate"] },
+    { "id": "nonfood_reason", "type": "enum", "enum": ["family", "own-use", "non-food"] },
+    { "id": "turnover_crore", "type": "number", "min": 0, "below": 1000000 },
+    { "id": "states", "type": "states" },
+    { "id": "products", "type": "strings", "maxItems": 20, "maxLength": 60 },
+    { "id": "city", "type": "string", "maxLength": 60 },
+    { "id": "description", "type": "string", "maxLength": 500 }
+  ],
+
+  "keep": [
+    { "key": "food_business", "when": { "not": { "nonempty": "activities" } } },
+    { "key": "nonfood_reason", "when": { "eq": ["food_business", false] } },
+    { "key": "trade", "when": { "has": ["activities", "sell"] } },
+    { "key": "municipal_registered", "when": { "eq": ["place", "street"] } }
+  ],
+
+  "derive": [
+    { "key": "kob", "when": { "known": "activities" }, "list": [
+      { "when": { "has": ["activities", "cook"] }, "value": "foodService" },
+      { "when": { "has": ["activities", "make"] }, "value": "manufacturer" },
+      { "when": { "any": [{ "has": ["activities", "sell"] }, { "has": ["activities", "import"] }] }, "value": "tradeRetailStorageTransport" }
+    ] },
+    { "key": "importer", "when": { "known": "activities" }, "bool": { "has": ["activities", "import"] } }
+  ],
+
+  "defs": {
+    "food": { "nonempty": "activities" },
+    "notFood": { "all": [{ "known": "activities" }, { "empty": "activities" }, { "eq": ["food_business", false] }] },
+    "deemed": { "all": [{ "eq": ["place", "street"] }, { "eq": ["municipal_registered", true] }] },
+    "retailOnlyIfSelling": { "any": [{ "not": { "has": ["activities", "sell"] } }, { "only": ["trade", ["retail"]] }] },
+    "outletOnly": { "all": [{ "only": ["activities", ["cook", "sell"]] }, { "ref": "retailOnlyIfSelling" }] },
+    "homeAllowed": { "all": [{ "only": ["activities", ["cook", "make", "sell"]] }, { "ref": "retailOnlyIfSelling" }] },
+    "transportOnly": { "all": [{ "only": ["activities", ["sell"]] }, { "nonempty": "trade" }, { "only": ["trade", ["transport"]] }] },
+    "storageOrTransportOnly": { "all": [{ "only": ["activities", ["sell"]] }, { "nonempty": "trade" }, { "only": ["trade", ["storage", "transport"]] }] },
+    "multistate": { "any": [{ "eq": ["locations", "multistate"] }, { "gt": [{ "len": "states" }, 1] }] },
+    "centralOverride": { "any": [
+      { "has": ["activities", "import"] }, { "eq": ["place", "hub"] }, { "eq": ["ecommerce_platform", true] }, { "ref": "multistate" }
+    ] },
+    "homeKitchen": { "any": [{ "has": ["activities", "cook"] }, { "has": ["activities", "make"] }] },
+    "vehicles": { "eq": ["place", "vehicles"] }
+  },
+
+  "facts": [
+    {
+      "id": "activity",
+      "multi": true,
+      "title": "What does your business do with food?",
+      "hint": "Tap everything that applies.",
+      "keys": ["activities", "kob", "importer"],
+      "alsoClears": ["food_business"],
+      "relevant": true,
+      "answered": { "known": "activities" },
+      "apply": { "list": "activities", "unset": ["food_business"] },
+      "value": { "key": "activities", "empty": "none" },
+      "show": { "values": "activities", "join": " · ", "empty": "None of these" },
+      "changeLabel": "what I do",
+      "values": [
+        { "id": "cook", "emoji": "🍳", "label": "Cook & serve", "example": "Restaurant, café, tiffin service, cloud kitchen, caterer, canteen", "show": "Cooks & serves food" },
+        { "id": "make", "emoji": "🏭", "label": "Make or pack", "example": "Bakery, pickles, namkeen, spices, dairy, repacking, bottled water", "show": "Makes or packs food" },
+        { "id": "sell", "emoji": "🛒", "label": "Sell, store or transport", "example": "Kirana shop, distributor, wholesaler, cold storage, delivery vans", "show": "Sells, stores or transports food" },
+        { "id": "import", "emoji": "🚢", "label": "Import food", "example": "Bring food products into India from another country", "show": "Imports food" },
+        { "id": "none", "emoji": "🤷", "label": "None of these", "example": "I'm not sure my business involves food", "exclusive": true,
+          "apply": { "set": { "activities": [] }, "unset": ["food_business"] } }
+      ]
+    },
+    {
+      "id": "nonfood",
+      "note": "Workflow step 1: is it a food business under the FSS Act?",
+      "title": "Which of these is closest?",
+      "keys": ["food_business"],
+      "alsoClears": ["nonfood_reason"],
+      "relevant": { "all": [{ "known": "activities" }, { "empty": "activities" }] },
+      "answered": { "known": "food_business" },
+      "apply": { "set": { "food_business": false, "nonfood_reason": "$id" } },
+      "value": { "key": "nonfood_reason", "default": "non-food", "when": { "eq": ["food_business", false] } },
+      "show": { "values": "nonfood_reason", "empty": "Not a food business" },
+      "values": [
+        { "id": "family", "emoji": "🏠", "label": "I cook only for my family", "example": "Nothing is sold or served to others", "show": "Cooks only for family" },
+        { "id": "own-use", "emoji": "🌾", "label": "I grow food for my own use", "example": "Kitchen garden or farm produce you eat yourself", "show": "Grows food for own use" },
+        { "id": "non-food", "emoji": "🧴", "label": "My products are not food", "example": "Cosmetics, utensils, packaging, cleaning products", "show": "Products are not food" },
+        { "id": "back", "emoji": "↩️", "label": "Actually, I do one of those", "example": "Go back to the previous question",
+          "apply": { "unset": ["activities", "kob", "importer", "food_business"] } }
+      ]
+    },
+    {
+      "id": "trade",
+      "multi": true,
+      "title": "What kind of selling, storing or transport?",
+      "hint": "Tap everything that applies.",
+      "keys": ["trade"],
+      "relevant": { "has": ["activities", "sell"] },
+      "answered": { "nonempty": "trade" },
+      "apply": { "list": "trade" },
+      "value": { "key": "trade" },
+      "show": { "values": "trade", "join": " · " },
+      "changeLabel": "what I sell",
+      "values": [
+        { "id": "retail", "emoji": "🏬", "label": "Sell to customers", "example": "Kirana, supermarket, sweet shop, fruit stall, online shop", "show": "Sells to customers" },
+        { "id": "wholesale", "emoji": "📦", "label": "Wholesale or distribution", "example": "Supply shops, restaurants or other businesses", "show": "Wholesale / distribution" },
+        { "id": "storage", "emoji": "❄️", "label": "Store food", "example": "Warehouse, godown, cold storage", "show": "Stores food" },
+        { "id": "transport", "emoji": "🚛", "label": "Transport food", "example": "Trucks, tempos, refrigerated vans", "show": "Transports food" }
+      ]
+    },
+    {
+      "id": "place",
+      "title": { "cases": [
+        { "when": { "only": ["activities", ["make"]] }, "text": "Where do you make or pack it?" },
+        { "when": { "only": ["activities", ["cook"]] }, "text": "Where do you cook?" },
+        { "text": "Where do you run it from?" }
+      ] },
+      "keys": ["place"],
+      "relevant": { "ref": "food" },
+      "answered": { "known": "place" },
+      "apply": { "key": "place" },
+      "value": { "key": "place" },
+      "show": { "values": "place" },
+      "changeLabel": "where I run it",
+      "values": [
+        { "id": "street", "when": { "ref": "outletOnly" }, "emoji": "🛺",
+          "label": { "cases": [{ "when": { "has": ["activities", "cook"] }, "text": "A cart, stall or food truck" }, { "text": "A cart or street stall" }] },
+          "example": { "cases": [{ "when": { "has": ["activities", "cook"] }, "text": "Chaat cart, tea stall, pav bhaji thela, food truck" }, { "text": "Fruit or vegetable cart, snack or paan stall" }] },
+          "show": "Street cart / stall" },
+        { "id": "home", "when": { "ref": "homeAllowed" }, "emoji": "🏠",
+          "label": { "cases": [{ "when": { "ref": "homeKitchen" }, "text": "My home kitchen" }, { "text": "From my home" }] },
+          "example": { "parts": [
+            { "when": { "has": ["activities", "cook"] }, "text": "tiffin service, home chef" },
+            { "when": { "has": ["activities", "make"] }, "text": "home bakery, homemade pickles or snacks" },
+            { "when": { "has": ["activities", "sell"] }, "text": "home-based shop, selling packaged food online" }
+          ], "join": "; ", "capitalize": true },
+          "show": { "cases": [{ "when": { "ref": "homeKitchen" }, "text": "Home kitchen" }, { "text": "From home" }] } },
+        { "id": "premises",
+          "emoji": { "cases": [{ "when": { "has": ["activities", "make"] }, "text": "🏭" }, { "text": "🏪" }] },
+          "label": { "prefix": "A ", "join": "or", "empty": "business premises", "parts": [
+            { "when": { "has": ["activities", "cook"] }, "text": "restaurant" },
+            { "when": { "has": ["activities", "make"] }, "text": "factory" },
+            { "when": { "has": ["trade", "retail"] }, "text": "shop" },
+            { "when": { "any": [{ "has": ["trade", "wholesale"] }, { "has": ["trade", "storage"] }] }, "text": "warehouse" },
+            { "when": { "any": [{ "has": ["activities", "import"] }, { "has": ["trade", "transport"] }] }, "text": "office" }
+          ] },
+          "example": { "prefix": "Owned or rented: ", "join": "; ", "parts": [
+            { "when": { "has": ["activities", "cook"] }, "text": "restaurant, café, canteen, cloud kitchen" },
+            { "when": { "has": ["activities", "make"] }, "text": "factory, workshop, processing unit" },
+            { "when": { "has": ["trade", "retail"] }, "text": "shop, kirana, supermarket" },
+            { "when": { "any": [{ "has": ["trade", "wholesale"] }, { "has": ["trade", "storage"] }] }, "text": "warehouse, godown, cold storage" },
+            { "when": { "any": [{ "has": ["activities", "import"] }, { "has": ["trade", "transport"] }] }, "text": "office or depot" }
+          ] },
+          "show": "@label" },
+        { "id": "hub", "when": { "ref": "outletOnly" }, "emoji": "✈️", "label": "Airport, railway or seaport",
+          "example": "Outlet inside an airport, station or port, or on central-government premises", "show": "Airport / railway / seaport" },
+        { "id": "vehicles", "when": { "ref": "transportOnly" }, "emoji": "🚛", "label": "Only my vehicles",
+          "example": "No shop or warehouse; just trucks or vans", "show": "Vehicles only" }
+      ]
+    },
+    {
+      "id": "vending",
+      "note": "Workflow step 3: deemed registration for registered street vendors.",
+      "title": "Is your stall registered with the municipality?",
+      "hint": "For example a vending certificate from your Municipal Corporation or Town Vending Committee.",
+      "keys": ["municipal_registered"],
+      "relevant": { "eq": ["place", "street"] },
+      "answered": { "known": "municipal_registered" },
+      "valid": true,
+      "value": { "cases": [{ "when": { "eq": ["municipal_registered", true] }, "id": "yes" }, { "id": "no" }] },
+      "show": { "cases": [{ "when": { "eq": ["municipal_registered", true] }, "text": "Yes" }, { "text": "No" }] },
+      "values": [
+        { "id": "yes", "emoji": "✅", "label": "Yes, I have a vending certificate", "example": "Issued by the municipality / Town Vending Committee", "set": { "municipal_registered": true } },
+        { "id": "no", "emoji": "❌", "label": "No", "example": "Not registered yet", "set": { "municipal_registered": false } },
+        { "id": "unsure", "emoji": "🤔", "label": "Not sure", "example": "We'll treat it as not registered", "set": { "municipal_registered": false } }
+      ]
+    },
+    {
+      "id": "locations",
+      "note": "Workflow step 7: every premise needs its own approval; a multi-state head office needs a Central Licence.",
+      "title": { "cases": [{ "when": { "ref": "vehicles" }, "text": "Where do your vehicles run?" }, { "text": "Do you run it from more than one place?" }] },
+      "keys": ["locations"],
+      "relevant": { "all": [{ "ref": "food" }, { "not": { "ref": "deemed" } }, { "not": { "implied": "locations" } }] },
+      "answered": { "known": "locations" },
+      "apply": { "key": "locations" },
+      "value": { "key": "locations" },
+      "show": { "values": "locations" },
+      "changeLabel": "number of places",
+      "values": [
+        { "id": "one", "emoji": "📍",
+          "label": { "cases": [{ "when": { "ref": "vehicles" }, "text": "Within one state" }, { "text": "Just one place" }] },
+          "example": { "cases": [{ "when": { "ref": "vehicles" }, "text": "All trips start and end in one state" }, { "text": "One shop, kitchen, unit or stall" }] },
+          "show": "One place" },
+        { "id": "many", "when": { "not": { "ref": "vehicles" } }, "emoji": "🏘️", "label": "Several places, one state",
+          "example": "Two or more outlets or units in the same state", "show": "Several places in one state" },
+        { "id": "multistate", "emoji": "🗺️",
+          "label": { "cases": [{ "when": { "ref": "vehicles" }, "text": "Across states" }, { "text": "Places in more than one state" }] },
+          "example": { "cases": [{ "when": { "ref": "vehicles" }, "text": "Vehicles based in or running through more than one state" }, { "text": "Outlets, units or offices in two or more states" }] },
+          "show": "Places in more than one state" }
+      ]
+    },
+    {
+      "id": "state",
+      "kind": "states",
+      "multi": { "eq": ["locations", "multistate"] },
+      "title": { "cases": [{ "when": { "eq": ["locations", "multistate"] }, "text": "Which states are you in?" }, { "text": "Which state is your business in?" }] },
+      "hint": { "cases": [{ "when": { "eq": ["locations", "multistate"] }, "text": "Tap every state where you have a place of business." }] },
+      "keys": ["states"],
+      "relevant": { "ref": "food" },
+      "answered": { "nonempty": "states" },
+      "valid": { "any": [
+        { "all": [{ "eq": ["locations", "multistate"] }, { "gte": [{ "len": "states" }, 2] }] },
+        { "all": [{ "not": { "eq": ["locations", "multistate"] } }, { "any": [{ "eq": [{ "len": "states" }, 1] }, { "not": { "known": "locations" } }] }] }
+      ] },
+      "show": { "joinKey": "states", "sep": ", " },
+      "changeLabel": "my states"
+    },
+    {
+      "id": "online",
+      "title": "Do you sell online?",
+      "keys": ["sells_online", "ecommerce_platform"],
+      "relevant": { "all": [{ "ref": "food" }, { "not": { "ref": "deemed" } }, { "not": { "ref": "storageOrTransportOnly" } }] },
+      "answered": { "known": "ecommerce_platform" },
+      "value": { "cases": [
+        { "when": { "eq": ["ecommerce_platform", true] }, "id": "platform" },
+        { "when": { "eq": ["sells_online", true] }, "id": "seller" },
+        { "id": "no" }
+      ] },
+      "show": { "cases": [
+        { "when": { "eq": ["ecommerce_platform", true] }, "text": "Runs a food marketplace" },
+        { "when": { "eq": ["sells_online", true] }, "text": "Sells on apps / own website" },
+        { "text": "Offline only" }
+      ] },
+      "changeLabel": "selling online",
+      "values": [
+        { "id": "no", "emoji": "🙅", "label": "No", "example": "Only in person / offline", "set": { "sells_online": false, "ecommerce_platform": false } },
+        { "id": "seller", "emoji": "📱", "label": "Yes, on apps as a seller", "example": "Swiggy, Zomato, Amazon, Flipkart, my own website", "set": { "sells_online": true, "ecommerce_platform": false } },
+        { "id": "platform", "emoji": "🌐", "label": "I run a food marketplace", "example": "An app or website where OTHER sellers list their food", "set": { "sells_online": true, "ecommerce_platform": true } }
+      ]
+    },
+    {
+      "id": "turnover",
+      "note": "Workflow step 6, asked only when no mandatory Central Licence already applies.",
+      "title": "Roughly how much do you sell in a year?",
+      "hint": "Just starting? Pick what you expect in your first year.",
+      "keys": ["turnover_crore"],
+      "relevant": { "all": [{ "ref": "food" }, { "not": { "ref": "deemed" } }, { "not": { "ref": "centralOverride" } }] },
+      "answered": { "known": "turnover_crore" },
+      "valid": true,
+      "value": { "cases": [
+        { "when": { "lte": ["turnover_crore", 1.5] }, "id": "t2" },
+        { "when": { "lte": ["turnover_crore", 50] }, "id": "t3" },
+        { "id": "t4" }
+      ] },
+      "show": { "cases": [
+        { "when": { "not": { "known": "turnover_crore" } }, "text": "—" },
+        { "when": { "lte": ["turnover_crore", 1.5] }, "text": "Up to ₹1.5 crore / year" },
+        { "when": { "lte": ["turnover_crore", 50] }, "text": "₹1.5 – ₹50 crore / year" },
+        { "text": "Above ₹50 crore / year" }
+      ] },
+      "changeLabel": "my yearly sales",
+      "values": [
+        { "id": "t2", "emoji": "🌱", "label": "Up to ₹1.5 crore", "example": "Up to about ₹41,000 a day — a stall, home business, shop or small restaurant", "set": { "turnover_crore": 1.5 } },
+        { "id": "t3", "emoji": "🌳", "label": "₹1.5 crore – ₹50 crore", "example": "Up to about ₹13.7 lakh a day — a factory or restaurant chain", "set": { "turnover_crore": 50 } },
+        { "id": "t4", "emoji": "🏔️", "label": "More than ₹50 crore", "example": "A large manufacturer or distributor", "set": { "turnover_crore": 51 } }
+      ]
+    }
+  ],
+
+  "edges": [
+    { "id": "home-one-place", "rel": "implies", "status": "draft", "key": "locations", "value": "one", "questions": ["place", "locations"],
+      "when": { "eq": ["place", "home"] },
+      "message": { "cases": [
+        { "when": { "ref": "homeKitchen" }, "text": "You run it from your home kitchen, but also said you have several places. Which is right?" },
+        { "text": "You run it from home, but also said you have several places. Which is right?" }
+      ] },
+      "fixLabel": { "cases": [{ "when": { "ref": "homeKitchen" }, "text": "Just one place: my home kitchen" }, { "text": "Just one place: my home" }] } },
+    { "id": "home-high-sales", "rel": "unlikely", "status": "draft", "questions": ["place", "turnover"],
+      "when": { "all": [{ "eq": ["place", "home"] }, { "gt": ["turnover_crore", 1.5] }] },
+      "message": { "cases": [
+        { "when": { "ref": "homeKitchen" }, "text": "Sales above ₹1.5 crore a year are unusual for a business run from your home kitchen. Is that right?" },
+        { "text": "Sales above ₹1.5 crore a year are unusual for a business run from home. Is that right?" }
+      ] } },
+    { "id": "street-high-sales", "rel": "unlikely", "status": "draft", "questions": ["place", "turnover"],
+      "when": { "all": [{ "eq": ["place", "street"] }, { "gt": ["turnover_crore", 1.5] }] },
+      "message": "Sales above ₹1.5 crore a year are unusual for a cart or stall. Is that right?" },
+    { "id": "street-many-states", "rel": "unlikely", "status": "draft", "questions": ["place", "locations"],
+      "when": { "all": [{ "eq": ["place", "street"] }, { "eq": ["locations", "multistate"] }] },
+      "message": "Carts or stalls in more than one state are unusual. Is that right?" },
+    { "id": "small-outlet-marketplace", "rel": "unlikely", "status": "draft", "questions": ["place", "online"],
+      "when": { "all": [{ "in": ["place", ["street", "home"]] }, { "eq": ["ecommerce_platform", true] }] },
+      "message": "You said you run a food marketplace (an app where other sellers list food). Selling your own food on Swiggy or Zomato is different. Which is right?" },
+
+    { "id": "outcome-notfood", "rel": "outcome", "status": "draft", "outcome": "notfood", "when": { "ref": "notFood" },
+      "reasons": ["What you described is not a food business under the FSS Act, so FSSAI approval is not required."],
+      "guidance": "If you start selling, serving, making, storing or transporting food for others, you will need FSSAI registration or a licence." },
+    { "id": "outcome-deemed", "rel": "outcome", "status": "draft", "outcome": "deemed", "when": { "ref": "deemed" },
+      "reasons": ["Deemed FSSAI-registered under the Street Vendors (Protection of Livelihood and Regulation of Street Vending) Act, 2014."],
+      "guidance": "Maintain hygiene and safety compliance per the FSS Act. No FSSAI application is required.",
+      "upsell": "Optional: many street vendors still apply for FSSAI Registration to display the logo and build consumer trust.",
+      "optIn": { "when": { "eq": ["opt_in_registration", true] }, "licence": "registration", "reason": "You chose to apply for FSSAI Registration anyway." } },
+
+    { "id": "reason-street-unregistered", "rel": "reason", "status": "draft",
+      "when": { "all": [{ "eq": ["place", "street"] }, { "not": { "eq": ["municipal_registered", true] } }] },
+      "text": "As a street vendor not yet registered with your local Municipal Corporation / Town Vending Committee, you most likely qualify for FSSAI Registration based on turnover." },
+
+    { "id": "central-importer", "rel": "forces", "status": "draft", "to": "central", "category": "importer", "label": "Importer of food items",
+      "when": { "eq": ["importer", true] },
+      "sources": [{ "level": "B", "file": "sources/KindofBusinessEligibility-2026-04-02.txt", "page": 6, "quote": "Import is an activity where articles of trade from a foreign source is" }] },
+    { "id": "central-ecommerce", "rel": "forces", "status": "draft", "to": "central", "category": "ecommerce", "label": "E-commerce food business operator",
+      "when": { "eq": ["ecommerce_platform", true] },
+      "sources": [{ "level": "B", "file": "sources/KindofBusinessEligibility-2026-04-02.txt", "page": 6, "quote": "E-Commerce" }] },
+    { "id": "central-multistate-head-office", "rel": "forces", "status": "draft", "to": "central", "category": "multiStateHeadOffice",
+      "label": "Head / Registered office operating in more than one State/UT", "when": { "ref": "multistate" } },
+    { "id": "central-hub", "rel": "forces", "status": "draft", "to": "central", "category": "govtAirportSeaportRailway",
+      "label": "Central Govt. / Airport / Seaport / Railway premises", "when": { "eq": ["place", "hub"] } },
+
+    { "id": "turnover-bands", "rel": "threshold", "status": "draft", "fact": "turnover_crore", "default": 0,
+      "bands": [
+        { "lte": 1.5, "to": "registration", "text": "Your annual turnover is ≤ ₹1.5 Crore, which qualifies for FSSAI Registration." },
+        { "lte": 50, "to": "state", "text": "Your annual turnover is between ₹1.5 Crore and ₹50 Crore, which requires a State Licence." },
+        { "to": "central", "text": "Your annual turnover exceeds ₹50 Crore, which requires a Central Licence." }
+      ],
+      "sources": [{ "level": "B", "file": "sources/KindofBusinessEligibility-2026-04-02.txt", "page": 5, "quote": "Annual Turnover upto Registration" }] },
+
+    { "id": "note-multistate-units", "rel": "note", "status": "draft",
+      "when": { "all": [{ "eq": ["locations", "multistate"] }, { "not": { "eq": ["place", "vehicles"] } }] },
+      "text": "The Central Licence covers your head office. Each outlet or unit also needs its own registration or licence, based on its own turnover." },
+    { "id": "note-several-places", "rel": "note", "status": "draft", "when": { "eq": ["locations", "many"] },
+      "text": "Each place of business needs its own registration or licence. We start with one and repeat it for the others." },
+    { "id": "note-hub-route", "rel": "note", "status": "draft", "when": { "eq": ["place", "hub"] },
+      "text": "Filed on the airport / seaport / railway route of FoSCoS, which handles these premises." }
+  ],
+
+  "verdict": {
+    "licences": { "registration": "FSSAI Registration", "state": "State Licence", "central": "Central Licence" },
+    "rank": ["registration", "state", "central"],
+    "effectiveDate": "1 April 2026",
+    "forcedReasons": ["{to} is mandatory for: {labels}.", "This overrides the turnover-based calculation below."]
+  },
+
+  "assertions": [
+    { "id": "no-street-for-maker", "text": "street cart for a manufacturer, importer, wholesaler, store or transporter",
+      "never": { "all": [{ "eq": ["place", "street"] }, { "any": [{ "has": ["activities", "make"] }, { "has": ["activities", "import"] }, { "not": { "only": ["trade", ["retail"]] } }] }] } },
+    { "id": "no-home-for-trade", "text": "home kitchen for an importer, wholesaler, store or transporter",
+      "never": { "all": [{ "eq": ["place", "home"] }, { "any": [{ "has": ["activities", "import"] }, { "not": { "only": ["trade", ["retail"]] } }] }] } },
+    { "id": "no-hub-for-maker", "text": "airport/railway outlet for a manufacturer or importer",
+      "never": { "all": [{ "eq": ["place", "hub"] }, { "any": [{ "has": ["activities", "make"] }, { "has": ["activities", "import"] }] }] } },
+    { "id": "vehicles-only-transporter", "text": "vehicles-only for anything but a transporter",
+      "never": { "all": [{ "eq": ["place", "vehicles"] }, { "not": { "all": [
+        { "nonempty": "activities" }, { "only": ["activities", ["sell"]] }, { "nonempty": "trade" }, { "only": ["trade", ["transport"]] }
+      ] } }] } },
+    { "id": "vending-only-street", "text": "vending question outside a street cart",
+      "never": { "all": [{ "known": "municipal_registered" }, { "not": { "eq": ["place", "street"] } }] } },
+    { "id": "single-state-count", "text": "several states picked for a single-state business",
+      "never": { "all": [{ "known": "locations" }, { "not": { "eq": ["locations", "multistate"] } }, { "gt": [{ "len": "states" }, 1] }] } },
+    { "id": "multistate-count", "text": "multi-state business with one state",
+      "never": { "all": [{ "eq": ["locations", "multistate"] }, { "lt": [{ "len": "states" }, 2] }] } },
+    { "id": "trade-needs-sell", "text": "trade kinds without selling",
+      "never": { "all": [{ "known": "trade" }, { "not": { "has": ["activities", "sell"] } }] } },
+    { "id": "home-one-place", "text": "home kitchen with several places",
+      "never": { "all": [{ "eq": ["place", "home"] }, { "not": { "eq": ["locations", "one"] } }] } },
+    { "id": "central-override-honoured", "text": "central override missed",
+      "verdict": true,
+      "never": { "all": [{ "known": "$licence" }, { "not": { "eq": ["$licence", "central"] } },
+        { "any": [{ "eq": ["importer", true] }, { "eq": ["place", "hub"] }, { "eq": ["ecommerce_platform", true] }, { "gt": [{ "len": "states" }, 1] }] }] } }
+  ]
+}

@@ -1,0 +1,57 @@
+                   USER MANUAL FOR TATKAL LICENSE/REGISTRATION
+
+
+
+1. Goto FoSCoS Home Page and click on “Apply for Tatkal License/Registration”
+
+
+
+
+2. The following screenshot shows the Eligible KoB list
+3. Select KoB from the Eligible KoB list and click on proceed
+4. Click on proceed
+
+
+
+
+5. Enter the GST number and click on proceed
+6. Fill the premises details and click on Verify PAN
+
+
+
+
+7. Enter the required PAN details and click on Submit
+8. PAN details verified successfully.
+
+
+
+
+9. Select the products and click on Save & Next
+10. Enter the details for Sign Up and Click on Submit
+
+
+
+
+11. On successful Signup, the login ID is generated.
+12. Enter the Communication details.
+13. Enter the OTP received on both - Mobile and Aadhar registered mobile and click on Submit.
+
+
+
+
+14. Upload all the mandatory documents.
+15. Enter the OTP received on Aadhar registered mobile number
+
+
+
+
+16. Select the payment method
+17. E-Sign using Aadhar – Enter the Aadhar number and click on proceed.
+
+
+
+
+18. Click on Pay and proceed with the payment.
+19. After successful payment, Login to FoSCoS and download the issued License copy from the
+    “Issued” bin.
+

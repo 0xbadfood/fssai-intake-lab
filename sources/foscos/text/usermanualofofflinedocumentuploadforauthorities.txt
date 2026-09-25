@@ -1,0 +1,36 @@
+1.The User manual of Offline document upload for Authorities:-
+
+Step 0: Authorities can log on to this URL https://foscos.fssai.gov.in on the web
+browser. Sign in using username and password.
+
+
+
+
+Step 1: Select the offline document upload menu and then click on the license
+document upload sub-menu or registration document upload menu as applicable.
+Step 2: In license document upload - Enter any license no. or document Id and click
+on search (To find out single entry).
+
+
+
+
+Step 3: In license document upload - Select Upload New Offline Data option on the
+right upper corner. Enter application Ref no./License No. and click on submit..
+Step 4: In license document upload -> Offline Data Capturing -> Select Document
+Type from drop down -> Add Remarks -> Press Submit.
+
+
+
+
+Step 5: After clicking on submit, the upload document option pops up. Authority can
+upload a maximum of five documents and can view or delete them as well.
+.
+Step 6: After clicking on the back button system redirect user to the search page here
+user can see the entry which he did recently with the remark and view button.
+
+
+
+
+Step 7: Select the view button on a search page and the user can view all uploaded
+documents and have the authority to delete
+

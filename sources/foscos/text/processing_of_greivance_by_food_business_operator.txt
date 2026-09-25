@@ -1,0 +1,32 @@
+How to process the complaint received from consumer?
+Step 1: Login to the portal and navigate to “Pending Complaint”.
+
+
+
+
+                                                                   Click here
+
+
+
+
+Step 2: Search for the complaint against which action needs to be taken.
+Step 3: Click on “Proceed” against the complaint for which action needs to be taken as
+shown below:
+
+
+
+
+Step 4: Scroll down the page to “Action to be performed by Food Business Operator” and
+fill in the required fields like root cause of the issue and the corrective action which is taken
+by the Food Business Operator. Once done click on “Submit”.
+
+
+
+
+Step 5: For confirmation a green dialog box will appear on top right corner as shown below:
+
+
+
+
+NOTE: Complaints will be visible in “Closed Complaint” bin once closed by the consumer
+

@@ -1,0 +1,13 @@
+1. Bulk Email and notification :-
+
+1.1 For Central Authority and state authority.
+
+Step 0: First Open the web browser and search for FoSCoS Web portal and login to
+central authority by just login id and password,captcha.
+
+
+
+
+Step 1: Select bulk mail module in side menu.
+Step 2: Send notification and bulk mail both have specific buttons.
+

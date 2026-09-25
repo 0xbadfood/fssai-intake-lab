@@ -1,0 +1,67 @@
+User Manual for Designated Officers – for making entries against Section-D on ERC portal and
+                               viewing section-wise details
+
+ 1. After successful login into FoSCoS, Click on Eat Right Challenge 3 tab available on the
+    Dashboard
+
+
+
+
+ 2. After clicking on ‘Eat Right Challenge 3’ tab, the user will be redirected to ERC Dashboard
+
+ 3. Eat Right Challenge 3 Dashboard
+
+     You will be redirected to ERC 3 dashboard, wherein by default the summary sheet will be
+     selected. The summary sheet is the sum of data of all the taluks under a DO’s jurisdiction.
+     The final score will be based on the values of the summary sheet.
+
+
+
+
+ 4. Details of Section A will be automatically fetched from FOSCOS portal
+ 5. Details of Section B will be automatically fetched from Eat Right India portals
+ 6. Details of Section C will be automatically fetched from FOSTAC portal
+User Manual for Designated Officers – for making entries against Section-D on ERC portal and
+                               viewing section-wise details
+
+ 7. Details of Section D need to be manually uploaded by the user
+       a.
+
+
+
+
+        b. The user will have to switch to the relevant taluk prior uploading the details
+
+
+
+
+        c.   Go to section D and press the upload button against relevant activity
+User Manual for Designated Officers – for making entries against Section-D on ERC portal and
+                               viewing section-wise details
+
+        d. Enter the requested data and press submit
+
+
+
+
+ 8. To again view Section-wise details, Select ‘Summary’ from the dropdown under Taluk
+    Section
+User Manual for Designated Officers – for making entries against Section-D on ERC portal and
+                               viewing section-wise details
+
+
+
+ 9. Scores and Rankings are updated every night on FoSCoS. To view latest Scores and
+    Rankings, Go to FoSCoS Dashboard and click on View ERC Score/Ranking
+
+
+
+
+ 10. For reporting any issue pertaining to ERC portal Scores and Ranking, please send it to your
+     respective onsite managers through email. Do enclose screenshots of the error /
+     discrepancy.
+         a. Onsite Manager, NR, ro-northern@fssai.gov.in
+         b. Onsite Manager, WR, ro-western@fssai.gov.in
+         c. Onsite Manager, ER, ro-eastern@fssai.gov.in
+         d. Onsite Manager, SR, ro-southern@fssai.gov.in
+
