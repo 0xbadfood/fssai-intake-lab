@@ -35,7 +35,7 @@ export const SAMPLE_INTERPRETATIONS = [
 
 const stripLabOnly = ({ trail, provisional, expert_option, ...rest }) => rest
 
-export function walkAll(E, V, { portal = null, tree = false, mergeEvery = 0, stopOnParity = false } = {}) {
+export function walkAll(E, V, { portal = null, tree = false, mergeEvery = 0, stopOnParity = false, maxPick = null } = {}) {
   const failures = []
   const parity = []
   const verdicts = {}
@@ -53,7 +53,8 @@ export function walkAll(E, V, { portal = null, tree = false, mergeEvery = 0, sto
     const opts = E.optionsFor(q, f)
     if (!E.isMulti(q, f)) return opts.map((o) => ({ optionIds: [o.id] }))
     const normal = opts.filter((o) => !o.exclusive).map((o) => o.id)
-    return [...subsets(normal).map((ids) => ({ optionIds: ids })), ...opts.filter((o) => o.exclusive).map((o) => ({ optionIds: [o.id] }))]
+    const limit = maxPick ? maxPick(q, f) : Infinity
+    return [...subsets(normal).filter((s) => s.length <= limit).map((ids) => ({ optionIds: ids })), ...opts.filter((o) => o.exclusive).map((o) => ({ optionIds: [o.id] }))]
   }
   const label = (q, c) => `${q.id}=${c.states ? (c.states.length > 1 ? '2 states' : '1 state') : c.optionIds.join('+')}`
   const STOP = Symbol('stop')
@@ -134,12 +135,16 @@ export function walkAll(E, V, { portal = null, tree = false, mergeEvery = 0, sto
     if (E.divergences(f).length) failures.push(`ends with an open check (${E.divergences(f)[0].id}): ${where}`)
     if (canon(E.reconcile(f)) !== canon(f)) failures.push(`reconcile not stable: ${where}`)
     const e = V.verdict(f)
-    const licences = Object.values(E.graph.verdict.licences)
+    const licences = V.licenceNames()
     const ok =
       (e.outcome === 'notfood' && !e.licence) ||
       (e.outcome === 'deemed' && !e.licence) ||
+      (e.outcome === 'handover' && !e.licence && e.handover?.length) ||
       (licences.includes(e.licence) && ['A', 'B'].includes(V.formKind(e)))
     if (!ok) failures.push(`no verdict (${JSON.stringify(e)}): ${where}`)
+    const unasked = (e.missing || []).filter((k) => V.dependsOn(f, k))
+    if (unasked.length) failures.push(`verdict depends on ${unasked.join(', ')} but it was never asked: ${where}`)
+    if (e.handover?.length) stats.handover = (stats.handover || 0) + 1
     const withLicence = { ...f, $licence: V.licenceId(e) }
     for (const a of assertions) if (a.verdict && E.ev(a.never, withLicence)) failures.push(`${a.text}: ${where}`)
     const key = e.licence || e.outcome

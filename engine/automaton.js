@@ -6,8 +6,8 @@
 import { makeEvaluator } from './conditions.js'
 import { renderText } from './text.js'
 
-export function createAutomaton(graph) {
-  const ev = makeEvaluator(graph)
+export function createAutomaton(graph, ops = {}) {
+  const ev = makeEvaluator(graph, ops)
   const text = (t, f) => renderText(t, f, ev)
   const rules = graph.edges.filter((e) => e.rel === 'implies' || e.rel === 'unlikely')
   const RAW = graph.facts
@@ -19,11 +19,12 @@ export function createAutomaton(graph) {
 
   const STATE_NAMES = graph.enums.states
   const ALIASES = graph.enums.stateAliases || {}
+  const BY_LENGTH = [...STATE_NAMES].sort((a, b) => b.length - a.length)
   function matchState(value) {
     const t = String(value || '').toLowerCase().replace(/\s+/g, ' ').trim()
     if (!t) return null
     for (const [alias, name] of Object.entries(ALIASES)) if (t.includes(alias)) return name
-    return [...STATE_NAMES].sort((a, b) => b.length - a.length).find((s) => t.includes(s.toLowerCase())) || null
+    return BY_LENGTH.find((s) => t.includes(s.toLowerCase())) || null
   }
 
   // ---------- Question helpers ----------
@@ -241,9 +242,15 @@ export function createAutomaton(graph) {
     for (const k of graph.keep || []) if (!ev(k.when, f)) delete f[k.key]
     for (const d of graph.derive || []) {
       if (!ev(d.when, f)) continue
-      f[d.key] = d.list ? d.list.filter((x) => ev(x.when, f)).map((x) => x.value) : ev(d.bool, f)
+      f[d.key] = d.list ? [...new Set(d.list.flatMap((x) => deriveItems(x, f)))] : ev(d.bool, f)
     }
     return f
+  }
+
+  /** One `derive.list` entry: { when, value } adds a value; { from, except } copies another list's items. */
+  function deriveItems(x, f) {
+    if (x.from) return (Array.isArray(f[x.from]) ? f[x.from] : []).filter((v) => !(x.except || []).includes(v))
+    return ev(x.when, f) ? [x.value] : []
   }
 
   /** Older records and model output may describe the business in the portal's earlier vocabulary. */

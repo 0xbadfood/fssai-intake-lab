@@ -5,12 +5,15 @@
 //                                                   walk every path; --parity also steps the portal in lockstep
 //   lab ask     [--graph FILE]                      answer the questions interactively (taps by number)
 //   lab explain [--graph FILE] '<facts json>'       verdict for a set of facts, with the edges and sources behind it
+//   lab cases   [--graph FILE] [CASES.json]         run scenario cases (default tests/cases.v<version>.json)
 import path from 'node:path'
 import readline from 'node:readline'
 import { stdin, stdout } from 'node:process'
 import { createEngine, loadGraph, validateGraph } from '../engine/index.js'
 import { LAB_ROOT } from '../engine/graph.js'
 import { portalAdapter, walkAll } from './walk.js'
+import { runCases } from './cases.js'
+import { readFileSync } from 'node:fs'
 
 const DEFAULT_GRAPH = path.join(LAB_ROOT, 'graph/graph.v1.json')
 const DEFAULT_PORTAL = path.resolve(LAB_ROOT, '../fssai-portal')
@@ -24,9 +27,21 @@ function parseArgs(argv) {
     else if (a === '--parity') opts.parity = rest[i + 1] && !rest[i + 1].startsWith('--') ? rest[++i] : DEFAULT_PORTAL
     else if (a === '--tree') opts.tree = true
     else if (a === '--merge-every') opts.mergeEvery = Number(rest[++i])
+    else if (a === '--pick') opts.pick = Number(rest[++i])
     else opts._.push(a)
   }
   return { cmd, opts }
+}
+
+/**
+ * How many options of a multi-select question the walker combines. v1 walks every subset (as the portal checker
+ * does). v2 has large lists of kinds of business, so it walks every pair of activities, every pair of kinds for
+ * a single activity, and every single kind when several activities are picked. --pick N raises the limit.
+ */
+function pickLimit(graph, opts) {
+  if (graph.verdict?.model !== 'kob') return null
+  const n = opts.pick ?? 2
+  return (q, f) => (q.id === 'activity' ? n : (f.activities || []).length > 1 ? n - 1 : n)
 }
 
 function load(opts) {
@@ -44,10 +59,22 @@ function report(result, { tree }) {
   }
 }
 
+function printVerdict(v) {
+  const fee = v.fee != null ? `, ₹${v.fee} a year` : ''
+  console.log(`\nResult: ${v.licence || v.outcome}${fee}${v.provisional ? '  (likely; an expert can confirm)' : ''}`)
+  for (const r of v.reasons) console.log(' -', r)
+  for (const h of v.handover || []) console.log(' ! expert:', h)
+  for (const t of v.tasks || []) console.log(` + task: ${t.label || t.task}${t.licence ? ` — ${t.licence}, ₹${t.fee} a year` : ''}. ${t.text}`)
+  if (v.documents?.length) {
+    console.log('Documents:')
+    for (const d of v.documents) console.log(`  • ${d.label}`)
+  }
+}
+
 async function main() {
   const { cmd, opts } = parseArgs(process.argv.slice(2))
   if (cmd === 'help' || cmd === '--help') {
-    console.log('usage: lab check|walk|ask|explain [--graph FILE] [--parity [PORTAL_DIR]] [--tree] [--merge-every N]')
+    console.log('usage: lab check|walk|ask|explain|cases [--graph FILE] [--parity [PORTAL_DIR]] [--tree] [--merge-every N]')
     return 0
   }
   const { file, graph, problems } = load(opts)
@@ -63,7 +90,7 @@ async function main() {
     const portal = cmd === 'walk' && opts.parity ? await portalAdapter(path.resolve(opts.parity)) : null
     if (portal) console.log(`parity against: ${path.resolve(opts.parity)}`)
     const t0 = Date.now()
-    const result = walkAll(E, E, { portal, tree: opts.tree, mergeEvery: portal ? opts.mergeEvery ?? 7 : 0 })
+    const result = walkAll(E, E, { portal, tree: opts.tree, mergeEvery: portal ? opts.mergeEvery ?? 7 : 0, maxPick: pickLimit(graph, opts) })
     report(result, opts)
     console.log(`time: ${((Date.now() - t0) / 1000).toFixed(1)}s`)
     let bad = 0
@@ -83,18 +110,35 @@ async function main() {
     return bad
   }
 
+  if (cmd === 'cases') {
+    const file = path.resolve(opts._[0] || path.join(LAB_ROOT, `tests/cases.v${graph.version}.json`))
+    const results = runCases(E, JSON.parse(readFileSync(file, 'utf8')).cases)
+    for (const r of results) {
+      const v = r.verdict
+      console.log(`${r.problems.length ? '✖' : '✔'} ${r.name}  →  ${v.licence || v.outcome}${v.fee != null ? ` ₹${v.fee}` : ''}${v.handover?.length ? ' (+expert)' : ''}`)
+      for (const p of r.problems) console.log(`    - ${p}`)
+    }
+    const bad = results.filter((r) => r.problems.length).length
+    console.log(`\n${results.length - bad}/${results.length} cases pass`)
+    return bad ? 1 : 0
+  }
+
   if (cmd === 'explain') {
     const facts = E.sanitizeFacts(JSON.parse(opts._[0] || '{}'))
     const v = E.verdict(facts)
     console.log('facts:', JSON.stringify(facts))
-    console.log(`\n${v.licence || v.outcome}${v.provisional ? '  (provisional: an expert can confirm)' : ''}`)
-    for (const r of v.reasons) console.log(' -', r)
+    printVerdict(v)
     console.log('\ntrail:')
     for (const id of v.trail) {
-      const e = graph.edges.find((x) => x.id === id)
-      console.log(`  ${id}  [${e.rel}, ${e.status}]`)
-      for (const s of e.sources || []) console.log(`      source ${s.level}: ${s.file}${s.page ? ` p.${s.page}` : ''} — "${s.quote}"`)
-      if (!(e.sources || []).length) console.log('      (no source yet)')
+      const [what, name] = id.includes(':') ? id.split(':') : ['edge', id]
+      const item = what === 'concept' ? graph.concepts.find((c) => c.id === name) : what === 'bands' ? null : graph.edges.find((x) => x.id === id)
+      const sources = what === 'bands' ? graph.verdict.bandSources?.[name] || [] : item?.sources || []
+      console.log(`  ${id}  [${what === 'edge' ? item.rel : what}, ${item?.status || 'draft'}]`)
+      for (const s0 of sources) {
+        const s = { ...(graph.defaultSource || {}), ...s0 }
+        console.log(`      source ${s.level}: ${s.file}${s.page ? ` p.${s.page}` : ''} — "${s.quote}"`)
+      }
+      if (!sources.length) console.log('      (no source yet)')
     }
     return 0
   }
@@ -139,11 +183,9 @@ async function main() {
     } finally {
       rl.close()
     }
-    const v = E.verdict(f)
     console.log('\nSummary:')
     for (const row of E.summary(f)) console.log(`  ${row.id}: ${row.value}`)
-    console.log(`\nResult: ${v.licence || v.outcome}${v.provisional ? '  (likely; an expert can confirm)' : ''}`)
-    for (const r of v.reasons) console.log(' -', r)
+    printVerdict(E.verdict(f))
     console.log(`\nfacts: ${JSON.stringify(f)}`)
     return 0
   }

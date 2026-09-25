@@ -3,8 +3,10 @@
 // Every result carries its trail (the edges that fired) and `provisional` when any of them is not expert-reviewed.
 // For v1 the returned shape matches the portal's eligibilityFromFacts(), plus trail / provisional / expert_option.
 import { makeEvaluator } from './conditions.js'
+import { createKobVerdict } from './verdict-kob.js'
 
 export function createVerdict(graph) {
+  if (graph.verdict?.model === 'kob') return createKobVerdict(graph)
   const ev = makeEvaluator(graph)
   const V = graph.verdict
   const edges = (rel) => graph.edges.filter((e) => e.rel === rel)
@@ -84,5 +86,7 @@ export function createVerdict(graph) {
   /** The licence id ('registration' | 'state' | 'central') behind a verdict, or null. */
   const licenceId = (e) => Object.keys(V.licences).find((k) => V.licences[k] === e?.licence) || null
 
-  return { verdict, formKind, licenceId }
+  const licenceNames = () => Object.values(V.licences)
+
+  return { verdict, formKind, licenceId, licenceNames }
 }

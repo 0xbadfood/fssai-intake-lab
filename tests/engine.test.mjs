@@ -103,3 +103,52 @@ for (const [name, mutate] of Object.entries(MUTATIONS)) {
     assert.ok(r.parity.length > 0, `mutation "${name}" went unnoticed`)
   })
 }
+
+// ---------- graph v2 (FoSCoS kinds of business) ----------
+
+import { readFileSync } from 'node:fs'
+import { runCases } from '../cli/cases.js'
+
+const GRAPH2 = path.join(LAB_ROOT, 'graph/graph.v2.json')
+const fresh2 = () => loadGraph(GRAPH2)
+
+test('graph v2 validates (concepts, is_a, licence rules, bands, documents, source quotes)', () => {
+  assert.deepEqual(validateGraph(fresh2()), [])
+})
+
+test('validator catches broken v2 concepts', () => {
+  const g = fresh2()
+  g.concepts.find((c) => c.id === 'general').is_a = ['packaged_water'] // cycle: packaged_water is_a general
+  g.concepts.find((c) => c.id === 'oil').licence = { bands: 'no_such_set' }
+  g.concepts.find((c) => c.id === 'fish').docs = ['no_such_doc']
+  g.concepts.find((c) => c.id === 'meat').sources = [{ page: 2, quote: 'this sentence is not in the table' }]
+  delete g.concepts.find((c) => c.id === 'wholesale').licence
+  g.concepts.find((c) => c.id === 'wholesale').is_a = []
+  const problems = validateGraph(g).join('\n')
+  assert.match(problems, /is_a cycle/)
+  assert.match(problems, /unknown band set no_such_set/)
+  assert.match(problems, /unknown document no_such_doc/)
+  assert.match(problems, /quote not found on page 2/)
+  assert.match(problems, /wholesale: no licence rule/)
+})
+
+test('v2 scenario cases (portal errors corrected against the FoSCoS table)', () => {
+  const E = createEngine(fresh2())
+  const { cases } = JSON.parse(readFileSync(path.join(LAB_ROOT, 'tests/cases.v2.json'), 'utf8'))
+  const failed = runCases(E, cases).filter((r) => r.problems.length).map((r) => `${r.name}: ${r.problems.join('; ')}`)
+  assert.deepEqual(failed, [])
+})
+
+test('v2 walk (one kind per question): every path ends in a verdict or a handover, invariants hold', () => {
+  const E = createEngine(fresh2())
+  const r = walkAll(E, E, { maxPick: () => 1 })
+  assert.deepEqual(r.failures, [])
+  assert.ok(r.paths > 10000, `only ${r.paths} paths`)
+  assert.ok(r.verdicts.handover > 0, 'some paths should reach the expert handover')
+})
+
+test('a place never lowers a Central-only kind of business', () => {
+  const E = createEngine(fresh2())
+  const f = E.sanitizeFacts({ activities: ['cook'], service_kinds: ['hotel'], hotel_stars: 'five', place: 'railway', locations: 'one', states: ['Delhi'], turnover_crore: 1.5 })
+  assert.equal(E.verdict(f).licence_id, 'central')
+})

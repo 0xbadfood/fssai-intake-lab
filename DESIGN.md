@@ -262,7 +262,13 @@ fssai-intake-lab/
 ## 9. Milestones
 
 - **M1: parity. Done 2026-09-25.** The engine plus `graph.v1` match the portal's `check-intake.mjs` path for path. They were checked in lockstep with the portal's own code: every rendered question, all facts, verdicts, forms and summaries, and ~600k typed merges. Ten mutation tests confirm the check catches differences.
-- **M2: v2 from the FoSCoS table.** Add the business layer (FoSCoS kinds of business, grouped as Manufacturer, Trade/Retail and Food Services). Add a `product_type` question for manufacturers, and the "always Central" kinds, including exporters and nutraceuticals. Correct the bands for caterers, hotels, clubs and canteens, and the fees. Add `requires_doc` edges from the document list for each kind of business, plus `HANDOVER` and provisional verdicts. The portal's known errors become v2's first test cases, and `lab check` must pass.
+- **M2: v2 from the FoSCoS table. Done 2026-09-25.** `graph.v2` covers the kinds of business, place rules, fees, documents, tasks and handover (see "As built in v2"). All 251,564 walked paths pass the invariants, and 27 scenario cases pass, including the portal's known errors with the FoSCoS answers. **Open questions for the expert review** (all edges are `draft`):
+  - unrated hotels above ₹1.5 Cr (State assumed);
+  - small grain, cereal and pulse mills (State assumed, from the table's "without any limit on turnover threshold");
+  - non-food-service activities at railway stations (handover);
+  - several kinds of business on one premises (the highest licence wins);
+  - petty milkmen (the table's note is not modelled);
+  - deemed registration for street vendors with a municipal certificate (kept from the portal's workflow; it is not in the table).
 - **M3: step 2.** Convert `intake_answer_cache` into records.
 - **M4: step 3.** The LLM loop writes records for each step, including unknowns.
 - Then the CLM experiment.
@@ -275,6 +281,16 @@ fssai-intake-lab/
 - Besides the edge types in §2.3, v1 uses **`outcome`** (not food, deemed with opt-in) and **`reason`** edges (for example, an unregistered street vendor). Licence names, their order and the forced-licence text are in `verdict`.
 - The **`assertions`** replace `check-intake.mjs`'s `FORBIDDEN` list. `lab check` fails if any path ends in a forbidden combination (`"verdict": true` assertions also see the chosen licence as `$licence`).
 - Edge **sources** are checked by `lab check`: the quote must appear on the cited page of the saved text, and `expert` status needs a level A source.
+
+### As built in v2
+
+- **Concepts:** each kind of business carries its edges as fields. `is_a` gives the `is_a` edges. `licence` gives the licence edge: `{fixed, fee}`, `{bands}` naming a band set in `verdict.bandSets`, or `{cases}`. `docs` gives the `requires_doc` edges, and `sources` default to `defaultSource`, the eligibility table. `lab explain` shows them as `concept:<id>` and `bands:<set>` in the trail.
+- **Questions:** each activity has its own "which kind?" question (`service`, `manufacture`, `trade`, `export`) writing its own list. `derive` joins them into `business`: `{from, except}` copies a list, `unsure` becomes the activity itself as a fallback, and import or a marketplace add `importer` or `ecommerce`.
+- **Licence per kind of business:** a place rule (`rel: "licence"`, with `applies` by group or concept, inherited through `is_a`) and the concept's own rule, found up the `is_a` chain, are both evaluated. **The higher licence wins, and on a tie the place rule wins** (its fee is specific). A place with an `otherwise` text hands over the kinds it does not cover. The premises verdict is the highest over all kinds of business, and the fee is the highest at that licence.
+- **`{needs: key}`** makes a question relevant only when the answer could change the result. The engine re-runs the verdict with the fact at every band boundary and compares licence, fee, outcome and handover.
+- **Handover:** a band may be `{handover: text}` (outside the table). With `unknown_kind`, the likely result is still shown with `expert_option`, and when no kind of business is placed the outcome is `handover`.
+- **Tasks:** `rel: "task"` edges add the Head Office task (a concept with its own licence and documents) and an "add another premises" offer (§11.4).
+- **Walking:** v2's option lists are large, so `lab check` walks every pair of activities, every pair of kinds for a single activity, and single kinds when several activities are picked (`--pick N`). The invariant is "the verdict does not depend on a fact that was never asked".
 
 ## 10. Findings that affect the plan
 

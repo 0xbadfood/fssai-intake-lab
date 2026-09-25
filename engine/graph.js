@@ -6,7 +6,7 @@ import { lintCondition } from './conditions.js'
 import { templateConditions } from './text.js'
 
 export const LAB_ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..')
-const RELS = ['implies', 'unlikely', 'outcome', 'reason', 'forces', 'threshold', 'note', 'requires_doc', 'is_a', 'sets', 'needs']
+const RELS = ['implies', 'unlikely', 'outcome', 'reason', 'forces', 'threshold', 'note', 'requires_doc', 'is_a', 'sets', 'needs', 'licence', 'task']
 const STATUSES = ['draft', 'model-reviewed', 'expert', 'rejected']
 
 export function loadGraph(file) {
@@ -21,7 +21,8 @@ export function validateGraph(graph) {
   const problems = []
   const keys = new Set([...graph.keys.map((k) => k.id), ...(graph.derive || []).map((d) => d.key)])
   const defs = graph.defs || {}
-  const ctx = { defs, keys }
+  const conceptIds = new Set((graph.concepts || []).map((c) => c.id))
+  const ctx = { defs, keys, concepts: conceptIds }
   const lint = (c, where) => lintCondition(c, ctx, where, problems)
   const lintText = (t, where) => templateConditions(t).forEach((c, i) => lint(c, `${where}~${i}`))
 
@@ -50,6 +51,60 @@ export function validateGraph(graph) {
     lint(d.when, `derive.${d.key}`)
     if (d.bool) lint(d.bool, `derive.${d.key}.bool`)
     for (const [i, x] of (d.list || []).entries()) lint(x.when, `derive.${d.key}.list[${i}]`)
+  }
+
+  // concepts (graph v2): kinds of business with is_a, licence rules, documents and sources
+  const src = (s) => ({ ...(graph.defaultSource || {}), ...s })
+  const V = graph.verdict || {}
+  const groups = new Set((graph.concepts || []).map((c) => c.group).filter(Boolean))
+  const docIds = new Set(Object.keys(V.documents?.catalogue || {}))
+  function checkRule(rule, where) {
+    if (!rule) return
+    if (rule.cases) return rule.cases.forEach((c, i) => { lint(c.when, `${where}.cases[${i}]`); checkRule(c, `${where}.cases[${i}]`) })
+    if (rule.fixed && !(rule.fixed in V.licences)) problems.push(`${where}: unknown licence ${rule.fixed}`)
+    if (rule.bands && !(rule.bands in (V.bandSets || {}))) problems.push(`${where}: unknown band set ${rule.bands}`)
+    if (!rule.fixed && !rule.bands) problems.push(`${where}: needs fixed, bands or cases`)
+  }
+  if (graph.concepts) {
+    const seen = new Set()
+    for (const c of graph.concepts) {
+      const w = `concepts.${c.id}`
+      if (!c.id || seen.has(c.id)) problems.push(`${w}: missing or duplicate id`)
+      seen.add(c.id)
+      for (const p of c.is_a || []) if (!conceptIds.has(p)) problems.push(`${w}: is_a unknown concept ${p}`)
+      checkRule(c.licence, `${w}.licence`)
+      for (const d of c.docs || []) if (!docIds.has(d)) problems.push(`${w}: unknown document ${d}`)
+      if (c.status && !STATUSES.includes(c.status)) problems.push(`${w}: bad status ${c.status}`)
+      for (const [i, s] of (c.sources || []).entries()) checkSource(src(s), `${w}.sources[${i}]`, problems)
+      if (c.kind !== 'activity' && c.group !== 'special' && !(c.is_a || []).length) problems.push(`${w}: a kind of business needs an is_a link to its activity`)
+    }
+    // is_a must be acyclic, and every kind of business must reach a licence rule
+    const byId = new Map(graph.concepts.map((c) => [c.id, c]))
+    const state = new Map()
+    const dfs = (id, path) => {
+      if (state.get(id) === 2) return
+      if (state.get(id) === 1) return problems.push(`is_a cycle: ${[...path, id].join(' → ')}`)
+      state.set(id, 1)
+      for (const p of byId.get(id)?.is_a || []) dfs(p, [...path, id])
+      state.set(id, 2)
+    }
+    graph.concepts.forEach((c) => dfs(c.id, []))
+    const reaches = (id, seen = new Set()) => !!byId.get(id)?.licence || (byId.get(id)?.is_a || []).some((p) => !seen.has(p) && reaches(p, new Set([...seen, id])))
+    for (const c of graph.concepts) if (c.kind !== 'activity' && !reaches(c.id)) problems.push(`concepts.${c.id}: no licence rule on it or any concept it is_a`)
+  }
+  for (const [name, set] of Object.entries(V.bandSets || {})) {
+    const limits = set.map((b) => b.lte)
+    if (limits.at(-1) != null) problems.push(`bandSets.${name}: last band needs no limit`)
+    if (limits.slice(0, -1).some((x, i, a) => x == null || (i && x <= a[i - 1]))) problems.push(`bandSets.${name}: band limits must rise`)
+    for (const b of set) if (!b.handover && !(b.to in V.licences)) problems.push(`bandSets.${name}: unknown licence ${b.to}`)
+  }
+  for (const [name, list] of Object.entries(V.bandSources || {})) {
+    if (!(name in V.bandSets)) problems.push(`bandSources.${name}: unknown band set`)
+    list.forEach((s, i) => checkSource(src(s), `bandSources.${name}[${i}]`, problems))
+  }
+  if (V.documents) {
+    for (const k of ['registration', 'licence', 'licence_manufacturing']) for (const d of V.documents[k] || []) if (!docIds.has(d)) problems.push(`documents.${k}: unknown document ${d}`)
+    ;(V.documents.sources || []).forEach((s, i) => checkSource(src(s), `documents.sources[${i}]`, problems))
   }
 
   // facts (questions)
@@ -95,7 +150,8 @@ export function validateGraph(graph) {
     for (const qid of e.questions || []) if (!factIds.has(qid)) problems.push(`${w}: unknown question ${qid}`)
     if (e.rel === 'implies' && !keys.has(e.key)) problems.push(`${w}: unknown key ${e.key}`)
     if (e.rel === 'forces' && !(e.to in graph.verdict.licences)) problems.push(`${w}: unknown licence ${e.to}`)
-    if (e.rel === 'threshold') {
+    if (e.rel === 'threshold' && !e.bands) problems.push(`${w}: threshold needs bands`)
+    if (e.rel === 'threshold' && e.bands) {
       if (!keys.has(e.fact)) problems.push(`${w}: unknown fact ${e.fact}`)
       const limits = e.bands.map((b) => b.lte)
       if (limits.at(-1) != null) problems.push(`${w}: last band needs no limit`)
@@ -103,11 +159,17 @@ export function validateGraph(graph) {
       for (const b of e.bands) if (!(b.to in graph.verdict.licences)) problems.push(`${w}: unknown licence ${b.to}`)
     }
     if (e.status === 'expert' && !(e.sources || []).some((s) => s.level === 'A')) problems.push(`${w}: expert status needs a level A source`)
-    for (const [i, s] of (e.sources || []).entries()) checkSource(s, `${w}.sources[${i}]`, problems)
+    for (const [i, s] of (e.sources || []).entries()) checkSource(src(s), `${w}.sources[${i}]`, problems)
+    if (e.rel === 'licence') {
+      checkRule(e.licence, `${w}.licence`)
+      for (const c of e.applies?.concepts || []) if (!conceptIds.has(c)) problems.push(`${w}: applies to unknown concept ${c}`)
+      for (const g of e.applies?.groups || []) if (!groups.has(g)) problems.push(`${w}: applies to unknown group ${g}`)
+    }
+    if (e.rel === 'task' && e.concept && !conceptIds.has(e.concept)) problems.push(`${w}: unknown concept ${e.concept}`)
   }
 
   for (const a of graph.assertions || []) {
-    lintCondition(a.never, { defs, keys: a.verdict ? new Set([...keys, '$licence']) : keys }, `assertions.${a.id}`, problems)
+    lintCondition(a.never, { defs, keys: a.verdict ? new Set([...keys, '$licence']) : keys, concepts: conceptIds }, `assertions.${a.id}`, problems)
   }
   return problems
 }

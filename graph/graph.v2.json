@@ -1,0 +1,754 @@
+{
+  "version": 2,
+  "name": "FoSCoS Kind of Business graph (2026 eligibility table + March 2021 document list)",
+  "note": "Licensing follows sources/KindofBusinessEligibility-2026-04-02 (FoSCoS, updated 01.04.2026). Documents follow FSSAI order 15(31)2020/FoSCoS/RCD (March 2021). Every edge is 'draft' until an expert reviews it and the sources are in the ~/fssai corpus (level A).",
+
+  "defaultSource": { "level": "B", "file": "sources/KindofBusinessEligibility-2026-04-02.txt" },
+
+  "enums": {
+    "states": [
+      "Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh",
+      "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir",
+      "Jharkhand", "Karnataka", "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya",
+      "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
+      "Uttar Pradesh", "Uttarakhand", "West Bengal"
+    ],
+    "popularStates": [
+      "Maharashtra", "Karnataka", "Delhi", "Tamil Nadu", "Uttar Pradesh", "Gujarat",
+      "Telangana", "West Bengal", "Kerala", "Rajasthan", "Haryana", "Punjab"
+    ],
+    "stateAliases": {
+      "orissa": "Odisha", "pondicherry": "Puducherry", "uttaranchal": "Uttarakhand", "nct of delhi": "Delhi", "new delhi": "Delhi",
+      "jammu & kashmir": "Jammu and Kashmir", "andaman & nicobar islands": "Andaman and Nicobar Islands", "bombay": "Maharashtra"
+    }
+  },
+
+  "keys": [
+    { "id": "activities", "type": "list", "enum": ["cook", "make", "sell", "import", "export"], "keepEmpty": true },
+    { "id": "service_kinds", "type": "list", "enum": ["restaurant", "hotel", "caterer", "canteen", "vending_est", "petty", "hawker", "mdm_caterer", "mdm_canteen", "anganwadi", "unsure"] },
+    { "id": "make_kinds", "type": "list", "enum": ["general", "dairy", "oil", "milling", "meat", "slaughter", "fish", "packaged_water", "repack", "additives", "nutraceutical", "proprietary", "novel", "ayurveda", "irradiation", "unsure"] },
+    { "id": "trade_kinds", "type": "list", "enum": ["retail", "wholesale", "distribution", "storage", "storage_cold", "storage_ca", "transport", "direct_seller", "vending_agency", "unsure"] },
+    { "id": "export_kinds", "type": "list", "enum": ["merchant_exporter", "exporter_manufacturer", "eou"] },
+    { "id": "hotel_stars", "type": "enum", "enum": ["five", "four", "unrated"] },
+    { "id": "food_business", "type": "bool" },
+    { "id": "municipal_registered", "type": "bool" },
+    { "id": "sells_online", "type": "bool" },
+    { "id": "ecommerce_platform", "type": "bool" },
+    { "id": "opt_in_registration", "type": "bool" },
+    { "id": "place", "type": "enum", "enum": ["street", "home", "premises", "airport", "railway", "central_govt", "vehicles"] },
+    { "id": "locations", "type": "enum", "enum": ["one", "many", "multistate"] },
+    { "id": "nonfood_reason", "type": "enum", "enum": ["family", "own-use", "non-food"] },
+    { "id": "turnover_crore", "type": "number", "min": 0, "below": 1000000 },
+    { "id": "states", "type": "states" },
+    { "id": "products", "type": "strings", "maxItems": 20, "maxLength": 60 },
+    { "id": "city", "type": "string", "maxLength": 60 },
+    { "id": "description", "type": "string", "maxLength": 500 }
+  ],
+
+  "keep": [
+    { "key": "food_business", "when": { "not": { "nonempty": "activities" } } },
+    { "key": "nonfood_reason", "when": { "eq": ["food_business", false] } },
+    { "key": "service_kinds", "when": { "has": ["activities", "cook"] } },
+    { "key": "make_kinds", "when": { "has": ["activities", "make"] } },
+    { "key": "trade_kinds", "when": { "has": ["activities", "sell"] } },
+    { "key": "export_kinds", "when": { "has": ["activities", "export"] } },
+    { "key": "hotel_stars", "when": { "has": ["service_kinds", "hotel"] } },
+    { "key": "municipal_registered", "when": { "eq": ["place", "street"] } }
+  ],
+
+  "derive": [
+    { "key": "business", "when": { "known": "activities" }, "list": [
+      { "from": "service_kinds", "except": ["unsure"] },
+      { "from": "make_kinds", "except": ["unsure"] },
+      { "from": "trade_kinds", "except": ["unsure"] },
+      { "from": "export_kinds" },
+      { "when": { "has": ["activities", "import"] }, "value": "importer" },
+      { "when": { "eq": ["ecommerce_platform", true] }, "value": "ecommerce" },
+      { "when": { "has": ["service_kinds", "unsure"] }, "value": "cook" },
+      { "when": { "has": ["make_kinds", "unsure"] }, "value": "make" },
+      { "when": { "has": ["trade_kinds", "unsure"] }, "value": "sell" }
+    ] },
+    { "key": "unknown_kind", "when": { "known": "activities" }, "bool": { "any": [
+      { "has": ["service_kinds", "unsure"] }, { "has": ["make_kinds", "unsure"] }, { "has": ["trade_kinds", "unsure"] }
+    ] } }
+  ],
+
+  "defs": {
+    "food": { "nonempty": "activities" },
+    "notFood": { "all": [{ "known": "activities" }, { "empty": "activities" }, { "eq": ["food_business", false] }] },
+    "deemed": { "all": [{ "eq": ["place", "street"] }, { "eq": ["municipal_registered", true] }] },
+    "retailOnlyIfSelling": { "any": [{ "not": { "has": ["activities", "sell"] } }, { "only": ["trade_kinds", ["retail", "vending_agency", "direct_seller"]] }] },
+    "outletOnly": { "all": [
+      { "only": ["activities", ["cook", "sell"]] }, { "ref": "retailOnlyIfSelling" },
+      { "only": ["service_kinds", ["restaurant", "caterer", "vending_est", "petty", "hawker", "unsure"]] },
+      { "only": ["trade_kinds", ["retail", "vending_agency", "unsure"]] }
+    ] },
+    "homeAllowed": { "all": [
+      { "only": ["activities", ["cook", "make", "sell"]] }, { "ref": "retailOnlyIfSelling" },
+      { "only": ["service_kinds", ["restaurant", "caterer", "vending_est", "petty", "unsure"]] },
+      { "only": ["make_kinds", ["general", "repack", "ayurveda", "unsure"]] }
+    ] },
+    "servicePremisesOnly": { "all": [{ "only": ["activities", ["cook", "sell"]] }, { "not": { "has": ["trade_kinds", "transport"] } }] },
+    "railwayAllowed": { "all": [{ "only": ["activities", ["cook", "sell"]] }, { "ref": "retailOnlyIfSelling" }] },
+    "transportOnly": { "all": [{ "only": ["activities", ["sell"]] }, { "nonempty": "trade_kinds" }, { "only": ["trade_kinds", ["transport"]] }] },
+    "storageOrTransportOnly": { "all": [{ "only": ["activities", ["sell"]] }, { "nonempty": "trade_kinds" }, { "only": ["trade_kinds", ["storage", "storage_cold", "storage_ca", "transport"]] }] },
+    "multistate": { "any": [{ "eq": ["locations", "multistate"] }, { "gt": [{ "len": "states" }, 1] }] },
+    "homeKitchen": { "any": [{ "has": ["activities", "cook"] }, { "has": ["activities", "make"] }] },
+    "hawkerOnly": { "all": [{ "only": ["activities", ["cook"]] }, { "has": ["service_kinds", "hawker"] }, { "only": ["service_kinds", ["hawker"]] }] },
+    "vehicles": { "eq": ["place", "vehicles"] }
+  },
+
+  "concepts": [
+    { "id": "cook", "kind": "activity", "label": "Cooks & serves food", "licence": { "bands": "standard" }, "docs": ["water_report"],
+      "note": "Fallback when the kind of food service is not known (handover)." },
+    { "id": "make", "kind": "activity", "label": "Makes or packs food", "licence": { "bands": "standard" }, "manufacturing": true,
+      "note": "Fallback when the kind of manufacturing is not known (handover)." },
+    { "id": "sell", "kind": "activity", "label": "Sells, stores or transports food", "licence": { "bands": "standard" },
+      "note": "Fallback when the kind of trade is not known (handover)." },
+    { "id": "import", "kind": "activity", "label": "Imports food" },
+    { "id": "export", "kind": "activity", "label": "Exports food" },
+
+    { "id": "dairy", "group": "manufacturer", "is_a": ["make"], "label": "Dairy unit", "licence": { "bands": "standard" }, "manufacturing": true, "docs": ["milk_source_plan"],
+      "desc": "Handling, processing, manufacturing, packing, storing, distribution and transport of milk and milk products, including milk producers and vendors.",
+      "sources": [{ "page": 1, "quote": "Dairy units [Handling and processing milk/ milk products" }],
+      "note": "Table note: registration for petty milkmen and milk vendors; licence for the rest by the turnover bands." },
+    { "id": "oil", "group": "manufacturer", "is_a": ["make"], "label": "Vegetable oil processing unit", "licence": { "bands": "standard" }, "manufacturing": true,
+      "desc": "Producing vegetable oils by solvent extraction, expeller or refining, including oil expeller units.",
+      "sources": [{ "page": 1, "quote": "Vegetable Oil Processing Units" }] },
+    { "id": "slaughter", "group": "manufacturer", "is_a": ["make"], "label": "Slaughtering unit", "licence": { "bands": "standard" }, "manufacturing": true, "docs": ["municipal_noc"],
+      "desc": "Transporting, stunning, butchering, dressing, processing, storing and distributing live animals or poultry birds.",
+      "sources": [{ "page": 1, "quote": "Slaughtering unit" }] },
+    { "id": "meat", "group": "manufacturer", "is_a": ["make"], "label": "Meat processing unit", "licence": { "bands": "standard" }, "manufacturing": true, "docs": ["raw_material_source", "municipal_noc"],
+      "desc": "Further processing of slaughtered animals or poultry into meat and meat products, with packing, storing and transport.",
+      "sources": [{ "page": 2, "quote": "Meat Processing units" }] },
+    { "id": "fish", "group": "manufacturer", "is_a": ["make"], "label": "Fish and fish products", "licence": { "bands": "standard" }, "manufacturing": true,
+      "desc": "Handling and processing fish, making fish products, packing, storing, distribution and transport.",
+      "sources": [{ "page": 2, "quote": "Fish and Fish Products" }] },
+    { "id": "general", "group": "manufacturer", "is_a": ["make"], "label": "General manufacturing", "licence": { "bands": "standard" }, "manufacturing": true,
+      "desc": "Manufacturers and processors other than dairy, vegetable oil, meat, fish, slaughtering and the special categories (bakery, confectionery, snacks, sweets, spices, beverages, prepared foods, ...).",
+      "sources": [{ "page": 2, "quote": "General manufacturing" }] },
+    { "id": "milling", "group": "manufacturer", "is_a": ["general"], "label": "Grains, cereals or pulses milling unit", "licence": { "fixed": "state", "fee": 5000 }, "manufacturing": true,
+      "desc": "Milling grains, cereals or pulses. The table puts all such units under a State Licence with no turnover limit.",
+      "sources": [{ "page": 2, "quote": "Pulses Milling units" }],
+      "note": "Reading of the table: 'All Grains, Cereals, Pulses Milling units without any limit on turnover threshold' sits in the State Licence row. Expert to confirm small units." },
+    { "id": "packaged_water", "group": "manufacturer", "is_a": ["general"], "label": "Packaged drinking water", "manufacturing": true, "docs": ["pesticide_report"],
+      "desc": "Packaged drinking water, packaged mineral water or carbonated water.",
+      "sources": [{ "file": "sources/foscos/vision/documentlistmarch.md", "quote": "Packaged Drinking Water" }] },
+    { "id": "repack", "group": "manufacturer", "is_a": ["general"], "label": "Repacker or relabeller", "manufacturing": true, "docs": ["manufacturer_noc"],
+      "desc": "Repacking a food product into different sizes without changing it, or getting products made by a third party and selling them under your label.",
+      "sources": [{ "page": 1, "quote": "Repacker means a food business operator who repacks a food product into different sizes" }] },
+    { "id": "additives", "group": "manufacturer", "is_a": ["make"], "label": "Substances added to food", "licence": { "bands": "standard" }, "manufacturing": true,
+      "desc": "Food additives, enzymes, flavouring agents, processing aids, nutrients, microorganisms and functional ingredients.",
+      "sources": [{ "page": 4, "quote": "Substances added to Food" }] },
+    { "id": "proprietary", "group": "manufacturer", "is_a": ["make"], "label": "Proprietary food", "licence": { "fixed": "central", "fee": 7500 }, "manufacturing": true, "docs": ["composition"],
+      "desc": "A food for which no standard is specified, made from standardised ingredients (sub-regulation 2.12).",
+      "sources": [{ "page": 3, "quote": "Proprietary Food [As per sub-Regulation 2.12 of Food Safety and" }] },
+    { "id": "nutraceutical", "group": "manufacturer", "is_a": ["make"], "label": "Health supplements and nutraceuticals", "licence": { "fixed": "central", "fee": 7500 }, "manufacturing": true, "docs": ["product_specification"],
+      "desc": "Food or health supplements, nutraceuticals, foods for special dietary uses or special medical purposes, functional foods.",
+      "sources": [{ "page": 3, "quote": "Food or Health Supplements and Nutraceuticals etc." }] },
+    { "id": "novel", "group": "manufacturer", "is_a": ["make"], "label": "Non-specified food and food ingredients", "licence": { "fixed": "central", "fee": 7500 }, "manufacturing": true, "docs": ["product_approval"],
+      "desc": "Foods or ingredients with no standard in any regulation (novel foods). Needs product approval from FSSAI HQ before the licence.",
+      "sources": [{ "page": 3, "quote": "Non-specified food and Food Ingredients" }] },
+    { "id": "ayurveda", "group": "manufacturer", "is_a": ["make"], "label": "Ayurveda aahara", "licence": { "fixed": "central", "fee": 7500 }, "manufacturing": true,
+      "desc": "Food prepared to recipes, ingredients or processes from the authoritative books of Ayurveda (not medicines).",
+      "sources": [{ "page": 3, "quote": "Ayurveda aahara" }] },
+    { "id": "irradiation", "group": "manufacturer", "is_a": ["make"], "label": "Radiation processing of food", "licence": { "fixed": "central", "fee": 7500 }, "manufacturing": true,
+      "desc": "Exposing food to controlled doses of ionising radiation (gamma rays, X-rays).",
+      "sources": [{ "page": 4, "quote": "Radiation processing of food" }] },
+    { "id": "eou", "group": "manufacturer", "is_a": ["make", "export"], "label": "100% export-oriented unit", "licence": { "fixed": "central", "fee": 7500 }, "manufacturing": true,
+      "docs": ["iec", "export_declaration", "eou_certificate"],
+      "desc": "Making food only for export (not meeting FSSAI product standards) with a 100% EOU certificate from the Ministry of Commerce.",
+      "sources": [{ "page": 4, "quote": "100 % Export Oriented units" }] },
+    { "id": "exporter_manufacturer", "group": "manufacturer", "is_a": ["make", "export"], "label": "Exporter - manufacturer", "licence": { "fixed": "central", "fee": 7500 }, "manufacturing": true,
+      "docs": ["iec", "export_declaration"],
+      "desc": "Making food for export that meets the importing country's rules rather than FSSAI's. Domestic products need their own kind of business.",
+      "sources": [{ "page": 4, "quote": "Exporter - Manufacturer" }] },
+
+    { "id": "storage_cold", "group": "trade", "is_a": ["sell"], "label": "Cold or refrigerated storage", "licence": { "bands": "standard" },
+      "sources": [{ "page": 4, "quote": "Storage (Cold/Refrigerated)" }] },
+    { "id": "storage_ca", "group": "trade", "is_a": ["sell"], "label": "Controlled atmosphere + cold storage", "licence": { "bands": "standard" },
+      "sources": [{ "page": 5, "quote": "Storage (Controlled Atmosphere + Cold)" }] },
+    { "id": "storage", "group": "trade", "is_a": ["sell"], "label": "Storage (warehouse, godown)", "licence": { "bands": "standard" },
+      "sources": [{ "page": 5, "quote": "Storage (except Controlled Atmosphere + Cold)" }] },
+    { "id": "transport", "group": "trade", "is_a": ["sell"], "label": "Transportation", "licence": { "bands": "standard" }, "docs": ["vehicle_list"],
+      "sources": [{ "page": 5, "quote": "Transportation (having a number of specialized vehicles like" }] },
+    { "id": "wholesale", "group": "trade", "is_a": ["sell"], "label": "Wholesaler", "licence": { "bands": "standard" },
+      "sources": [{ "page": 5, "quote": "Wholesaler" }] },
+    { "id": "distribution", "group": "trade", "is_a": ["sell"], "label": "Distributor", "licence": { "bands": "standard" },
+      "sources": [{ "page": 5, "quote": "Distributor" }] },
+    { "id": "retail", "group": "trade", "is_a": ["sell"], "label": "Retailer", "licence": { "bands": "standard" },
+      "sources": [{ "page": 6, "quote": "Retailer" }] },
+    { "id": "direct_seller", "group": "trade", "is_a": ["sell"], "label": "Direct seller", "licence": { "bands": "standard" },
+      "sources": [{ "page": 6, "quote": "Direct seller" }] },
+    { "id": "vending_agency", "group": "trade", "is_a": ["sell"], "label": "Food vending agency", "licence": { "bands": "standard" },
+      "desc": "Sale of packaged or fresh food from a temporary or fixed stall, cart or machine.",
+      "sources": [{ "page": 6, "quote": "Food Vending Agencies" }] },
+    { "id": "importer", "group": "trade", "is_a": ["import"], "label": "Importer", "licence": { "fixed": "central", "fee": 7500 }, "docs": ["iec", "recall_plan"],
+      "sources": [{ "page": 6, "quote": "Import is an activity where articles of trade from a foreign source is" }] },
+    { "id": "ecommerce", "group": "trade", "is_a": ["sell"], "label": "E-commerce food business", "licence": { "fixed": "central", "fee": 7500 }, "docs": ["recall_plan"],
+      "sources": [{ "page": 6, "quote": "E-Commerce" }] },
+    { "id": "merchant_exporter", "group": "trade", "is_a": ["export"], "label": "Trader / merchant exporter", "licence": { "fixed": "central", "fee": 7500 }, "docs": ["iec", "export_declaration"],
+      "sources": [{ "page": 6, "quote": "Trader/Merchant - Exporter" }] },
+
+    { "id": "petty", "group": "food_service", "is_a": ["cook"], "label": "Petty retailer of snacks / tea shop", "licence": { "bands": "registration_only" },
+      "sources": [{ "page": 6, "quote": "Petty Retailer of snacks/tea shops" }] },
+    { "id": "hawker", "group": "food_service", "is_a": ["cook"], "label": "Hawker (itinerant / mobile food vendor)", "licence": { "bands": "fee_waived_registration" },
+      "sources": [{ "page": 6, "quote": "Hawker (Itinerant / Mobile food vendor)" }],
+      "note": "Hawker fee waived with effect from 28.09.2024." },
+    { "id": "hotel", "group": "food_service", "is_a": ["cook"], "label": "Hotel", "docs": ["water_report"],
+      "licence": { "cases": [
+        { "when": { "eq": ["hotel_stars", "five"] }, "fixed": "central", "fee": 7500 },
+        { "when": { "eq": ["hotel_stars", "four"] }, "fixed": "state", "fee": 5000 },
+        { "bands": "state_capped" }
+      ] },
+      "sources": [{ "page": 7, "quote": "Hotel is a commercial establishment providing lodging, meals, and" }],
+      "note": "Five star and above: Central. Up to 4 star: State. Turnover up to 1.5 Cr: Registration. A hotel without a star rating above 1.5 Cr is not stated; State is assumed (expert to confirm)." },
+    { "id": "restaurant", "group": "food_service", "is_a": ["cook"], "label": "Restaurant", "licence": { "bands": "standard" }, "docs": ["water_report"],
+      "aliases": ["cloud kitchen", "cafe", "takeaway", "delivery kitchen"],
+      "sources": [{ "page": 7, "quote": "offer only take-out and delivery." }] },
+    { "id": "canteen", "group": "food_service", "is_a": ["cook"], "label": "Club / canteen", "licence": { "bands": "state_capped" }, "docs": ["water_report"],
+      "sources": [{ "page": 7, "quote": "Club/Canteen" }] },
+    { "id": "caterer", "group": "food_service", "is_a": ["cook"], "label": "Caterer", "licence": { "bands": "caterer" }, "docs": ["water_report"],
+      "sources": [{ "page": 7, "quote": "Food Service Establishment involved in preparation, storage, than 50 Cr" }] },
+    { "id": "vending_est", "group": "food_service", "is_a": ["cook"], "label": "Food vending establishment", "licence": { "bands": "state_capped" }, "docs": ["water_report"],
+      "desc": "Freshly prepared food with temporary or no seating: dhaba, boarding house, banquet hall, home-based canteen or dabbawala, stall holder, stalls at religious gatherings and fairs.",
+      "sources": [{ "page": 7, "quote": "Food Vending Establishment [Involved in preparing freshly" }] },
+    { "id": "mdm_caterer", "group": "food_service", "is_a": ["cook"], "label": "Mid-day meal caterer", "licence": { "bands": "caterer" }, "docs": ["water_report"],
+      "sources": [{ "page": 8, "quote": "Mid-day Meal Caterer" }] },
+    { "id": "mdm_canteen", "group": "food_service", "is_a": ["cook"], "label": "Mid-day meal canteen", "licence": { "bands": "state_capped" }, "docs": ["water_report"],
+      "sources": [{ "page": 8, "quote": "Mid-Day Meal Canteen" }] },
+    { "id": "anganwadi", "group": "food_service", "is_a": ["cook"], "label": "Anganwadi (ICDS) centre", "licence": { "bands": "fee_waived_registration" },
+      "sources": [{ "page": 8, "quote": "Anganwadi [ICDS] Centres" }],
+      "note": "Fee waived with effect from 12.03.2025." },
+
+    { "id": "head_office", "group": "special", "label": "Head office / registered office", "licence": { "fixed": "central", "fee": 7500 }, "docs": ["recall_plan"],
+      "desc": "A business with food activities in two or more States/UTs declares one head or registered office, licensed centrally.",
+      "sources": [{ "page": 9, "quote": "Food Business Operators having food business activities in two or" }] }
+  ],
+
+  "facts": [
+    {
+      "id": "activity",
+      "multi": true,
+      "title": "What does your business do with food?",
+      "hint": "Tap everything that applies.",
+      "keys": ["activities"],
+      "alsoClears": ["food_business"],
+      "relevant": true,
+      "answered": { "known": "activities" },
+      "apply": { "list": "activities", "unset": ["food_business"] },
+      "value": { "key": "activities", "empty": "none" },
+      "show": { "values": "activities", "join": " · ", "empty": "None of these" },
+      "changeLabel": "what I do",
+      "values": [
+        { "id": "cook", "emoji": "🍳", "label": "Cook & serve", "example": "Restaurant, café, hotel, caterer, canteen, tea stall, tiffin service", "show": "Cooks & serves food" },
+        { "id": "make", "emoji": "🏭", "label": "Make or pack", "example": "Bakery, pickles, namkeen, dairy, oil mill, flour mill, supplements, repacking", "show": "Makes or packs food" },
+        { "id": "sell", "emoji": "🛒", "label": "Sell, store or transport", "example": "Kirana shop, distributor, wholesaler, cold storage, delivery vans", "show": "Sells, stores or transports food" },
+        { "id": "import", "emoji": "🚢", "label": "Import food", "example": "Bring food products into India from another country", "show": "Imports food" },
+        { "id": "export", "emoji": "🌍", "label": "Export food", "example": "Send food products from India to other countries", "show": "Exports food" },
+        { "id": "none", "emoji": "🤷", "label": "None of these", "example": "I'm not sure my business involves food", "exclusive": true,
+          "apply": { "set": { "activities": [] }, "unset": ["food_business"] } }
+      ]
+    },
+    {
+      "id": "nonfood",
+      "title": "Which of these is closest?",
+      "keys": ["food_business"],
+      "alsoClears": ["nonfood_reason"],
+      "relevant": { "all": [{ "known": "activities" }, { "empty": "activities" }] },
+      "answered": { "known": "food_business" },
+      "apply": { "set": { "food_business": false, "nonfood_reason": "$id" } },
+      "value": { "key": "nonfood_reason", "default": "non-food", "when": { "eq": ["food_business", false] } },
+      "show": { "values": "nonfood_reason", "empty": "Not a food business" },
+      "values": [
+        { "id": "family", "emoji": "🏠", "label": "I cook only for my family", "example": "Nothing is sold or served to others", "show": "Cooks only for family" },
+        { "id": "own-use", "emoji": "🌾", "label": "I grow food for my own use", "example": "Kitchen garden or farm produce you eat yourself", "show": "Grows food for own use" },
+        { "id": "non-food", "emoji": "🧴", "label": "My products are not food", "example": "Cosmetics, utensils, packaging, cleaning products", "show": "Products are not food" },
+        { "id": "back", "emoji": "↩️", "label": "Actually, I do one of those", "example": "Go back to the previous question",
+          "apply": { "unset": ["activities", "food_business"] } }
+      ]
+    },
+    {
+      "id": "service",
+      "multi": true,
+      "title": "What kind of food service?",
+      "hint": "Tap everything that applies.",
+      "keys": ["service_kinds"],
+      "relevant": { "has": ["activities", "cook"] },
+      "answered": { "nonempty": "service_kinds" },
+      "apply": { "list": "service_kinds" },
+      "value": { "key": "service_kinds" },
+      "show": { "values": "service_kinds", "join": " · " },
+      "changeLabel": "my kind of food service",
+      "values": [
+        { "id": "restaurant", "emoji": "🍽️", "label": "Restaurant, café or cloud kitchen", "example": "Dine-in, takeaway or delivery-only kitchen", "show": "Restaurant" },
+        { "id": "hotel", "emoji": "🏨", "label": "Hotel", "example": "Rooms and meals for guests", "show": "Hotel" },
+        { "id": "caterer", "emoji": "🍲", "label": "Caterer", "example": "Cooking for weddings, events, offices or institutions", "show": "Caterer" },
+        { "id": "canteen", "emoji": "🏢", "label": "Club or canteen", "example": "Canteen or cafeteria in an office, factory, college or club", "show": "Club / canteen" },
+        { "id": "vending_est", "emoji": "🛖", "label": "Dhaba, food stall, banquet hall or tiffin service", "example": "Dhaba, stall, banquet hall, boarding house, dabbawala, fair or temple stall", "show": "Food vending establishment" },
+        { "id": "petty", "emoji": "🫖", "label": "Tea or snack shop", "example": "A small tea stall or snack counter", "show": "Tea / snack shop" },
+        { "id": "hawker", "emoji": "🚶", "label": "Hawker", "example": "Selling food while moving around, on foot or with a cart", "show": "Hawker" },
+        { "id": "mdm_caterer", "emoji": "🏫", "label": "Mid-day meal caterer", "example": "Cooking and delivering school mid-day meals", "show": "Mid-day meal caterer" },
+        { "id": "mdm_canteen", "emoji": "🍱", "label": "Mid-day meal canteen", "example": "Serving mid-day meals inside a school", "show": "Mid-day meal canteen" },
+        { "id": "anganwadi", "emoji": "🧒", "label": "Anganwadi centre", "example": "ICDS centre serving food to children and mothers", "show": "Anganwadi centre" },
+        { "id": "unsure", "emoji": "🤔", "label": "Something else / not sure", "example": "An expert will help place your business", "exclusive": true, "show": "Not sure (expert to confirm)" }
+      ]
+    },
+    {
+      "id": "manufacture",
+      "multi": true,
+      "title": "What do you make or pack?",
+      "hint": "Tap everything that applies.",
+      "keys": ["make_kinds"],
+      "relevant": { "has": ["activities", "make"] },
+      "answered": { "nonempty": "make_kinds" },
+      "apply": { "list": "make_kinds" },
+      "value": { "key": "make_kinds" },
+      "show": { "values": "make_kinds", "join": " · " },
+      "changeLabel": "what I make",
+      "values": [
+        { "id": "general", "emoji": "🍪", "label": "Packaged foods, bakery, snacks, sweets or spices", "example": "Bakery, namkeen, pickles, sweets, spices, beverages, ready-to-eat", "show": "General food products" },
+        { "id": "dairy", "emoji": "🥛", "label": "Milk or milk products", "example": "Milk, paneer, ghee, curd, milk-based ice cream", "show": "Dairy" },
+        { "id": "oil", "emoji": "🫒", "label": "Edible oil", "example": "Oil mill, expeller, refinery", "show": "Edible oil" },
+        { "id": "milling", "emoji": "🌾", "label": "Grain, flour or dal milling", "example": "Atta chakki, rice mill, dal mill", "show": "Grain / pulses milling" },
+        { "id": "meat", "emoji": "🍗", "label": "Meat or poultry products", "example": "Processing and packing meat", "show": "Meat processing" },
+        { "id": "slaughter", "emoji": "🔪", "label": "Slaughter house", "example": "Slaughtering animals or poultry", "show": "Slaughter house" },
+        { "id": "fish", "emoji": "🐟", "label": "Fish or seafood products", "example": "Processing, freezing or packing fish", "show": "Fish products" },
+        { "id": "packaged_water", "emoji": "💧", "label": "Packaged drinking water", "example": "Bottled or mineral water, soda", "show": "Packaged drinking water" },
+        { "id": "repack", "emoji": "📦", "label": "Repacking or relabelling", "example": "Buy in bulk and pack or label under your own brand", "show": "Repacking / relabelling" },
+        { "id": "additives", "emoji": "🧪", "label": "Food additives or ingredients", "example": "Colours, flavours, enzymes, preservatives, nutrients", "show": "Food additives" },
+        { "id": "nutraceutical", "emoji": "💊", "label": "Health supplements or nutraceuticals", "example": "Protein powder, vitamins, herbal supplements, special dietary foods", "show": "Supplements / nutraceuticals" },
+        { "id": "proprietary", "emoji": "🧾", "label": "A food with no FSSAI standard", "example": "Your own recipe that no FSSAI product standard covers (proprietary food)", "show": "Proprietary food" },
+        { "id": "novel", "emoji": "🧬", "label": "New or novel food ingredients", "example": "Foods or ingredients that need FSSAI product approval", "show": "Novel / non-specified food" },
+        { "id": "ayurveda", "emoji": "🌿", "label": "Ayurveda aahara", "example": "Food made to Ayurveda recipes (not medicines)", "show": "Ayurveda aahara" },
+        { "id": "irradiation", "emoji": "☢️", "label": "Food irradiation", "example": "Radiation processing of food", "show": "Food irradiation" },
+        { "id": "unsure", "emoji": "🤔", "label": "Something else / not sure", "example": "An expert will help place your business", "exclusive": true, "show": "Not sure (expert to confirm)" }
+      ]
+    },
+    {
+      "id": "trade",
+      "multi": true,
+      "title": "What kind of selling, storing or transport?",
+      "hint": "Tap everything that applies.",
+      "keys": ["trade_kinds"],
+      "relevant": { "has": ["activities", "sell"] },
+      "answered": { "nonempty": "trade_kinds" },
+      "apply": { "list": "trade_kinds" },
+      "value": { "key": "trade_kinds" },
+      "show": { "values": "trade_kinds", "join": " · " },
+      "changeLabel": "what I sell",
+      "values": [
+        { "id": "retail", "emoji": "🏬", "label": "A shop selling to customers", "example": "Kirana, supermarket, sweet shop, meat or fish shop", "show": "Retail" },
+        { "id": "wholesale", "emoji": "📦", "label": "Wholesale", "example": "Selling in bulk to shops and businesses", "show": "Wholesale" },
+        { "id": "distribution", "emoji": "🚚", "label": "Distributor", "example": "Distributing a manufacturer's products to retailers", "show": "Distribution" },
+        { "id": "storage", "emoji": "🏚️", "label": "Warehouse or godown", "example": "Dry storage", "show": "Storage" },
+        { "id": "storage_cold", "emoji": "❄️", "label": "Cold storage", "example": "Refrigerated or frozen storage", "show": "Cold storage" },
+        { "id": "storage_ca", "emoji": "🌡️", "label": "Controlled-atmosphere storage", "example": "CA + cold stores for fruit, grain and produce", "show": "CA + cold storage" },
+        { "id": "transport", "emoji": "🚛", "label": "Transport", "example": "Trucks, refrigerated vans, milk or oil tankers", "show": "Transport" },
+        { "id": "direct_seller", "emoji": "🤝", "label": "Direct seller", "example": "Selling for a direct-selling company", "show": "Direct seller" },
+        { "id": "vending_agency", "emoji": "🏧", "label": "Vending machines or kiosks", "example": "Packaged or fresh food from machines, kiosks or carts", "show": "Food vending agency" },
+        { "id": "unsure", "emoji": "🤔", "label": "Something else / not sure", "example": "An expert will help place your business", "exclusive": true, "show": "Not sure (expert to confirm)" }
+      ]
+    },
+    {
+      "id": "export",
+      "multi": true,
+      "title": "How do you export?",
+      "hint": "Tap everything that applies.",
+      "keys": ["export_kinds"],
+      "relevant": { "has": ["activities", "export"] },
+      "answered": { "nonempty": "export_kinds" },
+      "apply": { "list": "export_kinds" },
+      "value": { "key": "export_kinds" },
+      "show": { "values": "export_kinds", "join": " · " },
+      "changeLabel": "how I export",
+      "values": [
+        { "id": "merchant_exporter", "emoji": "🧾", "label": "I export food made by others", "example": "Merchant or trader exporter", "show": "Merchant exporter" },
+        { "id": "exporter_manufacturer", "emoji": "🏭", "label": "I export food I make", "example": "Made to the importing country's rules", "show": "Exporter-manufacturer",
+          "when": { "has": ["activities", "make"] } },
+        { "id": "eou", "emoji": "🏷️", "label": "100% export-oriented unit (EOU)", "example": "With an EOU certificate from the Ministry of Commerce", "show": "100% EOU",
+          "when": { "has": ["activities", "make"] } }
+      ]
+    },
+    {
+      "id": "stars",
+      "title": "Is your hotel star-rated?",
+      "keys": ["hotel_stars"],
+      "relevant": { "has": ["service_kinds", "hotel"] },
+      "answered": { "known": "hotel_stars" },
+      "apply": { "key": "hotel_stars" },
+      "value": { "key": "hotel_stars" },
+      "show": { "values": "hotel_stars" },
+      "changeLabel": "my hotel rating",
+      "values": [
+        { "id": "five", "emoji": "⭐", "label": "Five star or above", "example": "5-star, 5-star deluxe", "show": "Five star or above" },
+        { "id": "four", "emoji": "✨", "label": "Up to four star", "example": "1 to 4 star rated", "show": "Up to four star" },
+        { "id": "unrated", "emoji": "🏠", "label": "Not star-rated", "example": "Guest house, lodge or hotel without a star rating", "show": "Not star-rated" }
+      ]
+    },
+    {
+      "id": "place",
+      "title": { "cases": [
+        { "when": { "only": ["activities", ["make"]] }, "text": "Where do you make or pack it?" },
+        { "when": { "only": ["activities", ["cook"]] }, "text": "Where do you cook?" },
+        { "text": "Where do you run it from?" }
+      ] },
+      "keys": ["place"],
+      "relevant": { "all": [{ "ref": "food" }, { "not": { "implied": "place" } }] },
+      "answered": { "known": "place" },
+      "apply": { "key": "place" },
+      "value": { "key": "place" },
+      "show": { "values": "place" },
+      "changeLabel": "where I run it",
+      "values": [
+        { "id": "street", "when": { "ref": "outletOnly" }, "emoji": "🛺",
+          "label": { "cases": [{ "when": { "has": ["activities", "cook"] }, "text": "A cart, stall or food truck" }, { "text": "A cart or street stall" }] },
+          "example": { "cases": [{ "when": { "has": ["activities", "cook"] }, "text": "Chaat cart, tea stall, pav bhaji thela, food truck" }, { "text": "Fruit or vegetable cart, snack or paan stall" }] },
+          "show": "Street cart / stall" },
+        { "id": "home", "when": { "ref": "homeAllowed" }, "emoji": "🏠",
+          "label": { "cases": [{ "when": { "ref": "homeKitchen" }, "text": "My home kitchen" }, { "text": "From my home" }] },
+          "example": { "parts": [
+            { "when": { "has": ["activities", "cook"] }, "text": "tiffin service, home chef" },
+            { "when": { "has": ["activities", "make"] }, "text": "home bakery, homemade pickles or snacks" },
+            { "when": { "has": ["activities", "sell"] }, "text": "home-based shop, selling packaged food online" }
+          ], "join": "; ", "capitalize": true },
+          "show": { "cases": [{ "when": { "ref": "homeKitchen" }, "text": "Home kitchen" }, { "text": "From home" }] } },
+        { "id": "premises",
+          "emoji": { "cases": [{ "when": { "has": ["activities", "make"] }, "text": "🏭" }, { "text": "🏪" }] },
+          "label": { "prefix": "A ", "join": "or", "empty": "business premises", "parts": [
+            { "when": { "has": ["activities", "cook"] }, "text": "restaurant or kitchen" },
+            { "when": { "has": ["activities", "make"] }, "text": "factory" },
+            { "when": { "has": ["trade_kinds", "retail"] }, "text": "shop" },
+            { "when": { "any": [{ "has": ["trade_kinds", "wholesale"] }, { "has": ["trade_kinds", "distribution"] }, { "has": ["trade_kinds", "storage"] }, { "has": ["trade_kinds", "storage_cold"] }, { "has": ["trade_kinds", "storage_ca"] }] }, "text": "warehouse" },
+            { "when": { "any": [{ "has": ["activities", "import"] }, { "has": ["activities", "export"] }, { "has": ["trade_kinds", "transport"] }] }, "text": "office" }
+          ] },
+          "example": "Owned or rented premises",
+          "show": "@label" },
+        { "id": "airport", "when": { "ref": "servicePremisesOnly" }, "emoji": "✈️", "label": "Airport or seaport",
+          "example": "Outlet, store or warehouse inside an airport or seaport", "show": "Airport / seaport" },
+        { "id": "railway", "when": { "ref": "railwayAllowed" }, "emoji": "🚉", "label": "Railway station",
+          "example": "Stall, restaurant, canteen or shop at a railway station", "show": "Railway station" },
+        { "id": "central_govt", "when": { "ref": "servicePremisesOnly" }, "emoji": "🏛️", "label": "Central government premises",
+          "example": "Canteen, shop or store inside a central government office or unit", "show": "Central government premises" },
+        { "id": "vehicles", "when": { "ref": "transportOnly" }, "emoji": "🚛", "label": "Only my vehicles",
+          "example": "No shop or warehouse; just trucks or vans", "show": "Vehicles only" }
+      ]
+    },
+    {
+      "id": "vending",
+      "title": "Is your stall registered with the municipality?",
+      "hint": "For example a vending certificate from your Municipal Corporation or Town Vending Committee.",
+      "keys": ["municipal_registered"],
+      "relevant": { "eq": ["place", "street"] },
+      "answered": { "known": "municipal_registered" },
+      "valid": true,
+      "value": { "cases": [{ "when": { "eq": ["municipal_registered", true] }, "id": "yes" }, { "id": "no" }] },
+      "show": { "cases": [{ "when": { "eq": ["municipal_registered", true] }, "text": "Yes" }, { "text": "No" }] },
+      "values": [
+        { "id": "yes", "emoji": "✅", "label": "Yes, I have a vending certificate", "example": "Issued by the municipality / Town Vending Committee", "set": { "municipal_registered": true } },
+        { "id": "no", "emoji": "❌", "label": "No", "example": "Not registered yet", "set": { "municipal_registered": false } },
+        { "id": "unsure", "emoji": "🤔", "label": "Not sure", "example": "We'll treat it as not registered", "set": { "municipal_registered": false } }
+      ]
+    },
+    {
+      "id": "locations",
+      "title": { "cases": [{ "when": { "ref": "vehicles" }, "text": "Where do your vehicles run?" }, { "text": "Do you run it from more than one place?" }] },
+      "keys": ["locations"],
+      "relevant": { "all": [{ "ref": "food" }, { "not": { "ref": "deemed" } }, { "not": { "implied": "locations" } }] },
+      "answered": { "known": "locations" },
+      "apply": { "key": "locations" },
+      "value": { "key": "locations" },
+      "show": { "values": "locations" },
+      "changeLabel": "number of places",
+      "values": [
+        { "id": "one", "emoji": "📍",
+          "label": { "cases": [{ "when": { "ref": "vehicles" }, "text": "Within one state" }, { "text": "Just one place" }] },
+          "example": { "cases": [{ "when": { "ref": "vehicles" }, "text": "All trips start and end in one state" }, { "text": "One shop, kitchen, unit or stall" }] },
+          "show": "One place" },
+        { "id": "many", "when": { "not": { "ref": "vehicles" } }, "emoji": "🏘️", "label": "Several places, one state",
+          "example": "Two or more outlets or units in the same state", "show": "Several places in one state" },
+        { "id": "multistate", "emoji": "🗺️",
+          "label": { "cases": [{ "when": { "ref": "vehicles" }, "text": "Across states" }, { "text": "Places in more than one state" }] },
+          "example": { "cases": [{ "when": { "ref": "vehicles" }, "text": "Vehicles based in or running through more than one state" }, { "text": "Outlets, units or offices in two or more states" }] },
+          "show": "Places in more than one state" }
+      ]
+    },
+    {
+      "id": "state",
+      "kind": "states",
+      "multi": { "eq": ["locations", "multistate"] },
+      "title": { "cases": [{ "when": { "eq": ["locations", "multistate"] }, "text": "Which states are you in?" }, { "text": "Which state is your business in?" }] },
+      "hint": { "cases": [{ "when": { "eq": ["locations", "multistate"] }, "text": "Tap every state where you have a place of business." }] },
+      "keys": ["states"],
+      "relevant": { "ref": "food" },
+      "answered": { "nonempty": "states" },
+      "valid": { "any": [
+        { "all": [{ "eq": ["locations", "multistate"] }, { "gte": [{ "len": "states" }, 2] }] },
+        { "all": [{ "not": { "eq": ["locations", "multistate"] } }, { "any": [{ "eq": [{ "len": "states" }, 1] }, { "not": { "known": "locations" } }] }] }
+      ] },
+      "show": { "joinKey": "states", "sep": ", " },
+      "changeLabel": "my states"
+    },
+    {
+      "id": "online",
+      "title": "Do you sell online?",
+      "keys": ["sells_online", "ecommerce_platform"],
+      "relevant": { "all": [{ "ref": "food" }, { "not": { "ref": "deemed" } }, { "not": { "ref": "storageOrTransportOnly" } }] },
+      "answered": { "known": "ecommerce_platform" },
+      "value": { "cases": [
+        { "when": { "eq": ["ecommerce_platform", true] }, "id": "platform" },
+        { "when": { "eq": ["sells_online", true] }, "id": "seller" },
+        { "id": "no" }
+      ] },
+      "show": { "cases": [
+        { "when": { "eq": ["ecommerce_platform", true] }, "text": "Runs a food marketplace" },
+        { "when": { "eq": ["sells_online", true] }, "text": "Sells on apps / own website" },
+        { "text": "Offline only" }
+      ] },
+      "changeLabel": "selling online",
+      "values": [
+        { "id": "no", "emoji": "🙅", "label": "No", "example": "Only in person / offline", "set": { "sells_online": false, "ecommerce_platform": false } },
+        { "id": "seller", "emoji": "📱", "label": "Yes, on apps as a seller", "example": "Swiggy, Zomato, Amazon, Flipkart, my own website", "set": { "sells_online": true, "ecommerce_platform": false } },
+        { "id": "platform", "emoji": "🌐", "label": "I run a food marketplace", "example": "An app or website where OTHER sellers list their food", "set": { "sells_online": true, "ecommerce_platform": true } }
+      ]
+    },
+    {
+      "id": "turnover",
+      "note": "Asked only when the verdict depends on it ({needs}: the engine asks the verdict rules).",
+      "title": "Roughly how much do you sell in a year?",
+      "hint": "Just starting? Pick what you expect in your first year.",
+      "keys": ["turnover_crore"],
+      "relevant": { "all": [{ "ref": "food" }, { "not": { "ref": "deemed" } }, { "needs": "turnover_crore" }] },
+      "answered": { "known": "turnover_crore" },
+      "valid": true,
+      "value": { "cases": [
+        { "when": { "lte": ["turnover_crore", 1.5] }, "id": "t2" },
+        { "when": { "lte": ["turnover_crore", 50] }, "id": "t3" },
+        { "id": "t4" }
+      ] },
+      "show": { "cases": [
+        { "when": { "not": { "known": "turnover_crore" } }, "text": "—" },
+        { "when": { "lte": ["turnover_crore", 1.5] }, "text": "Up to ₹1.5 crore / year" },
+        { "when": { "lte": ["turnover_crore", 50] }, "text": "₹1.5 – ₹50 crore / year" },
+        { "text": "Above ₹50 crore / year" }
+      ] },
+      "changeLabel": "my yearly sales",
+      "values": [
+        { "id": "t2", "emoji": "🌱", "label": "Up to ₹1.5 crore", "example": "Up to about ₹41,000 a day — a stall, home business, shop or small restaurant", "set": { "turnover_crore": 1.5 } },
+        { "id": "t3", "emoji": "🌳", "label": "₹1.5 crore – ₹50 crore", "example": "Up to about ₹13.7 lakh a day — a factory or restaurant chain", "set": { "turnover_crore": 50 } },
+        { "id": "t4", "emoji": "🏔️", "label": "More than ₹50 crore", "example": "A large manufacturer or distributor", "set": { "turnover_crore": 51 } }
+      ]
+    }
+  ],
+
+  "edges": [
+    { "id": "home-one-place", "rel": "implies", "status": "draft", "key": "locations", "value": "one", "questions": ["place", "locations"],
+      "when": { "eq": ["place", "home"] },
+      "message": { "cases": [
+        { "when": { "ref": "homeKitchen" }, "text": "You run it from your home kitchen, but also said you have several places. Which is right?" },
+        { "text": "You run it from home, but also said you have several places. Which is right?" }
+      ] },
+      "fixLabel": { "cases": [{ "when": { "ref": "homeKitchen" }, "text": "Just one place: my home kitchen" }, { "text": "Just one place: my home" }] } },
+    { "id": "hawker-street", "rel": "implies", "status": "draft", "key": "place", "value": "street", "questions": ["service", "place"],
+      "when": { "ref": "hawkerOnly" },
+      "message": "A hawker sells on the move, but you also said you work from a fixed place. Which is right?",
+      "fixLabel": "I move around (hawker)" },
+    { "id": "hawker-one-place", "rel": "implies", "status": "draft", "key": "locations", "value": "one", "questions": ["service", "locations"],
+      "when": { "ref": "hawkerOnly" },
+      "message": "A hawker registers once, wherever they sell. Did you mean you also have fixed outlets?",
+      "fixLabel": "Just me, selling on the move" },
+    { "id": "home-high-sales", "rel": "unlikely", "status": "draft", "questions": ["place", "turnover"],
+      "when": { "all": [{ "eq": ["place", "home"] }, { "gt": ["turnover_crore", 1.5] }] },
+      "message": { "cases": [
+        { "when": { "ref": "homeKitchen" }, "text": "Sales above ₹1.5 crore a year are unusual for a business run from your home kitchen. Is that right?" },
+        { "text": "Sales above ₹1.5 crore a year are unusual for a business run from home. Is that right?" }
+      ] } },
+    { "id": "street-high-sales", "rel": "unlikely", "status": "draft", "questions": ["place", "turnover"],
+      "when": { "all": [{ "eq": ["place", "street"] }, { "gt": ["turnover_crore", 1.5] }] },
+      "message": "Sales above ₹1.5 crore a year are unusual for a cart or stall. Is that right?" },
+    { "id": "street-many-states", "rel": "unlikely", "status": "draft", "questions": ["place", "locations"],
+      "when": { "all": [{ "eq": ["place", "street"] }, { "eq": ["locations", "multistate"] }] },
+      "message": "Carts or stalls in more than one state are unusual. Is that right?" },
+    { "id": "small-outlet-marketplace", "rel": "unlikely", "status": "draft", "questions": ["place", "online"],
+      "when": { "all": [{ "in": ["place", ["street", "home"]] }, { "eq": ["ecommerce_platform", true] }] },
+      "message": "You said you run a food marketplace (an app where other sellers list food). Selling your own food on Swiggy or Zomato is different. Which is right?" },
+
+    { "id": "outcome-notfood", "rel": "outcome", "status": "draft", "outcome": "notfood", "when": { "ref": "notFood" },
+      "reasons": ["What you described is not a food business under the FSS Act, so FSSAI approval is not required."],
+      "guidance": "If you start selling, serving, making, storing or transporting food for others, you will need FSSAI registration or a licence." },
+    { "id": "outcome-deemed", "rel": "outcome", "status": "draft", "outcome": "deemed", "when": { "ref": "deemed" },
+      "reasons": ["Deemed FSSAI-registered under the Street Vendors (Protection of Livelihood and Regulation of Street Vending) Act, 2014."],
+      "guidance": "Maintain hygiene and safety compliance per the FSS Act. No FSSAI application is required.",
+      "upsell": "Optional: many street vendors still apply for FSSAI Registration to display the logo and build consumer trust.",
+      "optIn": { "when": { "eq": ["opt_in_registration", true] }, "licence": "registration", "reason": "You chose to apply for FSSAI Registration anyway." } },
+
+    { "id": "reason-street-unregistered", "rel": "reason", "status": "draft",
+      "when": { "all": [{ "eq": ["place", "street"] }, { "not": { "eq": ["municipal_registered", true] } }] },
+      "text": "You are not registered with your Municipal Corporation / Town Vending Committee, so the street-vendor exemption does not apply." },
+
+    { "id": "place-airport", "rel": "licence", "status": "draft", "when": { "eq": ["place", "airport"] },
+      "licence": { "fixed": "central", "fee": 7500 },
+      "text": "Food businesses at airports and seaports need a Central Licence, whatever their turnover.",
+      "sources": [{ "page": 8, "quote": "Food Business Activities at premises of Airport/Seaport such" }] },
+    { "id": "place-railway", "rel": "licence", "status": "draft", "when": { "eq": ["place", "railway"] },
+      "applies": { "groups": ["food_service"], "concepts": ["retail", "vending_agency", "cook", "sell"] },
+      "licence": { "bands": "railway" },
+      "otherwise": "The eligibility table covers caterers, restaurants, canteens, hawkers and petty retailers at railway stations; other activities there need an expert.",
+      "sources": [{ "page": 8, "quote": "Caterers/Restaurants/Canteens/Hawkers/Petty Retailers at" }] },
+    { "id": "place-central-govt-trade", "rel": "licence", "status": "draft", "when": { "eq": ["place", "central_govt"] },
+      "applies": { "concepts": ["storage", "storage_cold", "storage_ca", "wholesale", "distribution", "retail", "vending_agency", "direct_seller", "sell"] },
+      "licence": { "fixed": "central", "fee": 7500 },
+      "sources": [{ "page": 8, "quote": "Food Business Activities at premises of Central Govt Agencies" }] },
+    { "id": "place-central-govt-catering", "rel": "licence", "status": "draft", "when": { "eq": ["place", "central_govt"] },
+      "applies": { "groups": ["food_service"], "concepts": ["cook"] },
+      "licence": { "bands": "central_govt_catering" },
+      "otherwise": "The eligibility table covers storage, trade and catering at central government premises; other activities there need an expert.",
+      "sources": [{ "page": 8, "quote": "Food Catering Services in establishments and units under" }] },
+
+    { "id": "task-head-office", "rel": "task", "status": "draft", "when": { "ref": "multistate" }, "concept": "head_office",
+      "sources": [{ "page": 9, "quote": "Food Business Operators having food business activities in two or" }],
+      "text": "You operate in more than one state, so you also declare one head / registered office, which needs its own Central Licence." },
+    { "id": "task-more-premises", "rel": "task", "status": "draft", "when": { "in": ["locations", ["many", "multistate"]] }, "offer": "another_premises", "label": "Add another premises",
+      "text": "Each place of business needs its own registration or licence. We start with this one; add the others one by one." },
+
+    { "id": "note-airport-route", "rel": "note", "status": "draft", "when": { "eq": ["place", "airport"] },
+      "text": "Filed on the airport / seaport route of FoSCoS." },
+    { "id": "note-railway-route", "rel": "note", "status": "draft", "when": { "eq": ["place", "railway"] },
+      "text": "Filed on the railway route of FoSCoS (zone-wise)." },
+    { "id": "note-novel-approval", "rel": "note", "status": "draft", "when": { "has": ["make_kinds", "novel"] },
+      "text": "Non-specified (novel) foods need product approval from FSSAI HQ before you apply for the licence." }
+  ],
+
+  "verdict": {
+    "model": "kob",
+    "licences": {
+      "registration": { "name": "FSSAI Registration", "form": "A" },
+      "central_registration": { "name": "Central Registration", "form": "A" },
+      "state": { "name": "State Licence", "form": "B" },
+      "central": { "name": "Central Licence", "form": "B" }
+    },
+    "rank": ["registration", "central_registration", "state", "central"],
+    "turnover": "turnover_crore",
+    "effectiveDate": "1 April 2026",
+    "bandSets": {
+      "standard": [
+        { "lte": 1.5, "to": "registration", "fee": 100 },
+        { "lte": 50, "to": "state", "fee": 5000 },
+        { "to": "central", "fee": 7500 }
+      ],
+      "state_capped": [
+        { "lte": 1.5, "to": "registration", "fee": 100 },
+        { "to": "state", "fee": 5000 }
+      ],
+      "caterer": [
+        { "lte": 50, "to": "state", "fee": 5000 },
+        { "to": "central", "fee": 7500 }
+      ],
+      "registration_only": [
+        { "lte": 1.5, "to": "registration", "fee": 100 },
+        { "handover": "The table lists this kind of business only up to ₹1.5 crore turnover; above that an expert needs to place it." }
+      ],
+      "fee_waived_registration": [
+        { "lte": 1.5, "to": "registration", "fee": 0 },
+        { "handover": "The table lists this kind of business only up to ₹1.5 crore turnover; above that an expert needs to place it." }
+      ],
+      "railway": [
+        { "lte": 1.5, "to": "central_registration", "fee": 100 },
+        { "to": "central", "fee": 2000 }
+      ],
+      "central_govt_catering": [
+        { "lte": 1.5, "to": "central_registration", "fee": 100 },
+        { "to": "central", "fee": 2000 }
+      ]
+    },
+    "bandSources": {
+      "standard": [{ "page": 5, "quote": "Annual Turnover upto Registration" }],
+      "state_capped": [{ "page": 7, "quote": "Club/Canteen" }],
+      "caterer": [{ "page": 7, "quote": "Caterer" }],
+      "railway": [{ "page": 8, "quote": "Caterers/Restaurants/Canteens/Hawkers/Petty Retailers at" }],
+      "central_govt_catering": [{ "page": 8, "quote": "Food Catering Services in establishments and units under" }]
+    },
+    "handover": {
+      "unknown_kind": "You told us you are not sure which kind of business fits. The result below is our best estimate; an expert will confirm it.",
+      "offer": "Talk to an expert to confirm this before you apply."
+    },
+    "documents": {
+      "catalogue": {
+        "reg_photo": "Photograph of the applicant",
+        "reg_photo_id": "Government-issued photo ID (Aadhaar, PAN, Voter ID, …)",
+        "reg_address_proof": "Proof of address of the business premises (if different from the photo ID)",
+        "directors_list": "List of directors / partners / proprietor with full address and contact details, nominating an authorised signatory (on letterhead)",
+        "photo_id_signatory": "Photo ID and address proof of the proprietor / partners / directors / authorised signatory",
+        "premises_proof": "Proof of possession of premises (sale deed, rent agreement, electricity bill, …)",
+        "constitution": "Partnership deed / self-declaration for proprietorship / memorandum & articles of association / co-operative certificate",
+        "form_ix": "Form IX: nomination of a person under the FSS Rules (not for a proprietor) (on letterhead)",
+        "layout_plan": "Blueprint / layout plan of the processing unit with dimensions and operation-wise areas (on letterhead)",
+        "unit_photos": "Photographs of the production unit",
+        "equipment_list": "List of equipment and machinery with number, installed capacity and horse power (on letterhead)",
+        "water_report": "Chemical and bacteriological analysis of water used as an ingredient, from a recognised or public health laboratory (not needed if water is not an ingredient)",
+        "recall_plan": "Recall plan (on letterhead)",
+        "iec": "Import Export Code (IEC) issued by DGFT",
+        "export_declaration": "Declaration that export-only products will not be sold in India and meet the importing country's standards (on letterhead)",
+        "eou_certificate": "Ministry of Commerce certificate for 100% EOU",
+        "vehicle_list": "List of vehicle registration numbers (on letterhead)",
+        "milk_source_plan": "Source or procurement plan for milk (on letterhead)",
+        "raw_material_source": "Source of raw material (on letterhead)",
+        "municipal_noc": "NOC from the Municipal Corporation / local body",
+        "manufacturer_noc": "NOC from the manufacturer(s)",
+        "product_specification": "Product specification of each product with the purity criteria of ingredients, in the prescribed format (on letterhead)",
+        "composition": "Composition of each product in the prescribed format (on letterhead)",
+        "product_approval": "Product approval from FSSAI HQ for each product",
+        "pesticide_report": "Pesticide residue report of the water used, with source of raw water and treatment plan"
+      },
+      "registration": ["reg_photo", "reg_photo_id", "reg_address_proof"],
+      "licence": ["directors_list", "photo_id_signatory", "premises_proof", "constitution", "form_ix"],
+      "licence_manufacturing": ["directors_list", "photo_id_signatory", "premises_proof", "constitution", "form_ix", "layout_plan", "unit_photos", "equipment_list", "water_report", "recall_plan"],
+      "sources": [{ "file": "sources/foscos/vision/documentlistmarch.md", "quote": "Revised list of the KoB-wise mandatory documents" }]
+    }
+  },
+
+  "assertions": [
+    { "id": "no-street-for-maker", "text": "street cart for a manufacturer, importer, exporter or non-retail trade",
+      "never": { "all": [{ "eq": ["place", "street"] }, { "any": [
+        { "has": ["activities", "make"] }, { "has": ["activities", "import"] }, { "has": ["activities", "export"] },
+        { "not": { "only": ["trade_kinds", ["retail", "vending_agency", "unsure"]] } }
+      ] }] } },
+    { "id": "no-home-for-trade", "text": "home for an importer, exporter, wholesaler, store or transporter",
+      "never": { "all": [{ "eq": ["place", "home"] }, { "any": [
+        { "has": ["activities", "import"] }, { "has": ["activities", "export"] },
+        { "not": { "only": ["trade_kinds", ["retail", "vending_agency", "direct_seller"]] } }
+      ] }] } },
+    { "id": "no-special-premises-for-maker", "text": "airport, railway or central-government outlet for a manufacturer, importer or exporter",
+      "never": { "all": [{ "in": ["place", ["airport", "railway", "central_govt"]] }, { "any": [
+        { "has": ["activities", "make"] }, { "has": ["activities", "import"] }, { "has": ["activities", "export"] }
+      ] }] } },
+    { "id": "vehicles-only-transporter", "text": "vehicles-only for anything but a transporter",
+      "never": { "all": [{ "eq": ["place", "vehicles"] }, { "not": { "ref": "transportOnly" } }] } },
+    { "id": "vending-only-street", "text": "vending question outside a street cart",
+      "never": { "all": [{ "known": "municipal_registered" }, { "not": { "eq": ["place", "street"] } }] } },
+    { "id": "single-state-count", "text": "several states picked for a single-state business",
+      "never": { "all": [{ "known": "locations" }, { "not": { "eq": ["locations", "multistate"] } }, { "gt": [{ "len": "states" }, 1] }] } },
+    { "id": "multistate-count", "text": "multi-state business with one state",
+      "never": { "all": [{ "eq": ["locations", "multistate"] }, { "lt": [{ "len": "states" }, 2] }] } },
+    { "id": "kinds-need-activity", "text": "a kind of business without its activity",
+      "never": { "any": [
+        { "all": [{ "known": "service_kinds" }, { "not": { "has": ["activities", "cook"] } }] },
+        { "all": [{ "known": "make_kinds" }, { "not": { "has": ["activities", "make"] } }] },
+        { "all": [{ "known": "trade_kinds" }, { "not": { "has": ["activities", "sell"] } }] },
+        { "all": [{ "known": "export_kinds" }, { "not": { "has": ["activities", "export"] } }] }
+      ] } },
+    { "id": "home-one-place", "text": "home kitchen with several places",
+      "never": { "all": [{ "eq": ["place", "home"] }, { "not": { "eq": ["locations", "one"] } }] } },
+    { "id": "fixed-central-honoured", "text": "a Central-only kind of business got a lower licence", "verdict": true,
+      "never": { "all": [{ "known": "$licence" }, { "not": { "eq": ["$licence", "central"] } }, { "any": [
+        { "matched": "importer" }, { "matched": "ecommerce" }, { "matched": "merchant_exporter" }, { "matched": "exporter_manufacturer" },
+        { "matched": "eou" }, { "matched": "proprietary" }, { "matched": "nutraceutical" }, { "matched": "novel" },
+        { "matched": "ayurveda" }, { "matched": "irradiation" }, { "eq": ["place", "airport"] }, { "eq": ["hotel_stars", "five"] }
+      ] }] } },
+    { "id": "caterer-never-registration", "text": "a caterer got a Registration", "verdict": true,
+      "never": { "all": [{ "matched": "caterer" }, { "eq": ["$licence", "registration"] }] } },
+    { "id": "canteen-never-central", "text": "a club or canteen alone got a Central Licence", "verdict": true,
+      "never": { "all": [{ "eq": ["$licence", "central"] }, { "nonempty": "business" },
+        { "only": ["business", ["canteen", "vending_est", "mdm_canteen"]] }, { "in": ["place", ["home", "premises", "street"]] }] } }
+  ]
+}
