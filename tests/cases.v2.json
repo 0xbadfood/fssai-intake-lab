@@ -1,86 +1,662 @@
 {
   "note": "Scenario cases for graph v2. `answers` maps question id → tap (option ids, a single id, or states). The runner answers only the questions the automaton asks and fails if it asks one that has no answer here, or never asks one that has. `portal` records what the live portal says today, where it differs.",
   "cases": [
-    { "name": "small caterer needs a State Licence (no Registration band)", "portal": "FSSAI Registration, ₹100",
-      "answers": { "activity": ["cook"], "service": ["caterer"], "place": "premises", "locations": "one", "state": ["Goa"], "online": "no", "turnover": "t2" },
-      "expect": { "licence_id": "state", "fee": 5000 } },
-    { "name": "small restaurant: Registration ₹100",
-      "answers": { "activity": ["cook"], "service": ["restaurant"], "place": "premises", "locations": "one", "state": ["Goa"], "online": "seller", "turnover": "t2" },
-      "expect": { "licence_id": "registration", "fee": 100, "documents": ["reg_photo", "reg_photo_id", "reg_address_proof"] } },
-    { "name": "mid-size restaurant: State Licence at ₹5,000", "portal": "State Licence, ₹2,000",
-      "answers": { "activity": ["cook"], "service": ["restaurant"], "place": "premises", "locations": "one", "state": ["Goa"], "online": "no", "turnover": "t3" },
-      "expect": { "licence_id": "state", "fee": 5000, "documents": ["directors_list", "water_report"] } },
-    { "name": "home nutraceutical maker is Central whatever the turnover", "portal": "FSSAI Registration (turnover asked)",
-      "answers": { "activity": ["make"], "manufacture": ["nutraceutical"], "place": "premises", "locations": "one", "state": ["Karnataka"], "online": "seller" },
-      "expect": { "licence_id": "central", "fee": 7500, "not_asked": ["turnover"], "documents": ["layout_plan", "product_specification"] } },
-    { "name": "merchant exporter is Central", "portal": "not modelled (no export activity)",
-      "answers": { "activity": ["export"], "export": ["merchant_exporter"], "place": "premises", "locations": "one", "state": ["Gujarat"], "online": "no" },
-      "expect": { "licence_id": "central", "fee": 7500, "not_asked": ["turnover"], "documents": ["iec", "export_declaration"] } },
-    { "name": "exporter-manufacturer is Central",
-      "answers": { "activity": ["make", "export"], "manufacture": ["general"], "export": ["exporter_manufacturer"], "place": "premises", "locations": "one", "state": ["Gujarat"], "online": "no" },
-      "expect": { "licence_id": "central", "fee": 7500, "not_asked": ["turnover"] } },
-    { "name": "five-star hotel is Central", "portal": "by turnover",
-      "answers": { "activity": ["cook"], "service": ["hotel"], "stars": "five", "place": "premises", "locations": "one", "state": ["Delhi"], "online": "no" },
-      "expect": { "licence_id": "central", "fee": 7500, "not_asked": ["turnover"] } },
-    { "name": "four-star hotel is State",
-      "answers": { "activity": ["cook"], "service": ["hotel"], "stars": "four", "place": "premises", "locations": "one", "state": ["Delhi"], "online": "no" },
-      "expect": { "licence_id": "state", "fee": 5000, "not_asked": ["turnover"] } },
-    { "name": "small unrated hotel: Registration",
-      "answers": { "activity": ["cook"], "service": ["hotel"], "stars": "unrated", "place": "premises", "locations": "one", "state": ["Kerala"], "online": "no", "turnover": "t2" },
-      "expect": { "licence_id": "registration", "fee": 100 } },
-    { "name": "very large canteen stays State (no Central band)", "portal": "Central Licence",
-      "answers": { "activity": ["cook"], "service": ["canteen"], "place": "premises", "locations": "one", "state": ["Maharashtra"], "online": "no", "turnover": "t4" },
-      "expect": { "licence_id": "state", "fee": 5000 } },
-    { "name": "small tea shop: Registration",
-      "answers": { "activity": ["cook"], "service": ["petty"], "place": "street", "vending": "no", "locations": "one", "state": ["Bihar"], "online": "no", "turnover": "t2" },
-      "expect": { "licence_id": "registration", "fee": 100, "handover": false } },
-    { "name": "tea shop above ₹1.5 crore is outside the table: handover",
-      "answers": { "activity": ["cook"], "service": ["petty"], "place": "premises", "locations": "one", "state": ["Bihar"], "online": "no", "turnover": "t3" },
-      "expect": { "outcome": "handover", "licence_id": null, "handover": true } },
-    { "name": "hawker: place implied (street), fee waived", "portal": "FSSAI Registration, ₹100 (place asked)",
-      "answers": { "activity": ["cook"], "service": ["hawker"], "vending": "no", "state": ["Uttar Pradesh"], "online": "no", "turnover": "t2" },
-      "expect": { "licence_id": "registration", "fee": 0, "not_asked": ["place", "locations"] } },
-    { "name": "hawker with a vending certificate is deemed registered",
-      "answers": { "activity": ["cook"], "service": ["hawker"], "vending": "yes", "state": ["Uttar Pradesh"] },
-      "expect": { "outcome": "deemed", "licence_id": null } },
-    { "name": "small railway-station restaurant: Central Registration ₹100", "portal": "Central Licence",
-      "answers": { "activity": ["cook"], "service": ["restaurant"], "place": "railway", "locations": "one", "state": ["Delhi"], "online": "no", "turnover": "t2" },
-      "expect": { "licence_id": "central_registration", "fee": 100 } },
-    { "name": "mid-size railway-station restaurant: Central Licence at ₹2,000",
-      "answers": { "activity": ["cook"], "service": ["restaurant"], "place": "railway", "locations": "one", "state": ["Delhi"], "online": "no", "turnover": "t3" },
-      "expect": { "licence_id": "central", "fee": 2000 } },
-    { "name": "small canteen on central government premises: Central Registration",
-      "answers": { "activity": ["cook"], "service": ["canteen"], "place": "central_govt", "locations": "one", "state": ["Delhi"], "online": "no", "turnover": "t2" },
-      "expect": { "licence_id": "central_registration", "fee": 100 } },
-    { "name": "shop on central government premises: Central, turnover not asked",
-      "answers": { "activity": ["sell"], "trade": ["retail"], "place": "central_govt", "locations": "one", "state": ["Delhi"], "online": "no" },
-      "expect": { "licence_id": "central", "fee": 7500, "not_asked": ["turnover"] } },
-    { "name": "airport café: Central, turnover not asked",
-      "answers": { "activity": ["cook"], "service": ["restaurant"], "place": "airport", "locations": "one", "state": ["Karnataka"], "online": "no" },
-      "expect": { "licence_id": "central", "fee": 7500, "not_asked": ["turnover"] } },
-    { "name": "small flour mill: State Licence whatever the turnover", "portal": "FSSAI Registration",
-      "answers": { "activity": ["make"], "manufacture": ["milling"], "place": "premises", "locations": "one", "state": ["Punjab"], "online": "no" },
-      "expect": { "licence_id": "state", "fee": 5000, "not_asked": ["turnover"] } },
-    { "name": "packaged water inherits general manufacturing bands, adds its own document",
-      "answers": { "activity": ["make"], "manufacture": ["packaged_water"], "place": "premises", "locations": "one", "state": ["Tamil Nadu"], "online": "no", "turnover": "t3" },
-      "expect": { "licence_id": "state", "fee": 5000, "documents": ["layout_plan", "pesticide_report"] } },
-    { "name": "multi-state restaurant chain: this outlet by its own turnover, plus a Central head-office task", "portal": "Central Licence for everything",
-      "answers": { "activity": ["cook"], "service": ["restaurant"], "place": "premises", "locations": "multistate", "state": ["Goa", "Karnataka"], "online": "no", "turnover": "t2" },
-      "expect": { "licence_id": "registration", "fee": 100, "tasks": ["task-head-office", "task-more-premises"] } },
-    { "name": "not sure what kind of manufacturing: likely licence plus expert",
-      "answers": { "activity": ["make"], "manufacture": ["unsure"], "place": "premises", "locations": "one", "state": ["Assam"], "online": "no", "turnover": "t3" },
-      "expect": { "licence_id": "state", "handover": true } },
-    { "name": "importer: Central with IEC",
-      "answers": { "activity": ["import"], "place": "premises", "locations": "one", "state": ["Maharashtra"], "online": "no" },
-      "expect": { "licence_id": "central", "fee": 7500, "not_asked": ["turnover"], "documents": ["iec", "recall_plan"] } },
-    { "name": "transporter with only vehicles: vehicle list document",
-      "answers": { "activity": ["sell"], "trade": ["transport"], "place": "vehicles", "locations": "one", "state": ["Haryana"], "turnover": "t3" },
-      "expect": { "licence_id": "state", "fee": 5000, "not_asked": ["online"], "documents": ["vehicle_list"] } },
-    { "name": "food marketplace: Central whatever the turnover",
-      "answers": { "activity": ["cook"], "service": ["restaurant"], "place": "premises", "locations": "one", "state": ["Karnataka"], "online": "platform" },
-      "expect": { "licence_id": "central", "fee": 7500, "not_asked": ["turnover"] } },
-    { "name": "cooks only for family: not a food business",
-      "answers": { "activity": ["none"], "nonfood": "family" },
-      "expect": { "outcome": "notfood", "licence_id": null } }
+    {
+      "name": "small caterer needs a State Licence (no Registration band)",
+      "portal": "FSSAI Registration, ₹100",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "caterer"
+        ],
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Goa"
+        ],
+        "online": "no",
+        "turnover": "t2"
+      },
+      "expect": {
+        "licence_id": "state",
+        "fee": 5000
+      }
+    },
+    {
+      "name": "small restaurant: Registration ₹100",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "restaurant"
+        ],
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Goa"
+        ],
+        "online": "seller",
+        "turnover": "t2"
+      },
+      "expect": {
+        "licence_id": "registration",
+        "fee": 100,
+        "documents": [
+          "reg_photo",
+          "reg_photo_id",
+          "reg_address_proof"
+        ]
+      }
+    },
+    {
+      "name": "mid-size restaurant: State Licence at ₹5,000",
+      "portal": "State Licence, ₹2,000",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "restaurant"
+        ],
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Goa"
+        ],
+        "online": "no",
+        "turnover": "t3"
+      },
+      "expect": {
+        "licence_id": "state",
+        "fee": 5000,
+        "documents": [
+          "directors_list",
+          "water_report"
+        ]
+      }
+    },
+    {
+      "name": "home nutraceutical maker is Central whatever the turnover",
+      "portal": "FSSAI Registration (turnover asked)",
+      "answers": {
+        "activity": [
+          "make"
+        ],
+        "manufacture": [
+          "nutraceutical"
+        ],
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Karnataka"
+        ],
+        "online": "seller"
+      },
+      "expect": {
+        "licence_id": "central",
+        "fee": 7500,
+        "not_asked": [
+          "turnover"
+        ],
+        "documents": [
+          "layout_plan",
+          "product_specification"
+        ]
+      }
+    },
+    {
+      "name": "merchant exporter is Central",
+      "portal": "not modelled (no export activity)",
+      "answers": {
+        "activity": [
+          "export"
+        ],
+        "export": [
+          "merchant_exporter"
+        ],
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Gujarat"
+        ],
+        "online": "no"
+      },
+      "expect": {
+        "licence_id": "central",
+        "fee": 7500,
+        "not_asked": [
+          "turnover"
+        ],
+        "documents": [
+          "iec",
+          "export_declaration"
+        ]
+      }
+    },
+    {
+      "name": "exporter-manufacturer is Central",
+      "answers": {
+        "activity": [
+          "make",
+          "export"
+        ],
+        "manufacture": [
+          "general"
+        ],
+        "export": [
+          "exporter_manufacturer"
+        ],
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Gujarat"
+        ],
+        "online": "no"
+      },
+      "expect": {
+        "licence_id": "central",
+        "fee": 7500,
+        "not_asked": [
+          "turnover"
+        ]
+      }
+    },
+    {
+      "name": "five-star hotel is Central",
+      "portal": "by turnover",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "hotel"
+        ],
+        "stars": "five",
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Delhi"
+        ],
+        "online": "no"
+      },
+      "expect": {
+        "licence_id": "central",
+        "fee": 7500,
+        "not_asked": [
+          "turnover"
+        ]
+      }
+    },
+    {
+      "name": "four-star hotel is State",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "hotel"
+        ],
+        "stars": "four",
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Delhi"
+        ],
+        "online": "no"
+      },
+      "expect": {
+        "licence_id": "state",
+        "fee": 5000,
+        "not_asked": [
+          "turnover"
+        ]
+      }
+    },
+    {
+      "name": "small unrated hotel: Registration",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "hotel"
+        ],
+        "stars": "unrated",
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Kerala"
+        ],
+        "online": "no",
+        "turnover": "t2"
+      },
+      "expect": {
+        "licence_id": "registration",
+        "fee": 100
+      }
+    },
+    {
+      "name": "very large canteen stays State (no Central band)",
+      "portal": "Central Licence",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "canteen"
+        ],
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Maharashtra"
+        ],
+        "online": "no",
+        "turnover": "t4"
+      },
+      "expect": {
+        "licence_id": "state",
+        "fee": 5000
+      }
+    },
+    {
+      "name": "small tea shop: Registration",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "petty"
+        ],
+        "place": "street",
+        "vending": "no",
+        "locations": "one",
+        "state": [
+          "Bihar"
+        ],
+        "online": "no",
+        "turnover": "t2"
+      },
+      "expect": {
+        "licence_id": "registration",
+        "fee": 100,
+        "handover": false
+      }
+    },
+    {
+      "name": "tea shop above ₹1.5 crore is outside the table: handover",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "petty"
+        ],
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Bihar"
+        ],
+        "online": "no",
+        "turnover": "t3"
+      },
+      "expect": {
+        "outcome": "handover",
+        "licence_id": null,
+        "handover": true
+      }
+    },
+    {
+      "name": "hawker: place implied (street), fee waived",
+      "portal": "FSSAI Registration, ₹100 (place asked)",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "hawker"
+        ],
+        "vending": "no",
+        "state": [
+          "Uttar Pradesh"
+        ],
+        "online": "no",
+        "turnover": "t2"
+      },
+      "expect": {
+        "licence_id": "registration",
+        "fee": 0,
+        "not_asked": [
+          "place",
+          "locations"
+        ]
+      }
+    },
+    {
+      "name": "hawker with a vending certificate is deemed registered",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "hawker"
+        ],
+        "vending": "yes",
+        "state": [
+          "Uttar Pradesh"
+        ]
+      },
+      "expect": {
+        "outcome": "deemed",
+        "licence_id": null
+      }
+    },
+    {
+      "name": "small railway-station restaurant: Central Registration ₹100",
+      "portal": "Central Licence",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "restaurant"
+        ],
+        "place": "railway",
+        "locations": "one",
+        "state": [
+          "Delhi"
+        ],
+        "online": "no",
+        "turnover": "t2"
+      },
+      "expect": {
+        "licence_id": "central_registration",
+        "fee": 100
+      }
+    },
+    {
+      "name": "mid-size railway-station restaurant: Central Licence at ₹2,000",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "restaurant"
+        ],
+        "place": "railway",
+        "locations": "one",
+        "state": [
+          "Delhi"
+        ],
+        "online": "no",
+        "turnover": "t3"
+      },
+      "expect": {
+        "licence_id": "central",
+        "fee": 2000
+      }
+    },
+    {
+      "name": "small canteen on central government premises: Central Registration",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "canteen"
+        ],
+        "place": "central_govt",
+        "locations": "one",
+        "state": [
+          "Delhi"
+        ],
+        "online": "no",
+        "turnover": "t2"
+      },
+      "expect": {
+        "licence_id": "central_registration",
+        "fee": 100
+      }
+    },
+    {
+      "name": "shop on central government premises: Central, turnover not asked",
+      "answers": {
+        "activity": [
+          "sell"
+        ],
+        "trade": [
+          "retail"
+        ],
+        "place": "central_govt",
+        "locations": "one",
+        "state": [
+          "Delhi"
+        ],
+        "online": "no"
+      },
+      "expect": {
+        "licence_id": "central",
+        "fee": 7500,
+        "not_asked": [
+          "turnover"
+        ]
+      }
+    },
+    {
+      "name": "airport café: Central, turnover not asked",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "restaurant"
+        ],
+        "place": "airport",
+        "locations": "one",
+        "state": [
+          "Karnataka"
+        ],
+        "online": "no"
+      },
+      "expect": {
+        "licence_id": "central",
+        "fee": 7500,
+        "not_asked": [
+          "turnover"
+        ]
+      }
+    },
+    {
+      "name": "small flour mill: State Licence whatever the turnover",
+      "portal": "FSSAI Registration",
+      "answers": {
+        "activity": [
+          "make"
+        ],
+        "manufacture": [
+          "milling"
+        ],
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Punjab"
+        ],
+        "online": "no"
+      },
+      "expect": {
+        "licence_id": "state",
+        "fee": 5000,
+        "not_asked": [
+          "turnover"
+        ]
+      }
+    },
+    {
+      "name": "packaged water inherits general manufacturing bands, adds its own document",
+      "answers": {
+        "activity": [
+          "make"
+        ],
+        "manufacture": [
+          "packaged_water"
+        ],
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Tamil Nadu"
+        ],
+        "online": "no",
+        "turnover": "t3"
+      },
+      "expect": {
+        "licence_id": "state",
+        "fee": 5000,
+        "documents": [
+          "layout_plan",
+          "pesticide_report"
+        ]
+      }
+    },
+    {
+      "name": "multi-state restaurant chain: this outlet by its own turnover, plus a Central head-office task",
+      "portal": "Central Licence for everything",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "restaurant"
+        ],
+        "place": "premises",
+        "locations": "multistate",
+        "state": [
+          "Goa",
+          "Karnataka"
+        ],
+        "online": "no",
+        "turnover": "t2"
+      },
+      "expect": {
+        "licence_id": "registration",
+        "fee": 100,
+        "tasks": [
+          "task-head-office",
+          "task-more-premises"
+        ]
+      }
+    },
+    {
+      "name": "not sure what kind of manufacturing: likely licence plus expert",
+      "answers": {
+        "activity": [
+          "make"
+        ],
+        "manufacture": [
+          "unsure"
+        ],
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Assam"
+        ],
+        "online": "no",
+        "turnover": "t3"
+      },
+      "expect": {
+        "licence_id": "state",
+        "handover": true
+      }
+    },
+    {
+      "name": "importer: Central with IEC",
+      "answers": {
+        "activity": [
+          "import"
+        ],
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Maharashtra"
+        ],
+        "online": "no"
+      },
+      "expect": {
+        "licence_id": "central",
+        "fee": 7500,
+        "not_asked": [
+          "turnover"
+        ],
+        "documents": [
+          "iec",
+          "recall_plan"
+        ]
+      }
+    },
+    {
+      "name": "transporter with only vehicles: vehicle list document",
+      "answers": {
+        "activity": [
+          "sell"
+        ],
+        "trade": [
+          "transport"
+        ],
+        "place": "vehicles",
+        "locations": "one",
+        "state": [
+          "Haryana"
+        ],
+        "turnover": "t3"
+      },
+      "expect": {
+        "licence_id": "state",
+        "fee": 5000,
+        "not_asked": [
+          "online"
+        ],
+        "documents": [
+          "vehicle_list"
+        ]
+      }
+    },
+    {
+      "name": "food marketplace: Central whatever the turnover",
+      "answers": {
+        "activity": [
+          "cook"
+        ],
+        "service": [
+          "restaurant"
+        ],
+        "place": "premises",
+        "locations": "one",
+        "state": [
+          "Karnataka"
+        ],
+        "online": "platform"
+      },
+      "expect": {
+        "licence_id": "central",
+        "fee": 7500,
+        "not_asked": [
+          "turnover"
+        ]
+      }
+    },
+    {
+      "name": "cooks only for family: not a food business",
+      "answers": {
+        "activity": [
+          "none"
+        ],
+        "nonfood": "family"
+      },
+      "expect": {
+        "outcome": "notfood",
+        "licence_id": null
+      }
+    }
   ]
 }

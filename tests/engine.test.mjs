@@ -152,3 +152,10 @@ test('a place never lowers a Central-only kind of business', () => {
   const f = E.sanitizeFacts({ activities: ['cook'], service_kinds: ['hotel'], hotel_stars: 'five', place: 'railway', locations: 'one', states: ['Delhi'], turnover_crore: 1.5 })
   assert.equal(E.verdict(f).licence_id, 'central')
 })
+
+test('railway rule covers only the kinds the table lists (a wholesaler there goes to the expert)', () => {
+  const E = createEngine(fresh2())
+  const v = E.verdict(E.sanitizeFacts({ activities: ['sell'], trade_kinds: ['wholesale'], place: 'railway', locations: 'one', states: ['Delhi'], turnover_crore: 1.5, ecommerce_platform: false }))
+  assert.equal(v.licence_id, 'registration', 'falls back to the wholesaler bands, not Central Registration')
+  assert.ok(v.handover.some((h) => /railway/.test(h)))
+})

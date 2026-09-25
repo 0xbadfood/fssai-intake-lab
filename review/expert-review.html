@@ -1,0 +1,405 @@
+<title>Licensing Rules Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital@1&display=swap">
+<style>
+  :root {
+    --bg: #f5f7f5;
+    --surface: #ffffff;
+    --ink: #17201c;
+    --muted: #56625c;
+    --rule: #d6ddd8;
+    --accent: #1e6b52;
+    --accent-soft: #e3efe9;
+    --agree: #2f7d4f;
+    --agree-soft: #e2f1e7;
+    --change: #a35f00;
+    --change-soft: #f8ecd9;
+    --unsure: #4f5f82;
+    --unsure-soft: #e5e9f3;
+    --quote: #3c4a44;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #111614; --surface: #19201d; --ink: #e4ebe7; --muted: #9aa8a1; --rule: #2d3733;
+      --accent: #63c29c; --accent-soft: #1d2d27;
+      --agree: #6fcf97; --agree-soft: #1b2e23; --change: #e2a24a; --change-soft: #33291b;
+      --unsure: #9fb0d6; --unsure-soft: #232a3a; --quote: #c3cec8;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #111614; --surface: #19201d; --ink: #e4ebe7; --muted: #9aa8a1; --rule: #2d3733;
+    --accent: #63c29c; --accent-soft: #1d2d27;
+    --agree: #6fcf97; --agree-soft: #1b2e23; --change: #e2a24a; --change-soft: #33291b;
+    --unsure: #9fb0d6; --unsure-soft: #232a3a; --quote: #c3cec8;
+  }
+
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.55; }
+  .wrap { max-width: 860px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: grid; gap: 28px; }
+
+  header { display: grid; gap: 10px; }
+  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+  h1 { font-size: clamp(26px, 4vw, 34px); line-height: 1.15; margin: 0; font-weight: 600; text-wrap: balance; }
+  .lede { margin: 0; color: var(--muted); max-width: 64ch; }
+
+  .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; background: var(--bg);
+    border-bottom: 1px solid var(--rule); padding-block: 10px; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+  .progress { font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .meter { flex: 1 1 160px; height: 6px; border-radius: 3px; background: var(--rule); overflow: hidden; }
+  .meter > span { display: block; height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+  .filters { display: flex; gap: 6px; flex-wrap: wrap; }
+  .filters button { font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); cursor: pointer; }
+  .filters button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .save-state { font-size: 13px; color: var(--muted); }
+  .notice { font-size: 14px; padding: 10px 12px; border-radius: 6px; background: var(--change-soft); color: var(--ink); }
+
+  section { display: grid; gap: 14px; }
+  section > h2 { font-size: 19px; margin: 0; font-weight: 600; display: flex; gap: 10px; align-items: baseline; }
+  section > h2 .code { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  section > p { margin: 0; color: var(--muted); max-width: 70ch; }
+
+  article { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 16px 18px; display: grid; gap: 12px; }
+  article[data-choice="agree"] { border-left: 4px solid var(--agree); }
+  article[data-choice="change"] { border-left: 4px solid var(--change); }
+  article[data-choice="unsure"] { border-left: 4px solid var(--unsure); }
+  .qhead { display: flex; gap: 12px; align-items: baseline; }
+  .qid { font-family: var(--mono); font-size: 12px; color: var(--muted); flex: none; }
+  .qtitle { margin: 0; font-size: 16px; font-weight: 600; text-wrap: balance; }
+  .label { font-size: 11px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .proposed { background: var(--accent-soft); border-radius: 6px; padding: 10px 12px; }
+  .proposed p, .proposed ul { margin: 0; }
+  .proposed ul { padding-left: 18px; }
+  .kinds { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .kinds span { font-size: 13px; border: 1px solid var(--rule); border-radius: 4px; padding: 2px 8px; background: var(--surface); }
+  .example { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; align-items: start; font-size: 14px; }
+  .example .in { color: var(--muted); }
+  .example .out { font-family: var(--mono); font-size: 13px; font-weight: 500; white-space: nowrap; text-align: right; }
+  .example .extra { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+  .source { font-family: var(--serif); font-style: italic; color: var(--quote); font-size: 14px; border-left: 2px solid var(--rule); padding-left: 10px; }
+  .source .where { font-family: var(--mono); font-style: normal; font-size: 12px; color: var(--muted); margin-left: 6px; }
+  .portal { font-size: 13px; color: var(--change); }
+
+  .decide { display: grid; gap: 8px; border-top: 1px dashed var(--rule); padding-top: 12px; }
+  .choices { display: flex; flex-wrap: wrap; gap: 8px; }
+  .choices button { font: inherit; font-size: 14px; padding: 6px 14px; border-radius: 6px; border: 1px solid var(--rule); background: var(--bg); color: var(--ink); cursor: pointer; }
+  .choices button:focus-visible, .filters button:focus-visible, textarea:focus-visible, .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .choices button[data-c="agree"][aria-pressed="true"] { background: var(--agree-soft); border-color: var(--agree); color: var(--agree); font-weight: 600; }
+  .choices button[data-c="change"][aria-pressed="true"] { background: var(--change-soft); border-color: var(--change); color: var(--change); font-weight: 600; }
+  .choices button[data-c="unsure"][aria-pressed="true"] { background: var(--unsure-soft); border-color: var(--unsure); color: var(--unsure); font-weight: 600; }
+  textarea { font: inherit; font-size: 14px; width: 100%; box-sizing: border-box; min-height: 60px; resize: vertical; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--rule); background: var(--bg); color: var(--ink); }
+  .status { font-size: 12px; color: var(--muted); min-height: 1em; }
+
+  footer { display: grid; gap: 10px; border-top: 1px solid var(--rule); padding-top: 18px; color: var(--muted); font-size: 14px; }
+  .copy { justify-self: start; font: inherit; font-size: 14px; padding: 6px 14px; border-radius: 6px; border: 1px solid var(--ink); background: var(--surface); color: var(--ink); cursor: pointer; }
+  #copyText { width: 100%; min-height: 120px; font-family: var(--mono); font-size: 12px; }
+  @media (max-width: 520px) {
+    .example { grid-template-columns: 1fr; }
+    .example .out { text-align: left; white-space: normal; }
+  }
+  @media (prefers-reduced-motion: reduce) { .meter > span { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">FSSAI intake lab · graph v2 · FoSCoS table updated 01.04.2026</div>
+    <h1>Licensing rules to confirm before we build further</h1>
+    <p class="lede">The lab now works out the FSSAI licence from the FoSCoS Kind of Business table. Each item below is a question we could not settle from the documents alone, with the answer we propose and what the engine gives today. Mark each one <b>Agree</b>, <b>Change</b> (say what is right) or <b>Not sure</b>. Your choices save as you go.</p>
+  </header>
+
+  <div class="bar" role="region" aria-label="Review progress">
+    <span class="progress" id="progress">0 of 0 decided</span>
+    <span class="meter" aria-hidden="true"><span id="meter"></span></span>
+    <div class="filters" role="group" aria-label="Show">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="open" aria-pressed="false">Open</button>
+      <button type="button" data-f="change" aria-pressed="false">Changes</button>
+      <button type="button" data-f="unsure" aria-pressed="false">Not sure</button>
+    </div>
+    <span class="save-state" id="saveState">Connecting…</span>
+  </div>
+  <div class="notice" id="offline" hidden>Decisions cannot be saved to the shared record in this view. They are kept in this browser only; use “Copy all decisions” at the bottom and send the text to the team.</div>
+
+  <main id="sections" style="display:grid;gap:32px"></main>
+
+  <footer>
+    <div>Sources: FoSCoS “Kind of Business eligibility” (updated 01.04.2026), FSSAI order 15(31)2020/FoSCoS/RCD on documents (March 2021), FoSCoS Guidance Document v1.0. Every rule is marked <i>draft</i> until you confirm it.</div>
+    <button type="button" class="copy" id="copyBtn">Copy all decisions</button>
+    <textarea id="copyText" readonly hidden aria-label="Decisions as text"></textarea>
+  </footer>
+</div>
+
+<script>
+const SECTIONS = [
+  {
+    code: 'A', title: 'The kinds of business people choose from',
+    intro: 'After “What do you do with food?”, the user picks their kind of business from these lists. Each maps to one FoSCoS Kind of Business. Check the lists before we generate thousands of example answers against them.',
+    items: [
+      { id: 'A1', q: 'Are these the right food-service choices?',
+        kinds: ['Restaurant, café or cloud kitchen', 'Hotel', 'Caterer', 'Club or canteen', 'Dhaba, food stall, banquet hall or tiffin service', 'Tea or snack shop', 'Hawker', 'Mid-day meal caterer', 'Mid-day meal canteen', 'Anganwadi centre', 'Something else / not sure'],
+        proposed: 'Keep these ten. Cloud kitchens, cafés and takeaways count as Restaurant. Dhaba, stall, banquet hall, boarding house, dabbawala and fair or temple stalls are one choice, Food vending establishment, because they share one row in the table.',
+        source: ['Restaurant … some offer only take-out and delivery.', 'p.7'] },
+      { id: 'A2', q: 'Are these the right manufacturing choices?',
+        kinds: ['Packaged foods, bakery, snacks, sweets, spices', 'Milk or milk products', 'Edible oil', 'Grain, flour or dal milling', 'Meat or poultry products', 'Slaughter house', 'Fish or seafood products', 'Packaged drinking water', 'Repacking or relabelling', 'Food additives or ingredients', 'Health supplements or nutraceuticals', 'A food with no FSSAI standard', 'New or novel food ingredients', 'Ayurveda aahara', 'Food irradiation', 'Something else / not sure'],
+        proposed: 'Keep these. Packaged drinking water and repacking/relabelling are licensed as General manufacturing (same bands) but each adds its own document (pesticide report; manufacturer NOC). Anyone making milk products must choose Dairy, not General (Guidance FAQ Q5).',
+        source: ['Those manufacturing products other than dairy, oil, meat, proprietary, nutraceutical, non-specified/novel food, are covered under “general manufacturing”.', 'Guidance doc, FAQ 6.2 Q3'] },
+      { id: 'A3', q: 'Are these the right trade choices?',
+        kinds: ['A shop selling to customers', 'Wholesale', 'Distributor', 'Warehouse or godown', 'Cold storage', 'Controlled-atmosphere storage', 'Transport', 'Direct seller', 'Vending machines or kiosks', 'Something else / not sure'],
+        proposed: 'Keep these. Storage is split three ways as in the table. Running a food marketplace app (other sellers list on it) is asked separately and makes the business E-commerce.',
+        source: ['Storage (Cold/Refrigerated) · Storage (Controlled Atmosphere + Cold) · Storage (except Controlled Atmosphere + Cold)', 'p.4–5'] },
+      { id: 'A4', q: 'Are these the right export choices?',
+        kinds: ['I export food made by others (merchant exporter)', 'I export food I make (exporter-manufacturer)', '100% export-oriented unit'],
+        proposed: 'Keep these three; all are Central whatever the turnover. The last two are offered only to people who also make food. A manufacturer who also sells in India picks its domestic kind as well.',
+        source: ['in case you are involved in manufacturing of products for domestic market, you are required to select appropriate kind of Business [KOBs] from non-Exporting manufacturing KOBs', 'p.4'] },
+      { id: 'A5', q: 'Which places do we offer, and who may run from home?',
+        kinds: ['Street cart or stall', 'Home', 'Own premises', 'Airport or seaport', 'Railway station', 'Central government premises', 'Only vehicles'],
+        proposed: 'Home is offered only to: restaurant or home chef, caterer, dhaba/tiffin-type, tea or snack shop; general food making, repacking, Ayurveda aahara; retail shop and direct selling. Not to importers, exporters, wholesalers, storage, transport, dairy, meat, oil, milling or supplements. Airport, railway and central-government premises are offered only to food service and selling.',
+        source: null },
+    ],
+  },
+  {
+    code: 'B', title: 'Rules that need a judgement',
+    intro: 'The table is silent or open to reading on these. The example shows what the engine gives today under our proposed answer.',
+    items: [
+      { id: 'B1', q: 'A hotel without a star rating and turnover above ₹1.5 crore: which licence?',
+        proposed: 'State Licence (₹5,000). The table gives five star and above: Central; up to four star: State; up to ₹1.5 crore: Registration. It does not cover unrated hotels above ₹1.5 crore.',
+        example: ['Unrated hotel · ₹1.5–50 crore', 'State Licence · ₹5,000/yr'],
+        source: ['Five Star and Above … Up to 4 Star … Annual Turnover up to Rs. 1.5Cr', 'p.7'] },
+      { id: 'B2', q: 'Grain, cereal and pulse mills: State Licence even when small?',
+        proposed: 'Yes. We read the table as putting every milling unit under a State Licence, whatever the turnover, so a small atta chakki gets State (₹5,000), not Registration.',
+        example: ['Flour mill · ₹1 crore', 'State Licence · ₹5,000/yr'],
+        portal: 'Live portal today: FSSAI Registration.',
+        source: ['All Grains, Cereals, Pulses Milling units without any limit on turnover threshold', 'p.2, State Licence row'] },
+      { id: 'B3', q: 'Several kinds of business at one premises: one licence at the highest level?',
+        proposed: 'Yes. One application covers the premises; the licence is the highest any of its kinds needs, and the fee is that licence’s fee. A small restaurant with a retail counter gets Registration; add supplement-making and the whole premises needs a Central Licence.',
+        example: ['Restaurant + retail · ₹1 crore → Registration ₹100/yr. Restaurant + nutraceuticals', 'Central Licence · ₹7,500/yr'],
+        source: null },
+      { id: 'B4', q: 'Businesses at a railway station other than food service and shops (a wholesaler, a godown)?',
+        proposed: 'We only offer “railway station” to food service and shops, as the table’s railway row lists caterers, restaurants, canteens, hawkers and petty retailers. Anything else found at a station is sent to an expert with its usual licence as the likely answer. Tell us the rule if there is one.',
+        example: ['Wholesaler at a station · ₹1 crore', 'FSSAI Registration + expert'],
+        source: ['Caterers/Restaurants/Canteens/Hawkers/Petty Retailers at the premises of Railway Stations', 'p.8'] },
+      { id: 'B5', q: 'Petty milkmen and milk vendors: add them as a choice?',
+        proposed: 'Yes: add “Milk vendor / petty milkman” under Dairy, with Registration (₹100) up to ₹1.5 crore. Today they would pick Dairy and get the normal turnover bands, which gives the same result for small vendors.',
+        source: ['Note: Registration for Petty Milkman, Milk Vendors, License for rest according to Eligibility criteria', 'p.1'] },
+      { id: 'B6', q: 'Street vendors with a municipal vending certificate: deemed registered, nothing to file?',
+        proposed: 'Yes, kept from the FSSAI registration workflow chart the portal follows (Street Vendors Act, 2014). This is not in the eligibility table, so please confirm it still applies and whether they may opt in to Registration.',
+        example: ['Tea stall with a vending certificate', 'Deemed registered, no application'],
+        source: null },
+      { id: 'B7', q: 'Tea/snack shop, hawker or Anganwadi above ₹1.5 crore: what then?',
+        proposed: 'Send to an expert. The table lists these only up to ₹1.5 crore. If there is a standard answer (for example, treat as Food vending establishment → State), tell us and we will encode it.',
+        example: ['Tea shop · ₹1.5–50 crore', 'Expert to decide'],
+        source: ['Petty Retailer of snacks/tea shops … Annual Turnover up to Rs. 1.5Cr', 'p.6'] },
+      { id: 'B8', q: 'Businesses in several states: each premises by its own turnover, plus a Central Head Office licence?',
+        proposed: 'Yes. The premises in front of us gets the licence its own kind and turnover need; the business also declares one Head Office, which needs a Central Licence (₹7,500). Each other premises is a separate application.',
+        example: ['Restaurant in Goa + Karnataka · this outlet ₹1.5 crore', 'Registration ₹100/yr + Head Office Central ₹7,500/yr'],
+        portal: 'Live portal today: Central Licence for everything.',
+        source: ['Food Business Operators having food business activities in two or more States/UTs have to declare one Head Office/Registered Office.', 'p.9'] },
+      { id: 'B9', q: 'Central government premises: Central Registration for small canteens?',
+        proposed: 'Yes, as the table says: catering up to ₹1.5 crore → Central Registration (₹100); above → Central Licence (₹2,000); storage, wholesale and retail there → Central Licence (₹7,500) whatever the turnover. Please confirm “Central Registration” is filed on Form A.',
+        example: ['Canteen in a central government office · ₹1 crore', 'Central Registration · ₹100/yr'],
+        source: ['Food Catering Services in establishments and units under Central Government Agencies', 'p.8'] },
+      { id: 'B10', q: 'Railway stations: is the ₹2,000 railway Central Licence right even above ₹50 crore, and for a five-star hotel inside a station?',
+        proposed: 'Yes. At a station the railway row applies: up to ₹1.5 crore → Central Registration (₹100), above → Central Licence (₹2,000). When a kind’s own rule is also Central (a five-star hotel), we keep the railway fee. A place rule never lowers the licence: a kind that needs a Central Licence stays Central.',
+        example: ['Restaurant or five-star hotel at a station · above ₹50 crore', 'Central Licence · ₹2,000/yr'],
+        source: ['Annual Turnover more than 1.5 Cr · Central License [Railways] · Rs. 2000', 'p.8'] },
+      { id: 'B11', q: 'E-commerce: only businesses that run a marketplace for other sellers?',
+        proposed: 'Yes. Selling your own food on Swiggy, Zomato or your own website does not make you an E-commerce business; running the app or site where other sellers list does, and that is Central whatever the turnover.',
+        example: ['Restaurant selling on Swiggy · ₹1.5 crore', 'FSSAI Registration · ₹100/yr'],
+        source: ['E-Commerce · No restriction on turnover threshold · Central License', 'p.6'] },
+      { id: 'B12', q: 'Hawkers: one registration, fee waived?',
+        proposed: 'Yes. A hawker moves around, so we do not ask “how many places”; they register once. The fee is ₹0 since 28.09.2024.',
+        example: ['Hawker without a vending certificate · ₹1.5 crore', 'FSSAI Registration · ₹0/yr'],
+        source: ['Hawker fee waived of w.e.f 28.09.2024', 'p.6'] },
+      { id: 'B13', q: 'Dairy: turnover bands only, no milk-capacity limits?',
+        proposed: 'Yes. The 2026 table licenses dairy units by turnover alone, so we no longer ask litres of milk per day.',
+        example: ['Dairy unit · ₹1.5 crore', 'FSSAI Registration · ₹100/yr'],
+        source: ['Dairy units [Handling and processing milk/ milk products … Annual Turnover more than 50 Cr · Central License', 'p.1'] },
+    ],
+  },
+  {
+    code: 'C', title: 'Changes to the live portal now',
+    intro: 'The live portal gives some answers that the table contradicts outright. These do not wait for the lab if you agree.',
+    items: [
+      { id: 'C1', q: 'Correct the State Licence fee on the live portal to ₹5,000 a year now?',
+        proposed: 'Yes. The table gives ₹5,000 for every kind of business with a State Licence; the portal shows ₹2,000. It is a one-line fix.',
+        example: ['Restaurant · ₹1.5–50 crore', 'State Licence · ₹5,000/yr'],
+        portal: 'Live portal today: State Licence ₹2,000/yr.',
+        source: ['Annual Turnover more than 1.5 Cr to 50 Cr · State License · Rs. 5000', 'p.1–7'] },
+      { id: 'C2', q: 'Fix the “always Central” kinds (supplements, proprietary and novel foods, Ayurveda aahara, irradiation, exporters, 100% EOU) on the live portal now, or wait for the lab?',
+        proposed: 'Wait for the lab. The live portal has no question that tells these kinds apart (no export option, no kind-of-manufacturing question), so a quick patch would mean adding questions twice. Until then, route supplement makers and exporters to an expert by hand.',
+        portal: 'Live portal today: licence by turnover for all of these.',
+        source: ['Food or Health Supplements and Nutraceuticals etc. · No restriction on turnover threshold · Central License', 'p.3'] },
+    ],
+  },
+]
+
+const ITEMS = SECTIONS.flatMap((s) => s.items)
+const decisions = {}          // id -> { choice, note, updatedAt }
+let db = null
+let filter = 'all'
+const pending = new Map()      // id -> latest record waiting to be written
+const writing = new Set()      // ids with a write in flight (one write at a time per doc)
+
+const $ = (sel, root = document) => root.querySelector(sel)
+const el = (tag, attrs = {}, ...kids) => {
+  const n = document.createElement(tag)
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === 'class') n.className = v
+    else if (k === 'text') n.textContent = v
+    else n.setAttribute(k, v)
+  }
+  for (const k of kids) if (k != null) n.append(k)
+  return n
+}
+
+function render() {
+  const main = $('#sections')
+  main.textContent = ''
+  for (const s of SECTIONS) {
+    const sec = el('section', { 'aria-labelledby': `h-${s.code}` },
+      el('h2', { id: `h-${s.code}` }, el('span', { class: 'code', text: s.code }), s.title),
+      el('p', { text: s.intro }))
+    for (const it of s.items) sec.append(card(it))
+    main.append(sec)
+  }
+  refresh()
+}
+
+function card(it) {
+  const a = el('article', { id: it.id, 'data-id': it.id })
+  a.append(el('div', { class: 'qhead' }, el('span', { class: 'qid', text: it.id }), el('h3', { class: 'qtitle', text: it.q })))
+  const prop = el('div', { class: 'proposed' }, el('div', { class: 'label', text: 'Proposed resolution' }), el('p', { text: it.proposed }))
+  if (it.kinds) prop.append(el('div', { class: 'kinds' }, ...it.kinds.map((k) => el('span', { text: k }))))
+  a.append(prop)
+  if (it.example) {
+    a.append(el('div', {}, el('div', { class: 'label', text: 'What the engine gives' }),
+      el('div', { class: 'example' }, el('span', { class: 'in', text: it.example[0] }), el('span', { class: 'out', text: it.example[1] }))))
+  }
+  if (it.portal) a.append(el('div', { class: 'portal', text: it.portal }))
+  if (it.source) a.append(el('div', { class: 'source' }, `“${it.source[0]}”`, el('span', { class: 'where', text: it.source[1] })))
+
+  const d = el('div', { class: 'decide' })
+  const choices = el('div', { class: 'choices', role: 'group', 'aria-label': `Decision for ${it.id}` })
+  for (const [c, label] of [['agree', 'Agree'], ['change', 'Change'], ['unsure', 'Not sure']]) {
+    const b = el('button', { type: 'button', 'data-c': c, 'aria-pressed': 'false', text: label })
+    b.addEventListener('click', () => choose(it.id, c))
+    choices.append(b)
+  }
+  const note = el('textarea', { id: `note-${it.id}`, placeholder: 'What is right, or what we should check (optional for Agree)', 'aria-label': `Note for ${it.id}` })
+  let t
+  note.addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => setNote(it.id, note.value), 700) })
+  note.addEventListener('blur', () => { clearTimeout(t); setNote(it.id, note.value) })
+  d.append(choices, note, el('div', { class: 'status', id: `status-${it.id}` }))
+  a.append(d)
+  return a
+}
+
+function refresh() {
+  let done = 0
+  for (const it of ITEMS) {
+    const rec = decisions[it.id] || {}
+    const a = document.getElementById(it.id)
+    if (!a) continue
+    if (rec.choice) { a.dataset.choice = rec.choice; done++ } else delete a.dataset.choice
+    a.querySelectorAll('.choices button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.c === rec.choice)))
+    const ta = $(`#note-${it.id}`)
+    if (document.activeElement !== ta && ta.value !== (rec.note || '')) ta.value = rec.note || ''
+    const show = filter === 'all' || (filter === 'open' ? !rec.choice : rec.choice === filter)
+    a.hidden = !show
+    const st = $(`#status-${it.id}`)
+    if (pending.has(it.id) || writing.has(it.id)) st.textContent = 'Saving…'
+    else if (rec.updatedAt) st.textContent = `Saved ${new Date(rec.updatedAt).toLocaleString()}`
+    else st.textContent = ''
+  }
+  $('#progress').textContent = `${done} of ${ITEMS.length} decided`
+  $('#meter').style.width = `${(100 * done) / ITEMS.length}%`
+  document.querySelectorAll('section').forEach((s) => { s.hidden = [...s.querySelectorAll('article')].every((a) => a.hidden) })
+}
+
+function choose(id, c) {
+  const rec = { ...(decisions[id] || {}), choice: c, updatedAt: new Date().toISOString() }
+  decisions[id] = rec
+  save(id, rec)
+  if (c === 'change' && !(rec.note || '').trim()) $(`#note-${id}`).focus()
+}
+function setNote(id, text) {
+  const prev = decisions[id] || {}
+  if ((prev.note || '') === text) return
+  const rec = { ...prev, note: text, updatedAt: new Date().toISOString() }
+  decisions[id] = rec
+  save(id, rec)
+}
+
+function save(id, rec) {
+  try { localStorage.setItem('review-decisions', JSON.stringify(decisions)) } catch {}
+  if (!db) return refresh()
+  pending.set(id, rec)
+  refresh()
+  flush(id)
+}
+async function flush(id) {
+  if (writing.has(id) || !pending.has(id)) return
+  const rec = pending.get(id)
+  pending.delete(id)
+  writing.add(id)
+  try {
+    await db.doc(`decisions/${id}`).set({ choice: rec.choice || null, note: rec.note || '', updatedAt: rec.updatedAt, item: id })
+    $('#saveState').textContent = 'All changes saved'
+  } catch (e) {
+    $('#saveState').textContent = e?.code === 'not_granted' ? 'You can view but not save decisions' : 'Could not save; your choices are kept in this browser'
+  } finally {
+    writing.delete(id)
+    refresh()
+    if (pending.has(id)) flush(id)
+  }
+}
+
+document.querySelectorAll('.filters button').forEach((b) => b.addEventListener('click', () => {
+  filter = b.dataset.f
+  document.querySelectorAll('.filters button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)))
+  refresh()
+}))
+
+$('#copyBtn').addEventListener('click', async () => {
+  const lines = ITEMS.map((it) => {
+    const r = decisions[it.id] || {}
+    return `${it.id} ${r.choice ? r.choice.toUpperCase() : 'OPEN'}${r.note ? ` — ${r.note.replace(/\s+/g, ' ')}` : ''}  (${it.q})`
+  })
+  const text = lines.join('\n')
+  const ta = $('#copyText')
+  ta.value = text
+  try {
+    await navigator.clipboard.writeText(text)
+    $('#copyBtn').textContent = 'Copied'
+  } catch {
+    ta.hidden = false
+    ta.select()
+    $('#copyBtn').textContent = 'Select the text below and copy it'
+  }
+})
+
+try { Object.assign(decisions, JSON.parse(localStorage.getItem('review-decisions') || '{}')) } catch {}
+render()
+
+;(async () => {
+  db = await (window.claude?.use ? window.claude.use('db') : Promise.resolve(null))
+  if (!db) {
+    $('#offline').hidden = false
+    $('#saveState').textContent = 'Saved in this browser only'
+    return
+  }
+  $('#saveState').textContent = 'Connected'
+  db.collection('decisions').onSnapshot((snap) => {
+    for (const d of snap.docs) {
+      const data = d.data() || {}
+      if (pending.has(d.id) || writing.has(d.id)) continue
+      decisions[d.id] = { choice: data.choice || null, note: data.note || '', updatedAt: data.updatedAt || null }
+    }
+    refresh()
+  }, () => { $('#saveState').textContent = 'Live updates paused; choices still save' })
+})()
+</script>

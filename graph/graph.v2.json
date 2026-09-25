@@ -591,7 +591,7 @@
       "text": "Food businesses at airports and seaports need a Central Licence, whatever their turnover.",
       "sources": [{ "page": 8, "quote": "Food Business Activities at premises of Airport/Seaport such" }] },
     { "id": "place-railway", "rel": "licence", "status": "draft", "when": { "eq": ["place", "railway"] },
-      "applies": { "groups": ["food_service"], "concepts": ["retail", "vending_agency", "cook", "sell"] },
+      "applies": { "groups": ["food_service"], "concepts": ["retail", "vending_agency", "cook"] },
       "licence": { "bands": "railway" },
       "otherwise": "The eligibility table covers caterers, restaurants, canteens, hawkers and petty retailers at railway stations; other activities there need an expert.",
       "sources": [{ "page": 8, "quote": "Caterers/Restaurants/Canteens/Hawkers/Petty Retailers at" }] },
