@@ -2,3 +2,5 @@ node_modules/
 *.log
 .env
 __pycache__/
+records/loop/*.stdout
+records/loop/*.stderr

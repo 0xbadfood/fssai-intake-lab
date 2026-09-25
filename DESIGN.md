@@ -270,7 +270,16 @@ fssai-intake-lab/
   - petty milkmen (the table's note is not modelled);
   - deemed registration for street vendors with a municipal certificate (kept from the portal's workflow; it is not in the table).
 - **M3: step 2.** Convert `intake_answer_cache` into records.
-- **M4: step 3.** The LLM loop writes records for each step, including unknowns.
+- **M4: step 3.** The LLM loop writes records for each step, including unknowns. **Pilot done 2026-09-25** (`loop/`, `records/loop/pilot-2/REPORT.md`):
+  - **Scope:** activity, food-service and manufacturing steps, 12 answers per option plus 15 no-match per step, 338 answers.
+  - **Method:** the planner (local 27B) writes answers in 7 styles (short, sentence, Hinglish, Devanagari Hindi, typos, indirect, detailed). Spark and the local model then classify each one **blind**, with a JSON schema enforced by grammar. An answer is kept when Spark matches the intent. It is relabelled when both blind classifiers agree with high confidence on another option.
+  - **Results:** 95% of answers kept; 96% of no-match answers recognised; 0 errors; 29 records a minute; mean within-option word overlap 0.04. A spot check of 60 found about 92–97% correct.
+  - **Pilot 1 lessons:**
+    - Spark (llama.cpp, one slot) ignores plain JSON mode on some Hindi input, so the schema is required.
+    - A retry must change the sampling.
+    - The planner's own "none" answers were often real matches, so the no-match prompt must forbid listed activities.
+    - Spark catches about 2.5% of answers that the local model passes. They are the genuinely ambiguous ones, so it stays on every answer.
+  - **Confusable pairs**, for the expert and as CLM hard negatives: proprietary/general, novel/nutraceutical, slaughter/meat, mid-day-meal canteen/canteen, caterer/vending establishment. Also: pet food is outside FSSAI.
 - Then the CLM experiment.
 
 ### As built in v1 (differences from §2's sketch)

@@ -1,0 +1,22 @@
+{
+  "note": "Models for the cache-fill loop. 10.8.0.5 is the production document checker and must never be used (loop/llm.mjs refuses it).",
+  "planner": {
+    "url": "http://localhost:7001/v1",
+    "model": "qwen3.8-27b",
+    "keyEnv": "VLLM_API_KEY",
+    "concurrency": 4
+  },
+  "selfcheck": {
+    "url": "http://localhost:7001/v1",
+    "model": "qwen3.8-27b",
+    "keyEnv": "VLLM_API_KEY",
+    "concurrency": 4
+  },
+  "reviewer": {
+    "url": "http://10.8.0.4:8001/v1",
+    "model": "qwen3.8-flash-next",
+    "keyEnv": null,
+    "concurrency": 1,
+    "note": "llama.cpp on Spark serves one request at a time (total_slots 1)"
+  }
+}

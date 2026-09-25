@@ -1,0 +1,47 @@
+{
+  "run": "pilot-1",
+  "started": "2026-09-25T10:42:51.721Z",
+  "seconds": 2042.319,
+  "steps": [
+    "activity",
+    "service",
+    "manufacture"
+  ],
+  "per_option": 12,
+  "nomatch": 15,
+  "graph": {
+    "version": 2,
+    "sha256": "f9fcb1bce4ffa935f5107a56f756e6e3896e0aa5f9d4e777a652d17dcb1f6dae"
+  },
+  "prompt_version": "loop-v1",
+  "endpoints": {
+    "planner": {
+      "url": "http://localhost:7001/v1",
+      "model": "qwen3.8-27b"
+    },
+    "selfcheck": {
+      "url": "http://localhost:7001/v1",
+      "model": "qwen3.8-27b"
+    },
+    "reviewer": {
+      "url": "http://10.8.0.4:8001/v1",
+      "model": "qwen3.8-flash-next"
+    }
+  },
+  "usage": {
+    "qwen3.8-27b": {
+      "calls": 353,
+      "failures": 0,
+      "prompt_tokens": 199454,
+      "completion_tokens": 22701,
+      "seconds": 816.2149999999998
+    },
+    "qwen3.8-flash-next": {
+      "calls": 396,
+      "failures": 114,
+      "prompt_tokens": 212338,
+      "completion_tokens": 37856,
+      "seconds": 1796.5920000000006
+    }
+  }
+}
