@@ -8,7 +8,7 @@ import { renderText } from '../engine/text.js'
 import { portalAdapter, walkAll } from '../cli/walk.js'
 
 const GRAPH = path.join(LAB_ROOT, 'graph/graph.v1.json')
-const PORTAL = path.resolve(LAB_ROOT, '../fssai-portal')
+const PORTAL = path.resolve(LAB_ROOT, 'baseline/portal-v1') // frozen pre-server portal intake (graph v1's parity target)
 const fresh = () => loadGraph(GRAPH)
 
 test('conditions', () => {
@@ -158,4 +158,24 @@ test('railway rule covers only the kinds the table lists (a wholesaler there goe
   const v = E.verdict(E.sanitizeFacts({ activities: ['sell'], trade_kinds: ['wholesale'], place: 'railway', locations: 'one', states: ['Delhi'], turnover_crore: 1.5, ecommerce_platform: false }))
   assert.equal(v.licence_id, 'registration', 'falls back to the wholesaler bands, not Central Registration')
   assert.ok(v.handover.some((h) => /railway/.test(h)))
+})
+
+// ---------- graph v3 (v2 + paged long lists; presentation only) ----------
+
+test('graph v3 validates, pages long lists, and gives the same results as v2', () => {
+  const g3 = loadGraph(path.join(LAB_ROOT, 'graph/graph.v3.json'))
+  assert.deepEqual(validateGraph(g3), [])
+  const E3 = createEngine(g3)
+  const r = E3.render(E3.QUESTIONS.find((q) => q.id === 'manufacture'), { activities: ['make'] })
+  assert.equal(r.options.filter((o) => !o.page && !o.exclusive).length, 5)
+  assert.deepEqual(r.pages.map((p) => p.page), [2, 3])
+  const broken = JSON.parse(JSON.stringify(g3))
+  broken.facts.find((q) => q.id === 'trade').values[0].page = 4
+  assert.match(validateGraph(broken).join('\n'), /page 4 has no label/)
+  const E2 = createEngine(loadGraph(path.join(LAB_ROOT, 'graph/graph.v2.json')))
+  const { cases } = JSON.parse(readFileSync(path.join(LAB_ROOT, 'tests/cases.v3.json'), 'utf8'))
+  for (const c of runCases(E3, cases)) {
+    assert.deepEqual(c.problems, [], c.name)
+    assert.equal(E3.verdict(c.facts).licence_id, E2.verdict(c.facts).licence_id, c.name)
+  }
 })

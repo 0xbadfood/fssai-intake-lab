@@ -136,6 +136,15 @@ export function validateGraph(graph) {
       for (const f of ['label', 'example', 'emoji']) lintText(v[f], `${vw}.${f}`)
       if (v.show !== '@label') lintText(v.show, `${vw}.show`)
       for (const k of Object.keys({ ...v.set, ...v.apply?.set })) if (!keys.has(k)) problems.push(`${vw}: sets unknown key ${k}`)
+      if (v.page != null && (!Number.isInteger(v.page) || v.page < 1)) problems.push(`${vw}: page must be a whole number from 1`)
+      if (v.page > 1 && !(q.pages || []).some((p) => p.page === v.page)) problems.push(`${vw}: page ${v.page} has no label in ${w}.pages`)
+      if (v.page != null && v.exclusive) problems.push(`${vw}: an exclusive option is shown on every page; give it no page`)
+    }
+    // Pages (a long list shown a few options at a time): "More" labels for pages 2.., each with options.
+    for (const p of q.pages || []) {
+      if (!Number.isInteger(p.page) || p.page < 2) problems.push(`${w}.pages: page numbers start at 2 (page 1 needs no label)`)
+      if (!(q.values || []).some((v) => v.page === p.page)) problems.push(`${w}.pages: page ${p.page} has no options`)
+      lintText(p.label, `${w}.pages.${p.page}`)
     }
   }
 

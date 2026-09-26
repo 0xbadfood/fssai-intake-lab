@@ -16,7 +16,8 @@ import { runCases } from './cases.js'
 import { readFileSync } from 'node:fs'
 
 const DEFAULT_GRAPH = path.join(LAB_ROOT, 'graph/graph.v1.json')
-const DEFAULT_PORTAL = path.resolve(LAB_ROOT, '../fssai-portal')
+// The portal's pre-server intake code, frozen here (baseline/portal-v1/README.md); graph v1 is its parity port.
+const DEFAULT_PORTAL = path.resolve(LAB_ROOT, 'baseline/portal-v1')
 
 function parseArgs(argv) {
   const [cmd = 'help', ...rest] = argv

@@ -40,6 +40,7 @@ export function createAutomaton(graph, ops = {}) {
   function renderOption(v, f) {
     const o = { id: v.id, emoji: text(v.emoji, f), label: text(v.label, f), example: text(v.example, f) }
     if (v.exclusive) o.exclusive = true
+    if (v.page > 1) o.page = v.page
     return o
   }
   function optionsFor(q, f = {}) {
@@ -382,15 +383,21 @@ export function createAutomaton(graph, ops = {}) {
     )
   }
 
-  /** What the host renders for a question. */
+  /**
+   * What the host renders for a question. A long list is shown a page at a time: options carry `page` (none = 1),
+   * `pages` holds the "More" button label for each further page; exclusive options ("not sure") show on every page.
+   */
   function render(q, f = {}) {
+    const options = optionsFor(q, f)
+    const pages = (q.pages || []).filter((p) => options.some((o) => o.page === p.page)).map((p) => ({ page: p.page, label: text(p.label, f) }))
     return {
       id: q.id,
       kind: q.kind || null,
       title: titleFor(q, f),
       hint: hintFor(q, f),
       multi: isMulti(q, f),
-      options: optionsFor(q, f),
+      options,
+      ...(pages.length ? { pages } : {}),
     }
   }
 

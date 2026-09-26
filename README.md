@@ -21,6 +21,8 @@ An experiment to rebuild the portal's intake as a **fixed automaton plus a growi
 - **Expert handover:** "not sure" answers and cases the table does not cover give a likely result with an expert option;
 - **Checks:** all 251,564 walked paths pass every invariant (`check --graph graph/graph.v2.json`, ~3 min), and 27 scenario cases pass (`cases --graph graph/graph.v2.json`), including the portal's known errors with their correct answers.
 
+**v3 (2026-09-26)** is v2 with long option lists (service, manufacture, trade) shown a page at a time: the five most common first, then a themed "More" button per page (`values[].page`, `pages[]`; "not sure" comes with the last page). Presentation only, so it declares `compatibleWith: [2]`: answers, records and results carry over. The portal runs v3.
+
 v1 is a **regression baseline, not correct licensing**. It carries the portal's known errors (State fee, missing "always Central" kinds of business, caterer and hotel bands). Those are fixed in v2, which is built from the FoSCoS 2026 eligibility table (`sources/`).
 
 ## Commands
