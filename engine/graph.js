@@ -6,6 +6,9 @@ import { lintCondition } from './conditions.js'
 import { templateConditions } from './text.js'
 
 export const LAB_ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..')
+// Source quotes are checked against the saved texts in the lab's sources/. A copy of the engine elsewhere (the
+// portal's server/intake/engine) has no sources/ next to it and skips that check; the lab checks before release.
+const SOURCES = existsSync(path.join(LAB_ROOT, 'sources')) ? LAB_ROOT : null
 const RELS = ['implies', 'unlikely', 'outcome', 'reason', 'forces', 'threshold', 'note', 'requires_doc', 'is_a', 'sets', 'needs', 'licence', 'task']
 const STATUSES = ['draft', 'model-reviewed', 'expert', 'rejected']
 
@@ -178,8 +181,8 @@ export function validateGraph(graph) {
 function checkSource(s, where, problems) {
   if (!['A', 'B', 'C'].includes(s.level)) return problems.push(`${where}: level must be A, B or C`)
   if (!s.quote) return problems.push(`${where}: missing quote`)
-  if (!s.file) return
-  const file = path.resolve(LAB_ROOT, s.file)
+  if (!s.file || !SOURCES) return
+  const file = path.resolve(SOURCES, s.file)
   if (!existsSync(file)) return problems.push(`${where}: file not found ${s.file}`)
   const pages = readFileSync(file, 'utf8').split('\f')
   const hay = s.page ? pages[s.page - 1] : pages.join(' ')
