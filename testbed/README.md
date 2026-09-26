@@ -21,6 +21,14 @@ Traffic path: Caddy on 10.8.0.1 → **10.8.0.2:8340** (VPN only) → `testbed/se
 
 CLM runs in the `clm-work` container on the 3090. The lab's `:7001` Qwen must be stopped: they cannot share the GPU.
 
+**Start CLM with `testbed/clm-up.sh`.** It is safe to rerun:
+- it does nothing if CLM already answers;
+- it refuses if the GPU is busy and says what holds it (`--stop-qwen` stops the lab Qwen first);
+- it starts only the parts that aren't running, polls until each answers, and classifies one test answer;
+- `--status` shows what is up.
+
+The manual steps, for reference:
+
 ```bash
 sudo docker stop qwen-vllm-single-1          # free the GPU
 sudo docker start clm-work
