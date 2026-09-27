@@ -3,7 +3,7 @@
   "host": "10.8.0.2",
   "port": 8340,
   "graph": "graph/graph.v2.json",
-  "clmUrl": "http://127.0.0.1:8700",
+  "clmUrl": "http://10.8.0.2:8700",
   "clmModel": "fssai-v-hard",
   "clmThreshold": 0.8,
   "silentReviewer": true,

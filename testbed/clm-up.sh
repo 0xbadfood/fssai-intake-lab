@@ -11,7 +11,8 @@ set -uo pipefail
 CONTAINER=clm-work
 QWEN=qwen-vllm-single-1
 ENC_URL=http://127.0.0.1:8090/v1/models
-CLM_URL=http://127.0.0.1:8700
+# VPN address, not localhost: the portal on deploy (10.8.0.7) calls CLM here.
+CLM_URL=http://10.8.0.2:8700
 FREE_MIB=21000          # the encoder asks for 85% of the 3090 (~20.9 GB)
 ENC_WAIT=900            # seconds; first load can take ~10 min
 CLM_WAIT=180
@@ -90,7 +91,7 @@ fi
 # 4. clm-serve
 if ! running 'clm-serve'; then
   say "starting clm-serve on :8700"
-  sudo -n docker exec -d "$CONTAINER" bash -c 'exec /app/venv/bin/clm-serve --host 127.0.0.1 --port 8700 --ckpt /clm/fssai/fssai-v-hard.pt --model fssai-v-hard=/clm/fssai/fssai-v-hard.pt --no-ui --no-download > /clm/clm-serve.log 2>&1'
+  sudo -n docker exec -d "$CONTAINER" bash -c 'exec /app/venv/bin/clm-serve --host 10.8.0.2 --port 8700 --ckpt /clm/fssai/fssai-v-hard.pt --model fssai-v-hard=/clm/fssai/fssai-v-hard.pt --no-ui --no-download > /clm/clm-serve.log 2>&1'
   sleep 2
 fi
 for ((t = 0; t < CLM_WAIT; t += 3)); do
