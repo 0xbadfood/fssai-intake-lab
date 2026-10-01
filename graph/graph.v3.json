@@ -1052,7 +1052,15 @@
         {
           "page": 4,
           "quote": "Radiation processing of food"
+        },
+        {
+          "file": "sources/foscos/web/required-documents-2026-10-01.md",
+          "quote": "License obtained from Dept of Atomic Energy"
         }
+      ],
+      "docs": [
+        "dae_licence",
+        "radiation_declaration"
       ]
     },
     {
@@ -1242,7 +1250,14 @@
         {
           "page": 6,
           "quote": "Direct seller"
+        },
+        {
+          "file": "sources/foscos/web/required-documents-2026-10-01.md",
+          "quote": "Copy of agreement with the Direct Selling Entity"
         }
+      ],
+      "docs": [
+        "direct_selling_agreement"
       ]
     },
     {
@@ -3720,7 +3735,10 @@
         "product_specification": "Product specification of each product with the purity criteria of ingredients, in the prescribed format (on letterhead)",
         "composition": "Composition of each product in the prescribed format (on letterhead)",
         "product_approval": "Product approval from FSSAI HQ for each product",
-        "pesticide_report": "Pesticide residue report of the water used, with source of raw water and treatment plan"
+        "pesticide_report": "Pesticide residue report of the water used, with source of raw water and treatment plan",
+        "dae_licence": "Licence from the Department of Atomic Energy",
+        "radiation_declaration": "Self-declaration to comply with the Atomic Energy (Radiation Processing of Food and Allied Products) Rules, 2012 (on letterhead)",
+        "direct_selling_agreement": "Copy of the agreement with the direct selling entity"
       },
       "registration": [
         "reg_photo",
@@ -3750,6 +3768,10 @@
         {
           "file": "sources/foscos/vision/documentlistmarch.md",
           "quote": "Revised list of the KoB-wise mandatory documents"
+        },
+        {
+          "file": "sources/foscos/web/required-documents-2026-10-01.md",
+          "quote": "Copy of agreement with the Direct Selling Entity"
         }
       ]
     }
